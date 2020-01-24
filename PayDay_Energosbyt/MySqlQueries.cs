@@ -45,25 +45,29 @@ LEFT JOIN raschetnye_scheta ON sotrudniki.ID_Rasch_scheta = raschetnye_scheta.ID
 DATE_FORMAT(CONCAT(grafik_raboty.Year, '-',grafik_raboty.Month, '-',grafik_raboty.Day),'%d %M %Y') AS 'Дата',
 grafik_raboty.Identify AS 'Идентификатор', grafik_raboty.Znachenie_Raboch_Vremeni AS 'Кол-во рабочих часов'
 FROM grafik_raboty INNER JOIN doljnosti ON grafik_raboty.ID_Doljnosti = doljnosti.ID_Doljnosti
-WHERE doljnosti.ID_Doljnosti = @Value1";
+WHERE doljnosti.ID_Doljnosti = @ID";
 
         public string Select_Grafik_Raboty_Filter = $@"SET lc_time_names = 'ru_RU'; SELECT
 DATE_FORMAT(CONCAT(grafik_raboty.Year, '-',grafik_raboty.Month, '-',grafik_raboty.Day),'%d %M %Y') AS 'Дата начала месяца',
 grafik_raboty.Identify AS 'Идентификатор', grafik_raboty.Znachenie_Raboch_Vremeni AS 'Кол-во рабочих часов'
 FROM grafik_raboty INNER JOIN doljnosti ON grafik_raboty.ID_Doljnosti = doljnosti.ID_Doljnosti
-WHERE doljnosti.ID_Doljnosti = @Value1 AND grafik_raboty.Month = @Value2 AND grafik_raboty.Year = @Value3";
+WHERE doljnosti.ID_Doljnosti = @ID AND grafik_raboty.Month = @Value1 AND grafik_raboty.Year = @Value2";
+
+        public string Select_Grafik_For_Tabel = $@"SELECT grafik_raboty.*
+FROM grafik_raboty INNER JOIN doljnosti ON grafik_raboty.ID_Doljnosti = doljnosti.ID_Doljnosti
+WHERE doljnosti.ID_Doljnosti = (SELECT sotrudniki.ID_Doljnosti FROM sotrudniki WHERE sotrudniki.ID_Sotrudnika = @ID) AND grafik_raboty.Month = @Value1 AND grafik_raboty.Year = @Value2";
 
         public string Select_Tabel = $@"SET lc_time_names = 'ru_RU'; SELECT
-DATE_FORMAT(CONCAT(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-',tabel_otr_vremeni.Day),'%d %M %Y') AS 'Дата начала месяца',
+DATE_FORMAT(CONCAT(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-',tabel_otr_vremeni.Day),'%d %M %Y') AS 'Дата',
 tabel_otr_vremeni.Identify AS 'Идентификатор', tabel_otr_vremeni.Znachenie_Otr_Vremeni AS 'Кол-во отработанных часов'
 FROM tabel_otr_vremeni INNER JOIN sotrudniki ON tabel_otr_vremeni.ID_Sotrudnika = sotrudniki.ID_Sotrudnika
-WHERE tabel_otr_vremeni.ID_Sotrudnika = @Value1";
+WHERE tabel_otr_vremeni.ID_Sotrudnika = @ID";
 
         public string Select_Tabel_Filter = $@"SET lc_time_names = 'ru_RU'; SELECT
-DATE_FORMAT(CONCAT(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-',tabel_otr_vremeni.Day),'%d %M %Y') AS 'Дата начала месяца',
+DATE_FORMAT(CONCAT(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-',tabel_otr_vremeni.Day),'%d %M %Y') AS 'Дата',
 tabel_otr_vremeni.Identify AS 'Идентификатор', tabel_otr_vremeni.Znachenie_Otr_Vremeni AS 'Кол-во отработанных часов'
 FROM tabel_otr_vremeni INNER JOIN sotrudniki ON tabel_otr_vremeni.ID_Sotrudnika = sotrudniki.ID_Sotrudnika
-WHERE tabel_otr_vremeni.ID_Sotrudnika = @Value1 AND tabel_otr_vremeni.Month = @Value2 AND tabel_otr_vremeni.Year = @Value3";
+WHERE tabel_otr_vremeni.ID_Sotrudnika = @ID AND tabel_otr_vremeni.Month = @Value1 AND tabel_otr_vremeni.Year = @Value2";
 
         //Запросы вывода таблиц в DataGridView
 
@@ -149,7 +153,7 @@ WHERE DATE_FORMAT(CONCAT(grafik_raboty.Year, '-',grafik_raboty.Month, '-',grafik
 AND grafik_raboty.ID_Doljnosti = @ID";
 
         public string Update_Tabel = $@"UPDATE tabel_otr_vremeni 
-SET tabel_otr_vremeni.Znachenie_Raboch_Vremeni = @Value2, tabel_otr_vremeni.Identify = @Value1 
+SET tabel_otr_vremeni.Znachenie_Otr_Vremeni = @Value2, tabel_otr_vremeni.Identify = @Value1 
 WHERE DATE_FORMAT(CONCAT(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-',tabel_otr_vremeni.Day),'%d %M %Y') = @Value3
 AND tabel_otr_vremeni.ID_Sotrudnika = @ID";
         //Запросы редактирования записей

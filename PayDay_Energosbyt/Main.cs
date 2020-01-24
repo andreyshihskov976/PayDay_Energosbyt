@@ -53,30 +53,35 @@ namespace PayDay_Energosbyt
         {
             DataGrid_Load(MySqlQueries.Select_Otdely);
             identify = "otdely";
+            this.Text = "Отделы";
         }
 
         private void окладToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DataGrid_Load(MySqlQueries.Select_Oklad);
             identify = "oklad";
+            this.Text = "Оклад";
         }
 
         private void должностиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DataGrid_Load(MySqlQueries.Select_Doljnosti);
             identify = "doljnosti";
+            this.Text = "Должности";
         }
 
         private void сотрудникиToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             DataGrid_Load(MySqlQueries.Select_Sotrudniki);
             identify = "sotrudniki";
+            this.Text = "Сотрудники";
         }
 
         private void расчетныеСчетаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DataGrid_Load(MySqlQueries.Select_Rasch_Scheta);
             identify = "raschetniki";
+            this.Text = "Расчетные счета";
         }
 
         private void вставкаToolStripMenuItem_Click(object sender, EventArgs e)

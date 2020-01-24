@@ -41,12 +41,13 @@ namespace PayDay_Energosbyt
         //Подключение (Закрытие подключения) к Базе Данных
 
         //Универсальные методы
-        public void Select_DataGridView(string query, DataGridView dataGridView, string Value1 = null, string Value2 = null, string Value3 = null)
+        public void Select_DataGridView(string query, DataGridView dataGridView, string ID = null, string Value1 = null, string Value2 = null, string Value3 = null)
         {
             try
             {
                 dataSet = new DataSet();
                 sqlCommand = new MySqlCommand(query, mySqlConnection);
+                sqlCommand.Parameters.AddWithValue("ID", ID);
                 sqlCommand.Parameters.AddWithValue("Value1", Value1);
                 sqlCommand.Parameters.AddWithValue("Value2", Value2);
                 sqlCommand.Parameters.AddWithValue("Value3", Value3);
@@ -269,7 +270,6 @@ namespace PayDay_Energosbyt
             {
                 while (Begin <= End)
                 {
-
                     if (Begin.DayOfWeek.ToString() == "Friday")
                     {
                         Identify = "Р";
@@ -287,6 +287,32 @@ namespace PayDay_Energosbyt
                     }
                     Insert_Update(query, ID, Begin.Year.ToString(), Begin.Month.ToString(), Begin.Day.ToString(), Identify, RabVrem);
                     Begin = Begin.AddDays(1);
+                }
+                MessageBox.Show("Операция выполнена успешно.", "Успех");
+            }
+            else
+            {
+                MessageBox.Show("Записи уже существуют.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        public void Insert_Tabel(MySqlQueries mySqlQueries, DataGridView dataGridView, DateTimePicker dateTimePicker1, string query, string ID)
+        {
+            string output = string.Empty;
+            string Identify = string.Empty;
+            string RabVrem = string.Empty;
+            int index = 0;
+            DateTime Begin = new DateTime(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, 1);
+            DateTime End = new DateTime(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, DateTime.DaysInMonth(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month));
+            Select_DataGridView(mySqlQueries.Select_Grafik_For_Tabel, dataGridView, ID, dateTimePicker1.Value.Month.ToString(), dateTimePicker1.Value.Year.ToString());
+            Select_TextBox(mySqlQueries.Exists_Tabel, ref output, ID, Begin.Year.ToString(), Begin.Month.ToString(), Begin.Day.ToString());
+            if (output == "0")
+            {
+                while (Begin <= End)
+                {
+                    Insert_Update(query, ID, dataGridView.Rows[index].Cells[1].Value.ToString(), dataGridView.Rows[index].Cells[2].Value.ToString(), dataGridView.Rows[index].Cells[3].Value.ToString(), dataGridView.Rows[index].Cells[4].Value.ToString(), dataGridView.Rows[index].Cells[5].Value.ToString().Replace(',','.'));
+                    Begin = Begin.AddDays(1);
+                    index++;
                 }
                 MessageBox.Show("Операция выполнена успешно.", "Успех");
             }

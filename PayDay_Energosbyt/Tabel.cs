@@ -28,6 +28,7 @@ namespace PayDay_Energosbyt
             MySqlOperations = mySqlOperations;
             MySqlQueries = mySqlQueries;
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Tabel, dataGridView1, ID);
+            Cancel_Update();
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -40,18 +41,15 @@ namespace PayDay_Energosbyt
             }
             else
             {
-                numericUpDown1.Maximum = 8;
-                numericUpDown1.Minimum = 2;
+                numericUpDown1.Maximum = decimal.Parse("8,2");
+                numericUpDown1.Minimum = decimal.Parse("1,2");
                 numericUpDown1.Value = numericUpDown1.Minimum;
             }
-            //button4.Enabled = true;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            comboBox1.SelectedIndex = 0;
-            numericUpDown1.Value = numericUpDown1.Minimum;
-            //button4.Enabled = false;
+            Cancel_Update();
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -90,20 +88,31 @@ namespace PayDay_Energosbyt
         {
             DateTime = DateTime.Parse(dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
             MySqlOperations.Search_In_ComboBox_Identify(dataGridView1.SelectedRows[0].Cells[1].Value.ToString(), comboBox1);
+            comboBox1.Enabled = true;
             numericUpDown1.Value = decimal.Parse(dataGridView1.SelectedRows[0].Cells[2].Value.ToString());
+            numericUpDown1.Enabled = true;
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            MySqlOperations.Insert_Update(MySqlQueries.Update_Tabel, ID, comboBox1.Text[0].ToString(), numericUpDown1.Value.ToString(), dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+            MySqlOperations.Insert_Update(MySqlQueries.Update_Tabel, ID, comboBox1.Text[0].ToString(), numericUpDown1.Value.ToString().Replace(',','.'), dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
             Update_Table();
+            Cancel_Update();
+        }
+
+        private void Cancel_Update()
+        {
+            comboBox1.SelectedIndex = 0;
+            comboBox1.Enabled = false;
+            numericUpDown1.Value = numericUpDown1.Minimum;
+            numericUpDown1.Enabled = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
-                MySqlOperations.Insert_Grafik(MySqlQueries ,dateTimePicker1, MySqlQueries.Insert_Tabel, ID);
+                MySqlOperations.Insert_Tabel(MySqlQueries, dataGridView2 ,dateTimePicker1, MySqlQueries.Insert_Tabel, ID);
             }
             catch (Exception ex)
             {
