@@ -83,6 +83,12 @@ namespace PayDay_Energosbyt
             identify = "raschetniki";
             this.Text = "Расчетные счета";
         }
+        private void выплатыЗарплатыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DataGrid_Load(MySqlQueries.Select_Vyplaty);
+            identify = "vyplaty";
+            this.Text = "Выплаты зарплаты";
+        }
 
         private void вставкаToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -139,6 +145,15 @@ namespace PayDay_Energosbyt
                 doljnosti.button1.Visible = true;
                 doljnosti.button3.Visible = false;
                 doljnosti.Show();
+            }
+            else if (identify == "vyplaty")
+            {
+                Vyplaty vyplaty = new Vyplaty(MySqlOperations, MySqlQueries);
+                vyplaty.Vyplaty_Closed += выплатыЗарплатыToolStripMenuItem_Click;
+                vyplaty.Owner = this;
+                //vyplaty.button1.Visible = true;
+                //vyplaty.button3.Visible = false;
+                vyplaty.Show();
             }
         }
 
@@ -337,6 +352,10 @@ namespace PayDay_Energosbyt
             {
                 MySqlOperations.Delete(MySqlQueries.Delete_Doljnosti, MySqlQueries.Select_Doljnosti, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
             }
+            else if(identify == "vyplaty")
+            {
+                MySqlOperations.Delete(MySqlQueries.Delete_Vyplaty, MySqlQueries.Select_Vyplaty, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+            }
         }
         public void редактироватьToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -387,48 +406,28 @@ namespace PayDay_Energosbyt
             grafik.Show();
         }
 
-        private void dataGridView1_Click(object sender, EventArgs e)
-        {
-            //var result = MessageBox.Show("Хотите отредактировать запись?", "Вопрос", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            //if (result == DialogResult.Yes)
-            //{
-            //    Edit_String();
-            //}
-            //else if (result == DialogResult.No && identify== "doljnosti")
-            //{
-            //    if (MessageBox.Show("Хотите просмотреть график работы для данной должности?","Вопрос",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
-            //    {
-            //        Open_Grafik();
-            //    }
-            //}
-            //else if (result == DialogResult.No && identify == "sotrudniki")
-            //{
-            //    if (MessageBox.Show("Хотите просмотреть табель отработанного времени для данного сотрудника?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            //    {
-            //        Open_Tabel();
-            //    }
-            //}
-        }
-
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            var result = MessageBox.Show("Хотите отредактировать запись?", "Вопрос", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            if (identify != "vyplaty")
             {
-                Edit_String();
-            }
-            else if (result == DialogResult.No && identify == "doljnosti")
-            {
-                if (MessageBox.Show("Хотите просмотреть график работы для данной должности?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                var result = MessageBox.Show("Хотите отредактировать запись?", "Вопрос", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
                 {
-                    Open_Grafik();
+                    Edit_String();
                 }
-            }
-            else if (result == DialogResult.No && identify == "sotrudniki")
-            {
-                if (MessageBox.Show("Хотите просмотреть табель отработанного времени для данного сотрудника?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                else if (result == DialogResult.No && identify == "doljnosti")
                 {
-                    Open_Tabel();
+                    if (MessageBox.Show("Хотите просмотреть график работы для данной должности?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        Open_Grafik();
+                    }
+                }
+                else if (result == DialogResult.No && identify == "sotrudniki")
+                {
+                    if (MessageBox.Show("Хотите просмотреть табель отработанного времени для данного сотрудника?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        Open_Tabel();
+                    }
                 }
             }
         }

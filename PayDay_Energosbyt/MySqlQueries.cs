@@ -17,6 +17,9 @@ namespace PayDay_Energosbyt
         public string Select_Oklad = $@"SELECT oklad.ID_Oklada AS 'ID Оклада', CONCAT(sotrudniki.Familiya, ' ', sotrudniki.Imya, ' ', sotrudniki.Otchestvo) AS 'ФИО Сотрудника',
 oklad.Znachenie AS 'Значение', oklad.Date_Nachala_Deistv AS 'Дата начала действия', oklad.Data_Okonchaniya_Deistv AS 'Дата окончания действия' FROM oklad LEFT JOIN sotrudniki ON oklad.ID_Oklada = sotrudniki.ID_Oklada;";
 
+        public string Select_Oklad_Sotrudnika = $@"SELECT oklad.Znachenie FROM oklad INNER JOIN sotrudniki ON oklad.ID_Oklada = sotrudniki.ID_Oklada
+WHERE sotrudniki.ID_Sotrudnika = @ID";
+
         public string Select_Rasch_Scheta = $@"SELECT raschetnye_scheta.ID_Rasch_scheta AS 'ID Расчетного счета', 
 CONCAT(sotrudniki.Familiya, ' ', sotrudniki.Imya, ' ', sotrudniki.Otchestvo) AS 'ФИО Сотрудника',
 raschetnye_scheta.Cod_strany AS 'Код страны',
@@ -40,6 +43,9 @@ INNER JOIN oklad ON sotrudniki.ID_Oklada = oklad.ID_Oklada
 INNER JOIN doljnosti ON sotrudniki.ID_Doljnosti = doljnosti.ID_Doljnosti 
 INNER JOIN otdely ON sotrudniki.ID_Otdela = otdely.ID_Otdela
 LEFT JOIN raschetnye_scheta ON sotrudniki.ID_Rasch_scheta = raschetnye_scheta.ID_Rasch_scheta";
+
+        public string Select_Kol_Izhdevencev_Sotrudnika = $@"SELECT sotrudniki.Kol_Izhdevencev FROM sotrudniki
+WHERE sotrudniki.ID_Sotrudnika = @ID";
 
         public string Select_Grafik_Raboty = $@"SET lc_time_names = 'ru_RU'; SELECT
 DATE_FORMAT(CONCAT(grafik_raboty.Year, '-',grafik_raboty.Month, '-',grafik_raboty.Day),'%d %M %Y') AS 'Дата',
@@ -69,6 +75,44 @@ tabel_otr_vremeni.Identify AS 'Идентификатор', tabel_otr_vremeni.Zn
 FROM tabel_otr_vremeni INNER JOIN sotrudniki ON tabel_otr_vremeni.ID_Sotrudnika = sotrudniki.ID_Sotrudnika
 WHERE tabel_otr_vremeni.ID_Sotrudnika = @ID AND tabel_otr_vremeni.Month = @Value1 AND tabel_otr_vremeni.Year = @Value2";
 
+        public string Select_Vyplaty = $@"SELECT vyplaty.Id, vyplaty.Date AS 'Дата начисления', vyplaty.Date_Begin AS 'Дата начала периода начисления', 
+vyplaty.Date_End AS 'Дата конца периода начисления', 
+CONCAT(sotrudniki.Familiya, ' ', sotrudniki.Imya, ' ', sotrudniki.Otchestvo) AS 'ФИО Сотрудника',
+vyplaty.Otrabotano AS 'Начислено зар. платы', vyplaty.Uderzhaniya AS 'Удержано из зар. платы',
+vyplaty.Itog AS 'Итого'
+FROM vyplaty INNER JOIN sotrudniki ON vyplaty.ID_Sotrudnika = sotrudniki.ID_Sotrudnika";
+
+//        public string Select_Otrabotano = $@"SELECT Sum(tabel_otr_vremeni.Znachenie_Otr_Vremeni) FROM
+//tabel_otr_vremeni INNER JOIN sotrudniki ON tabel_otr_vremeni.ID_Sotrudnika = sotrudniki.ID_Sotrudnika
+//WHERE CONCAT(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-',tabel_otr_vremeni.Day) BETWEEN @Value1 AND @Value2
+//AND sotrudniki.ID_Sotrudnika = @ID";
+
+//        public string Select_Plan = $@"SELECT Sum(grafik_raboty.Znachenie_Raboch_Vremeni) FROM
+//grafik_raboty INNER JOIN sotrudniki ON grafik_raboty.ID_Doljnosti = sotrudniki.ID_Doljnosti
+//WHERE CONCAT(grafik_raboty.Year, '-',grafik_raboty.Month, '-',grafik_raboty.Day) BETWEEN @Value1 AND @Value2
+//AND sotrudniki.ID_Sotrudnika = @ID";
+
+//        public string Select_Stavka = $@"SELECT oklad.Znachenie / @Value1
+//FROM oklad
+//INNER JOIN sotrudniki ON oklad.ID_Oklada = sotrudniki.ID_Oklada
+//WHERE sotrudniki.ID_Sotrudnika = @ID";
+
+//        public string Select_Nachisleno = $@"SELECT DISTINCT @Value1 * @Value2
+//FROM tabel_otr_vremeni INNER JOIN sotrudniki ON tabel_otr_vremeni.ID_Sotrudnika = sotrudniki.ID_Sotrudnika
+//WHERE sotrudniki.ID_Sotrudnika = @ID";
+
+        public string Select_Nachisleno = $@"SELECT DISTINCT ROUND((SELECT oklad.Znachenie / (SELECT Sum(grafik_raboty.Znachenie_Raboch_Vremeni) FROM
+grafik_raboty INNER JOIN sotrudniki ON grafik_raboty.ID_Doljnosti = sotrudniki.ID_Doljnosti
+WHERE CONCAT(grafik_raboty.Year, '-',grafik_raboty.Month, '-',grafik_raboty.Day) BETWEEN @Value1 AND @Value2
+AND sotrudniki.ID_Sotrudnika = @ID)
+FROM oklad
+INNER JOIN sotrudniki ON oklad.ID_Oklada = sotrudniki.ID_Oklada
+WHERE sotrudniki.ID_Sotrudnika = @ID) * (SELECT Sum(tabel_otr_vremeni.Znachenie_Otr_Vremeni) FROM
+tabel_otr_vremeni INNER JOIN sotrudniki ON tabel_otr_vremeni.ID_Sotrudnika = sotrudniki.ID_Sotrudnika
+WHERE CONCAT(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-',tabel_otr_vremeni.Day) BETWEEN @Value1 AND @Value2
+AND sotrudniki.ID_Sotrudnika = @ID),2)
+FROM tabel_otr_vremeni INNER JOIN sotrudniki ON tabel_otr_vremeni.ID_Sotrudnika = sotrudniki.ID_Sotrudnika
+WHERE sotrudniki.ID_Sotrudnika = @ID";
         //Запросы вывода таблиц в DataGridView
 
         //Запросы вывода данный в ComboBox
@@ -110,6 +154,9 @@ raschetnye_scheta.Balance_schet,
 raschetnye_scheta.Cod_banka_BIC,
 raschetnye_scheta.Individual_schet) = @Value1";
 
+        public string Select_ID_Sotrudnika = $@"SELECT sotrudniki.ID_Sotrudnika FROM sotrudniki
+WHERE CONCAT(sotrudniki.Familiya, ' ',sotrudniki.Imya, ' ',sotrudniki.Otchestvo) = @Value1";
+
         //Запросы получения ID из значений ComboBox
 
         //Запросы вставки в таблицы
@@ -128,6 +175,7 @@ raschetnye_scheta.Individual_schet) = @Value1";
 
         public string Insert_Tabel = $@"INSERT INTO tabel_otr_vremeni (ID_Sotrudnika, Year, Month, Day, Identify, Znachenie_Otr_Vremeni) VALUES (@ID, @Value1, @Value2, @Value3, @Value4, @Value5);";
 
+        public string Insert_Vyplaty = $@"INSERT INTO vyplaty (Date, Date_Begin, Date_End, ID_Sotrudnika, Otrabotano, Uderzhaniya, Itog) VALUES (@Value1, @Value2, @Value3, @ID, @Value4, @Value5, @Value6);";
 
         //Запросы вставки в таблицы
 
@@ -171,6 +219,8 @@ AND tabel_otr_vremeni.ID_Sotrudnika = @ID";
 
         public string Delete_Sotrudniki = $@"DELETE FROM sotrudniki WHERE ID_Sotrudnika = @ID";
 
+        public string Delete_Vyplaty = $@"DELETE FROM vyplaty WHERE Id= @ID;";
+
         //Запросы удаления записей
 
         //Запросы проверки на существование
@@ -179,13 +229,15 @@ AND tabel_otr_vremeni.ID_Sotrudnika = @ID";
 
         public string Exists_Tabel = $@"SELECT EXISTS (SELECT * FROM tabel_otr_vremeni WHERE tabel_otr_vremeni.ID_Sotrudnika = @ID AND tabel_otr_vremeni.Year = @Value1 AND tabel_otr_vremeni.Month = @Value2 AND tabel_otr_vremeni.Day = @Value3)";
 
-        public string Exists_Rasch_Scheta = $@"";
+        public string Exists_Rasch_Scheta = $@"SELECT EXISTS(SELECT * FROM raschetnye_scheta WHERE CONCAT(raschetnye_scheta.Cod_strany,raschetnye_scheta.Contr_chislo,raschetnye_scheta.Balance_schet,raschetnye_scheta.Cod_banka_BIC,raschetnye_scheta.Individual_schet) = @Value1)";
 
-        public string Exists_Otdely = $@"";
+        public string Exists_Otdely = $@"SELECT EXISTS(SELECT * FROM otdely WHERE otdely.Name = @Value1)";
 
-        public string Exists_Doljnosti = $@"";
+        public string Exists_Doljnosti = $@"SELECT EXISTS(SELECT * FROM doljnosti WHERE doljnosti.Name = @Value1)";
 
-        public string Exists_Oklad = $@"";
+        public string Exists_Oklad = $@"SELECT EXISTS(SELECT * FROM oklad WHERE oklad.Znachenie = @Value1 AND oklad.Date_Nachala_Deistv = @Value2 AND oklad.Data_Okonchaniya_Deistv = @Value3)";
+
+        public string Exists_Vyplaty = $@"SELECT EXISTS(SELECT * FROM vyplaty WHERE vyplaty.Date_Begin = @Value1 AND vyplaty.Date_Begin = @Value2 AND vyplaty.Date_End = @Value3 AND vyplaty.ID_Sotrudnika = @ID)";
 
         //Запросы проверки на существование
     }

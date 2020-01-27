@@ -40,10 +40,6 @@ namespace PayDay_Energosbyt
                     string ID_Doljnosti = MySqlOperations.Select_ID_From_ComboBox(MySqlQueries.Select_ID_Doljnosti, comboBox2.Text);
                     string ID_Oklada = MySqlOperations.Select_ID_From_ComboBox(MySqlQueries.Select_ID_Oklada, comboBox3.Text);
                     string ID_Rasch_Scheta = MySqlOperations.Select_ID_From_ComboBox(MySqlQueries.Select_ID_Rasch_Scheta, comboBox4.Text);
-                    //if (ID_Rasch_Scheta == null)
-                    //{
-                    //    MySqlOperations.Insert_Update_Doljnosti_Otdely(MySqlQueries.Insert_Sotrudniki, ID, textBox1.Text.ToString(), textBox2.Text.ToString(), textBox3.Text.ToString(), ID_Otdela, ID_Doljnosti, ID_Oklada, numericUpDown1.Value.ToString(), ID_Rasch_Scheta);
-                    //}
                     MySqlOperations.Insert_Update(MySqlQueries.Insert_Sotrudniki, ID, textBox1.Text.ToString(),textBox2.Text.ToString(), textBox3.Text.ToString(),ID_Otdela,ID_Doljnosti,ID_Oklada,numericUpDown1.Value.ToString(),ID_Rasch_Scheta);
                     MessageBox.Show("Операция выполнена успешно.", "Успех");
                 }
@@ -55,7 +51,7 @@ namespace PayDay_Energosbyt
             }
             else
             {
-                MessageBox.Show("Поле не заполнено." + '\n' + "Введите наименование отдела.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Поля не заполнены." + '\n' + "Введите данные.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -89,7 +85,7 @@ namespace PayDay_Energosbyt
             }
             else
             {
-                MessageBox.Show("Поле не заполнено." + '\n' + "Введите наименование отдела.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Поля не заполнены." + '\n' + "Введите данные.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

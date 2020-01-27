@@ -33,8 +33,17 @@ namespace PayDay_Energosbyt
             {
                 try
                 {
-                    MySqlOperations.Insert_Update(MySqlQueries.Insert_Otdely, ID, textBox1.Text.ToString());
-                    MessageBox.Show("Операция выполнена успешно.", "Успех");
+                    string exists = null;
+                    MySqlOperations.Select_Text(MySqlQueries.Exists_Otdely, ref exists, null, textBox1.Text);
+                    if (exists == "0")
+                    {
+                        MySqlOperations.Insert_Update(MySqlQueries.Insert_Otdely, ID, textBox1.Text.ToString());
+                        MessageBox.Show("Операция выполнена успешно.", "Успех");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Запись уже существует.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -60,9 +69,18 @@ namespace PayDay_Energosbyt
             {
                 try
                 {
-                    MySqlOperations.Insert_Update(MySqlQueries.Update_Otdely, ID, textBox1.Text.ToString());
-                    MessageBox.Show("Операция выполнена успешно.", "Успех");
+                    string exists = null;
+                    MySqlOperations.Select_Text(MySqlQueries.Exists_Otdely, ref exists, null, textBox1.Text);
+                    if (exists == "0")
+                    {
+                        MySqlOperations.Insert_Update(MySqlQueries.Update_Otdely, ID, textBox1.Text.ToString());
+                        MessageBox.Show("Операция выполнена успешно.", "Успех");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Запись уже существует.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
+                    }
                 }
                 catch (Exception ex)
                 {

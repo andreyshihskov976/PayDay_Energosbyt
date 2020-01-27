@@ -95,7 +95,7 @@
             this.справкаToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(809, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -190,6 +190,7 @@
             this.выплатыЗарплатыToolStripMenuItem.Name = "выплатыЗарплатыToolStripMenuItem";
             this.выплатыЗарплатыToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.выплатыЗарплатыToolStripMenuItem.Text = "Выплаты зарплаты";
+            this.выплатыЗарплатыToolStripMenuItem.Click += new System.EventHandler(this.выплатыЗарплатыToolStripMenuItem_Click);
             // 
             // toolStripSeparator
             // 
@@ -455,11 +456,10 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(797, 423);
+            this.dataGridView1.Size = new System.Drawing.Size(806, 423);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
-            this.dataGridView1.Click += new System.EventHandler(this.dataGridView1_Click);
             // 
             // contextMenuStrip1
             // 
@@ -524,7 +524,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(809, 450);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;

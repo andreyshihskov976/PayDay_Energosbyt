@@ -32,8 +32,18 @@ namespace PayDay_Energosbyt
             {
                 try
                 {
-                    MySqlOperations.Insert_Update(MySqlQueries.Insert_Rasch_Scheta, ID, textBox1.Text.ToString(), textBox2.Text.ToString(), textBox3.Text.ToString(), textBox4.Text.ToString(), textBox5.Text.ToString());
-                    MessageBox.Show("Операция выполнена успешно.", "Успех");
+                    string exists = null;
+                    string rs = textBox1.Text + textBox2.Text + textBox3.Text + textBox4.Text + textBox5.Text;
+                    MySqlOperations.Select_Text(MySqlQueries.Exists_Rasch_Scheta, ref exists, null, rs);
+                    if (exists == "0")
+                    {
+                        MySqlOperations.Insert_Update(MySqlQueries.Insert_Rasch_Scheta, ID, textBox1.Text.ToString(), textBox2.Text.ToString(), textBox3.Text.ToString(), textBox4.Text.ToString(), textBox5.Text.ToString());
+                        MessageBox.Show("Операция выполнена успешно.", "Успех");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Запись уже существует.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -43,7 +53,7 @@ namespace PayDay_Energosbyt
             }
             else
             {
-                MessageBox.Show("Поле не заполнено." + '\n' + "Введите наименование отдела.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Поля не заполнены." + '\n' + "Введите данные.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -63,8 +73,19 @@ namespace PayDay_Energosbyt
             {
                 try
                 {
-                    MySqlOperations.Insert_Update(MySqlQueries.Update_Rasch_Scheta, ID,textBox1.Text.ToString(), textBox2.Text.ToString(), textBox3.Text.ToString(), textBox4.Text.ToString(), textBox5.Text.ToString());
-                    MessageBox.Show("Операция выполнена успешно.", "Успех");
+                    string exists = null;
+                    string rs = textBox1.Text + textBox2.Text + textBox3.Text + textBox4.Text + textBox5.Text;
+                    MySqlOperations.Select_Text(MySqlQueries.Exists_Rasch_Scheta, ref exists, null, rs);
+                    if (exists == "0")
+                    {
+
+                        MySqlOperations.Insert_Update(MySqlQueries.Update_Rasch_Scheta, ID, textBox1.Text.ToString(), textBox2.Text.ToString(), textBox3.Text.ToString(), textBox4.Text.ToString(), textBox5.Text.ToString());
+                        MessageBox.Show("Операция выполнена успешно.", "Успех");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Запись уже существует.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -74,7 +95,7 @@ namespace PayDay_Energosbyt
             }
             else
             {
-                MessageBox.Show("Поле не заполнено." + '\n' + "Введите наименование отдела.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Поля не заполнены." + '\n' + "Введите данные.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

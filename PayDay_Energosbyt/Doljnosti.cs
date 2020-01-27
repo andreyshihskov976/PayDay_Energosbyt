@@ -33,8 +33,17 @@ namespace PayDay_Energosbyt
             {
                 try
                 {
-                    MySqlOperations.Insert_Update(MySqlQueries.Insert_Doljnosti, ID, textBox1.Text.ToString());
-                    MessageBox.Show("Операция выполнена успешно.", "Успех");
+                    string exists = null;
+                    MySqlOperations.Select_Text(MySqlQueries.Exists_Doljnosti, ref exists, null, textBox1.Text);
+                    if (exists == "0")
+                    {
+                        MySqlOperations.Insert_Update(MySqlQueries.Insert_Doljnosti, ID, textBox1.Text.ToString());
+                        MessageBox.Show("Операция выполнена успешно.", "Успех");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Запись уже существует.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -44,7 +53,7 @@ namespace PayDay_Energosbyt
             }
             else
             {
-                MessageBox.Show("Поле не заполнено." + '\n' + "Введите наименование отдела.","Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Поле не заполнено." + '\n' + "Введите наименование должности.","Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -60,9 +69,18 @@ namespace PayDay_Energosbyt
             {
                 try
                 {
-                    MySqlOperations.Insert_Update(MySqlQueries.Update_Doljnosti, ID, textBox1.Text.ToString());
-                    MessageBox.Show("Операция выполнена успешно.", "Успех");
-                    
+                    string exists = null;
+                    MySqlOperations.Select_Text(MySqlQueries.Exists_Doljnosti, ref exists, null, textBox1.Text);
+                    if (exists == "0")
+                    {
+                        MySqlOperations.Insert_Update(MySqlQueries.Update_Doljnosti, ID, textBox1.Text.ToString());
+                        MessageBox.Show("Операция выполнена успешно.", "Успех");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Запись уже существует.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
                 }
                 catch (Exception ex)
                 {
@@ -72,7 +90,7 @@ namespace PayDay_Energosbyt
             }
             else
             {
-                MessageBox.Show("Поле не заполнено." + '\n' + "Введите наименование отдела.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Поле не заполнено." + '\n' + "Введите наименование должности.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

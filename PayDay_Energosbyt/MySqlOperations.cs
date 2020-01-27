@@ -203,7 +203,7 @@ namespace PayDay_Energosbyt
             }
         }
 
-        public void Select_TextBox(string query, ref string output, string ID = null, string Value1 = null, string Value2 = null, string Value3 = null, string Value4 = null, string Value5 = null, string Value6 = null, string Value7 = null, string Value8 = null)
+        public void Select_Text(string query, ref string output, string ID = null, string Value1 = null, string Value2 = null, string Value3 = null, string Value4 = null, string Value5 = null, string Value6 = null, string Value7 = null, string Value8 = null)
         {
             try
             {
@@ -265,7 +265,7 @@ namespace PayDay_Energosbyt
             string RabVrem = string.Empty;
             DateTime Begin = new DateTime(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, 1);
             DateTime End = new DateTime(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, DateTime.DaysInMonth(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month));
-            Select_TextBox(mySqlQueries.Exists_Grafik_Raboty, ref output, ID, Begin.Year.ToString(), Begin.Month.ToString(), Begin.Day.ToString());
+            Select_Text(mySqlQueries.Exists_Grafik_Raboty, ref output, ID, Begin.Year.ToString(), Begin.Month.ToString(), Begin.Day.ToString());
             if (output == "0")
             {
                 while (Begin <= End)
@@ -305,7 +305,7 @@ namespace PayDay_Energosbyt
             DateTime Begin = new DateTime(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, 1);
             DateTime End = new DateTime(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, DateTime.DaysInMonth(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month));
             Select_DataGridView(mySqlQueries.Select_Grafik_For_Tabel, dataGridView, ID, dateTimePicker1.Value.Month.ToString(), dateTimePicker1.Value.Year.ToString());
-            Select_TextBox(mySqlQueries.Exists_Tabel, ref output, ID, Begin.Year.ToString(), Begin.Month.ToString(), Begin.Day.ToString());
+            Select_Text(mySqlQueries.Exists_Tabel, ref output, ID, Begin.Year.ToString(), Begin.Month.ToString(), Begin.Day.ToString());
             if (output == "0")
             {
                 while (Begin <= End)
