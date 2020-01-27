@@ -69,17 +69,11 @@ namespace PayDay_Energosbyt
                 while (sqlDataReader.Read())
                 {
                     comboBox.Items.Add(Convert.ToString(sqlDataReader[0]));
-                    //comboBox.SelectedIndex = 0;
                 }
                 if (comboBox.Items.Count != 0)
                 {
                     comboBox.SelectedIndex = 0;
                 }
-                //else
-                //{
-                //    comboBox.Items.Add("Нет доступных данных");
-                //    comboBox.SelectedIndex = 0;
-                //}
             }
             catch (Exception ex)
             {
@@ -100,17 +94,11 @@ namespace PayDay_Energosbyt
                 while (sqlDataReader.Read())
                 {
                     comboBox.Items.Add(Convert.ToString(sqlDataReader[0]));
-                    //comboBox.SelectedIndex = 0;
                 }
                 if (comboBox.Items.Count != 0)
                 {
                     comboBox.SelectedIndex = 0;
                 }
-                //else
-                //{
-                //    comboBox.Items.Add("Нет доступных данных");
-                //    comboBox.SelectedIndex = 0;
-                //}
             }
             catch (Exception ex)
             {
