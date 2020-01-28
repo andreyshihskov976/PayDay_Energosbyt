@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace PayDay_Energosbyt
 {
@@ -45,6 +41,7 @@ namespace PayDay_Energosbyt
         {
             try
             {
+                dataGridView.DataSource = null;
                 dataSet = new DataSet();
                 sqlCommand = new MySqlCommand(query, mySqlConnection);
                 sqlCommand.Parameters.AddWithValue("ID", ID);
@@ -70,10 +67,6 @@ namespace PayDay_Energosbyt
                 {
                     comboBox.Items.Add(Convert.ToString(sqlDataReader[0]));
                 }
-                if (comboBox.Items.Count != 0)
-                {
-                    comboBox.SelectedIndex = 0;
-                }
             }
             catch (Exception ex)
             {
@@ -83,6 +76,10 @@ namespace PayDay_Energosbyt
             {
                 if (sqlDataReader != null)
                     sqlDataReader.Close();
+                if (comboBox.Items.Count != 0)
+                {
+                    comboBox.SelectedIndex = 0;
+                }
             }
         }
         public void Select_ComboBox_Editing(string query, ComboBox comboBox)
@@ -95,10 +92,6 @@ namespace PayDay_Energosbyt
                 {
                     comboBox.Items.Add(Convert.ToString(sqlDataReader[0]));
                 }
-                if (comboBox.Items.Count != 0)
-                {
-                    comboBox.SelectedIndex = 0;
-                }
             }
             catch (Exception ex)
             {
@@ -108,6 +101,10 @@ namespace PayDay_Energosbyt
             {
                 if (sqlDataReader != null)
                     sqlDataReader.Close();
+                if (comboBox.Items.Count != 0)
+                {
+                    comboBox.SelectedIndex = 0;
+                }
             }
         }
         public void Search_In_ComboBox(string In, ComboBox comboBox)

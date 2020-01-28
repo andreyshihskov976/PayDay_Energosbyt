@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PayDay_Energosbyt
@@ -77,14 +70,14 @@ namespace PayDay_Energosbyt
 
         private void button3_Click(object sender, EventArgs e)
         {
-            string nachisleno = "0";
-            string date1 = dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString() + '-' + dateTimePicker2.Value.Day.ToString();
-            string date2 = dateTimePicker3.Value.Year.ToString() + '-' + dateTimePicker3.Value.Month.ToString() + '-' + dateTimePicker3.Value.Day.ToString();
-            MySqlOperations.Select_Text(MySqlQueries.Select_Nachisleno, ref nachisleno, ID, date1, date2);
-            textBox1.Text = nachisleno;
-            decimal uderzhano = (decimal.Parse(nachisleno) * 15)/100;
-            textBox2.Text = uderzhano.ToString();
-            textBox3.Text = (decimal.Parse(nachisleno) - uderzhano).ToString();
+            //string nachisleno = "0";
+            //string date1 = dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString() + '-' + dateTimePicker2.Value.Day.ToString();
+            //string date2 = dateTimePicker3.Value.Year.ToString() + '-' + dateTimePicker3.Value.Month.ToString() + '-' + dateTimePicker3.Value.Day.ToString();
+            //MySqlOperations.Select_Text(MySqlQueries.Select_Nachisleno, ref nachisleno, ID, date1, date2);
+            //textBox1.Text = nachisleno;
+            //decimal uderzhano = (decimal.Parse(nachisleno) * 15)/100;
+            //textBox2.Text = uderzhano.ToString();
+            //textBox3.Text = (decimal.Parse(nachisleno) - uderzhano).ToString();
         }
 
         private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
@@ -100,6 +93,14 @@ namespace PayDay_Energosbyt
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             MySqlOperations.Select_Text(MySqlQueries.Select_ID_Sotrudnika, ref ID, null, comboBox1.Text);
+            string nachisleno = "0";
+            string date1 = dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString() + '-' + dateTimePicker2.Value.Day.ToString();
+            string date2 = dateTimePicker3.Value.Year.ToString() + '-' + dateTimePicker3.Value.Month.ToString() + '-' + dateTimePicker3.Value.Day.ToString();
+            MySqlOperations.Select_Text(MySqlQueries.Select_Nachisleno, ref nachisleno, ID, date1, date2);
+            textBox1.Text = nachisleno;
+            decimal uderzhano = (decimal.Parse(nachisleno) * 15) / 100;
+            textBox2.Text = uderzhano.ToString();
+            textBox3.Text = (decimal.Parse(nachisleno) - uderzhano).ToString();
         }
     }
 }

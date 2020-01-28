@@ -88,7 +88,7 @@
             this.textBox3.MaxLength = 4;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(51, 26);
-            this.textBox3.TabIndex = 7;
+            this.textBox3.TabIndex = 5;
             // 
             // label3
             // 
@@ -107,7 +107,7 @@
             this.textBox4.MaxLength = 4;
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(51, 26);
-            this.textBox4.TabIndex = 5;
+            this.textBox4.TabIndex = 7;
             // 
             // label4
             // 

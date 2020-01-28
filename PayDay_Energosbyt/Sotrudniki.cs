@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PayDay_Energosbyt
@@ -40,7 +33,7 @@ namespace PayDay_Energosbyt
                     string ID_Doljnosti = MySqlOperations.Select_ID_From_ComboBox(MySqlQueries.Select_ID_Doljnosti, comboBox2.Text);
                     string ID_Oklada = MySqlOperations.Select_ID_From_ComboBox(MySqlQueries.Select_ID_Oklada, comboBox3.Text);
                     string ID_Rasch_Scheta = MySqlOperations.Select_ID_From_ComboBox(MySqlQueries.Select_ID_Rasch_Scheta, comboBox4.Text);
-                    MySqlOperations.Insert_Update(MySqlQueries.Insert_Sotrudniki, ID, textBox1.Text.ToString(),textBox2.Text.ToString(), textBox3.Text.ToString(),ID_Otdela,ID_Doljnosti,ID_Oklada,numericUpDown1.Value.ToString(),ID_Rasch_Scheta);
+                    MySqlOperations.Insert_Update(MySqlQueries.Insert_Sotrudniki, ID, textBox1.Text.ToString(),textBox2.Text.ToString(), textBox3.Text.ToString(),ID_Otdela,ID_Doljnosti,ID_Oklada,ID_Rasch_Scheta);
                     MessageBox.Show("Операция выполнена успешно.", "Успех");
                 }
                 catch (Exception ex)
@@ -60,7 +53,6 @@ namespace PayDay_Energosbyt
             textBox1.Clear();
             textBox2.Clear();
             textBox3.Clear();
-            numericUpDown1.Value = 0;
             this.Close();
         }
 
@@ -74,7 +66,7 @@ namespace PayDay_Energosbyt
                     string ID_Doljnosti = MySqlOperations.Select_ID_From_ComboBox(MySqlQueries.Select_ID_Doljnosti, comboBox2.Text);
                     string ID_Oklada = MySqlOperations.Select_ID_From_ComboBox(MySqlQueries.Select_ID_Oklada, comboBox3.Text);
                     string ID_Rasch_Scheta = MySqlOperations.Select_ID_From_ComboBox(MySqlQueries.Select_ID_Rasch_Scheta, comboBox4.Text);
-                    MySqlOperations.Insert_Update(MySqlQueries.Update_Sotrudniki, ID, textBox1.Text.ToString(), textBox2.Text.ToString(), textBox3.Text.ToString(), ID_Otdela, ID_Doljnosti, ID_Oklada, numericUpDown1.Value.ToString(), ID_Rasch_Scheta);
+                    MySqlOperations.Insert_Update(MySqlQueries.Update_Sotrudniki, ID, textBox1.Text.ToString(), textBox2.Text.ToString(), textBox3.Text.ToString(), ID_Otdela, ID_Doljnosti, ID_Oklada, ID_Rasch_Scheta);
                     MessageBox.Show("Операция выполнена успешно.", "Успех");
                 }
                 catch (Exception ex)

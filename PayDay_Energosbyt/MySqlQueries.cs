@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PayDay_Energosbyt
+﻿namespace PayDay_Energosbyt
 {
     public class MySqlQueries
     {
@@ -15,7 +9,7 @@ namespace PayDay_Energosbyt
         public string Select_Doljnosti = $@"SELECT ID_Doljnosti AS 'ID Должности', NAME AS 'Наименование должности' FROM doljnosti;";
 
         public string Select_Oklad = $@"SELECT oklad.ID_Oklada AS 'ID Оклада', CONCAT(sotrudniki.Familiya, ' ', sotrudniki.Imya, ' ', sotrudniki.Otchestvo) AS 'ФИО Сотрудника',
-oklad.Znachenie AS 'Значение', oklad.Date_Nachala_Deistv AS 'Дата начала действия', oklad.Data_Okonchaniya_Deistv AS 'Дата окончания действия' FROM oklad LEFT JOIN sotrudniki ON oklad.ID_Oklada = sotrudniki.ID_Oklada;";
+oklad.Znachenie AS 'Значение', oklad.Date_Nachala_Deistv AS 'Дата начала действия', oklad.Date_Okonchaniya_Deistv AS 'Дата окончания действия' FROM oklad LEFT JOIN sotrudniki ON oklad.ID_Oklada = sotrudniki.ID_Oklada;";
 
         public string Select_Oklad_Sotrudnika = $@"SELECT oklad.Znachenie FROM oklad INNER JOIN sotrudniki ON oklad.ID_Oklada = sotrudniki.ID_Oklada
 WHERE sotrudniki.ID_Sotrudnika = @ID";
@@ -32,7 +26,7 @@ FROM raschetnye_scheta LEFT JOIN sotrudniki ON raschetnye_scheta.ID_Rasch_scheta
         public string Select_Sotrudniki = $@"SELECT sotrudniki.ID_Sotrudnika AS 'ID Сотрудника',
 CONCAT(sotrudniki.Familiya, ' ', sotrudniki.Imya, ' ', sotrudniki.Otchestvo) AS 'ФИО Сотрудника',
 otdely.Name AS 'Наименование отдела', doljnosti.Name AS 'Наименование должности',
-oklad.Znachenie AS 'Значение оклада', sotrudniki.Kol_Izhdevencev AS 'Кол-во иждевенцев',
+oklad.Znachenie AS 'Значение оклада',
 CONCAT(raschetnye_scheta.Cod_strany,
 raschetnye_scheta.Contr_chislo,
 raschetnye_scheta.Balance_schet,
@@ -43,9 +37,6 @@ INNER JOIN oklad ON sotrudniki.ID_Oklada = oklad.ID_Oklada
 INNER JOIN doljnosti ON sotrudniki.ID_Doljnosti = doljnosti.ID_Doljnosti 
 INNER JOIN otdely ON sotrudniki.ID_Otdela = otdely.ID_Otdela
 LEFT JOIN raschetnye_scheta ON sotrudniki.ID_Rasch_scheta = raschetnye_scheta.ID_Rasch_scheta";
-
-        public string Select_Kol_Izhdevencev_Sotrudnika = $@"SELECT sotrudniki.Kol_Izhdevencev FROM sotrudniki
-WHERE sotrudniki.ID_Sotrudnika = @ID";
 
         public string Select_Grafik_Raboty = $@"SET lc_time_names = 'ru_RU'; SELECT
 DATE_FORMAT(CONCAT(grafik_raboty.Year, '-',grafik_raboty.Month, '-',grafik_raboty.Day),'%d %M %Y') AS 'Дата',
@@ -167,9 +158,9 @@ WHERE CONCAT(sotrudniki.Familiya, ' ',sotrudniki.Imya, ' ',sotrudniki.Otchestvo)
 
         public string Insert_Rasch_Scheta = $@"INSERT INTO raschetnye_scheta (Cod_strany, Contr_chislo, Balance_schet, Cod_banka_BIC, Individual_schet) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5);";
 
-        public string Insert_Oklad = $@"INSERT INTO oklad (Znachenie, Date_Nachala_Deistv, Data_Okonchaniya_Deistv) VALUES (@Value1, @Value2, @Value3);";
+        public string Insert_Oklad = $@"INSERT INTO oklad (Znachenie, Date_Nachala_Deistv, Date_Okonchaniya_Deistv) VALUES (@Value1, @Value2, @Value3);";
 
-        public string Insert_Sotrudniki = $@"INSERT INTO sotrudniki (Familiya, Imya, Otchestvo, ID_Otdela, ID_Doljnosti, ID_Oklada, Kol_Izhdevencev, ID_Rasch_scheta) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5, @Value6, @Value7, @Value8);";
+        public string Insert_Sotrudniki = $@"INSERT INTO sotrudniki (Familiya, Imya, Otchestvo, ID_Otdela, ID_Doljnosti, ID_Oklada, ID_Rasch_scheta) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5, @Value6, @Value7);";
 
         public string Insert_Grafik_Raboty = $@"INSERT INTO grafik_raboty (ID_Doljnosti, Year, Month, Day, Identify, Znachenie_Raboch_Vremeni) VALUES (@ID, @Value1, @Value2, @Value3, @Value4, @Value5);";
 
@@ -188,11 +179,11 @@ WHERE CONCAT(sotrudniki.Familiya, ' ',sotrudniki.Imya, ' ',sotrudniki.Otchestvo)
 
         public string Update_Rasch_Scheta = $@"UPDATE raschetnye_scheta SET Cod_strany=@Value1, Contr_chislo=@Value2, Balance_schet=@Value3, Cod_banka_BIC=@Value4, Individual_schet=@Value5 WHERE ID_Rasch_scheta=@ID;";
 
-        public string Update_Oklad = $@"UPDATE oklad SET Znachenie = @Value1, Date_Nachala_Deistv = @Value2, Data_Okonchaniya_Deistv = @Value3 WHERE ID_Oklada = @ID;";
+        public string Update_Oklad = $@"UPDATE oklad SET Znachenie = @Value1, Date_Nachala_Deistv = @Value2, Date_Okonchaniya_Deistv = @Value3 WHERE ID_Oklada = @ID;";
         
         public string Update_Sotrudniki = $@"UPDATE sotrudniki SET Familiya = @Value1, Imya = @Value2, 
 Otchestvo = @Value3, ID_Otdela = @Value4, ID_Doljnosti = @Value5, ID_Oklada = @Value6, 
-Kol_Izhdevencev = @Value7, ID_Rasch_Scheta = @Value8
+ID_Rasch_Scheta = @Value7
 WHERE ID_Sotrudnika = @ID";
 
         public string Update_Grafik_Raboty = $@"UPDATE grafik_raboty 
@@ -235,7 +226,7 @@ AND tabel_otr_vremeni.ID_Sotrudnika = @ID";
 
         public string Exists_Doljnosti = $@"SELECT EXISTS(SELECT * FROM doljnosti WHERE doljnosti.Name = @Value1)";
 
-        public string Exists_Oklad = $@"SELECT EXISTS(SELECT * FROM oklad WHERE oklad.Znachenie = @Value1 AND oklad.Date_Nachala_Deistv = @Value2 AND oklad.Data_Okonchaniya_Deistv = @Value3)";
+        public string Exists_Oklad = $@"SELECT EXISTS(SELECT * FROM oklad WHERE oklad.Znachenie = @Value1 AND oklad.Date_Nachala_Deistv = @Value2 AND oklad.Date_Okonchaniya_Deistv = @Value3)";
 
         public string Exists_Vyplaty = $@"SELECT EXISTS(SELECT * FROM vyplaty WHERE vyplaty.Date_Begin = @Value1 AND vyplaty.Date_Begin = @Value2 AND vyplaty.Date_End = @Value3 AND vyplaty.ID_Sotrudnika = @ID)";
 

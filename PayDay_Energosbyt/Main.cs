@@ -1,15 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.Entity;
-using MySql.Data.MySqlClient;
-using MySql.Data.Types;
 
 namespace PayDay_Energosbyt
 {
@@ -18,7 +8,7 @@ namespace PayDay_Energosbyt
         public MySqlOperations MySqlOperations = null;
         public MySqlQueries MySqlQueries = null;
         public string identify = null;
-        public string SelectedRowIndex = null;
+        //public string SelectedRowIndex = null;
         //DataGridViewColumn OrderByColumn = null;
         //public string SortOrder = null;
         public Main()
@@ -253,7 +243,7 @@ namespace PayDay_Energosbyt
             }
             else if (identify == "sotrudniki")
             {
-                SelectedRowIndex = dataGridView1.SelectedRows[0].Index.ToString();
+                //SelectedRowIndex = dataGridView1.SelectedRows[0].Index.ToString();
                 //OrderByColumn = dataGridView1.SortedColumn;
                 //SortOrder = dataGridView1.SortOrder.ToString();
                 Sotrudniki sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
@@ -261,20 +251,19 @@ namespace PayDay_Energosbyt
                 {
                     Kostyl(sotrudniki);
                     sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
-                    dataGridView1.Rows[int.Parse(SelectedRowIndex)].Selected = true;
+                    //dataGridView1.Rows[int.Parse(SelectedRowIndex)].Selected = true;
                     sotrudniki.ID = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
                     sotrudniki.textBox1.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString().Split(' ')[0];
                     sotrudniki.textBox2.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString().Split(' ')[1];
                     sotrudniki.textBox3.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString().Split(' ')[2];
-                    if (dataGridView1.SelectedRows[0].Cells[6].Value.ToString() != "")
+                    if (dataGridView1.SelectedRows[0].Cells[5].Value.ToString() != "")
                     {
-                        sotrudniki.comboBox4.Items.Add(dataGridView1.SelectedRows[0].Cells[6].Value.ToString());
+                        sotrudniki.comboBox4.Items.Add(dataGridView1.SelectedRows[0].Cells[5].Value.ToString());
                     }
                     MySqlOperations.Search_In_ComboBox(dataGridView1.SelectedRows[0].Cells[2].Value.ToString(), sotrudniki.comboBox1);
                     MySqlOperations.Search_In_ComboBox(dataGridView1.SelectedRows[0].Cells[3].Value.ToString(), sotrudniki.comboBox2);
                     MySqlOperations.Search_In_ComboBox(dataGridView1.SelectedRows[0].Cells[4].Value.ToString(), sotrudniki.comboBox3);
-                    sotrudniki.numericUpDown1.Value = int.Parse(dataGridView1.SelectedRows[0].Cells[5].Value.ToString());
-                    MySqlOperations.Search_In_ComboBox(dataGridView1.SelectedRows[0].Cells[6].Value.ToString(), sotrudniki.comboBox4);
+                    MySqlOperations.Search_In_ComboBox(dataGridView1.SelectedRows[0].Cells[5].Value.ToString(), sotrudniki.comboBox4);
                     sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
                     sotrudniki.Owner = this;
                     sotrudniki.button3.Visible = true;
@@ -283,20 +272,19 @@ namespace PayDay_Energosbyt
                 }
                 else
                 {
-                    dataGridView1.Rows[int.Parse(SelectedRowIndex)].Selected = true;
+                    //dataGridView1.Rows[int.Parse(SelectedRowIndex)].Selected = true;
                     sotrudniki.ID = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
                     sotrudniki.textBox1.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString().Split(' ')[0];
                     sotrudniki.textBox2.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString().Split(' ')[1];
                     sotrudniki.textBox3.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString().Split(' ')[2];
-                    if (dataGridView1.SelectedRows[0].Cells[6].Value.ToString() != "")
+                    if (dataGridView1.SelectedRows[0].Cells[5].Value.ToString() != "")
                     {
-                        sotrudniki.comboBox4.Items.Add(dataGridView1.SelectedRows[0].Cells[6].Value.ToString());
+                        sotrudniki.comboBox4.Items.Add(dataGridView1.SelectedRows[0].Cells[5].Value.ToString());
                     }
                     MySqlOperations.Search_In_ComboBox(dataGridView1.SelectedRows[0].Cells[2].Value.ToString(), sotrudniki.comboBox1);
                     MySqlOperations.Search_In_ComboBox(dataGridView1.SelectedRows[0].Cells[3].Value.ToString(), sotrudniki.comboBox2);
                     MySqlOperations.Search_In_ComboBox(dataGridView1.SelectedRows[0].Cells[4].Value.ToString(), sotrudniki.comboBox3);
-                    sotrudniki.numericUpDown1.Value = int.Parse(dataGridView1.SelectedRows[0].Cells[5].Value.ToString());
-                    MySqlOperations.Search_In_ComboBox(dataGridView1.SelectedRows[0].Cells[6].Value.ToString(), sotrudniki.comboBox4);
+                    MySqlOperations.Search_In_ComboBox(dataGridView1.SelectedRows[0].Cells[5].Value.ToString(), sotrudniki.comboBox4);
                     sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
                     sotrudniki.Owner = this;
                     sotrudniki.button3.Visible = true;

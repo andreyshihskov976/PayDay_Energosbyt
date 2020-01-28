@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PayDay_Energosbyt
@@ -112,7 +105,7 @@ namespace PayDay_Energosbyt
         {
             try
             {
-                MySqlOperations.Insert_Tabel(MySqlQueries, dataGridView2 ,dateTimePicker1, MySqlQueries.Insert_Tabel, ID);
+                MySqlOperations.Insert_Tabel(MySqlQueries, dataGridView2, dateTimePicker1, MySqlQueries.Insert_Tabel, ID);
             }
             catch (Exception ex)
             {
