@@ -14,13 +14,18 @@ namespace PayDay_Energosbyt
             InitializeComponent();
         }
 
-        public Grafik(string id, MySqlOperations mySqlOperations, MySqlQueries mySqlQueries)
+        public Grafik(string id, MySqlOperations mySqlOperations, MySqlQueries mySqlQueries, string query)
         {
             InitializeComponent();
             ID = id;
             MySqlOperations = mySqlOperations;
             MySqlQueries = mySqlQueries;
-            MySqlOperations.Select_DataGridView(MySqlQueries.Select_Grafik_Raboty, dataGridView1, ID);
+            MySqlOperations.Select_DataGridView(query, dataGridView1, ID);
+            int result = 0;
+            if (int.TryParse(ID, out result) != true)
+            {
+                MySqlOperations.Select_Text(MySqlQueries.Select_ID_Doljnosti_Sotrudnika, ref ID, null, ID);
+            }
             Cancel_Update();
         }
 

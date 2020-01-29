@@ -164,7 +164,6 @@
             // 
             // табелиУчетаРабВремениToolStripMenuItem
             // 
-            this.табелиУчетаРабВремениToolStripMenuItem.Enabled = false;
             this.табелиУчетаРабВремениToolStripMenuItem.Name = "табелиУчетаРабВремениToolStripMenuItem";
             this.табелиУчетаРабВремениToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.табелиУчетаРабВремениToolStripMenuItem.Text = "Табель учета раб. времени";
@@ -172,7 +171,6 @@
             // 
             // графикиРаботыToolStripMenuItem
             // 
-            this.графикиРаботыToolStripMenuItem.Enabled = false;
             this.графикиРаботыToolStripMenuItem.Name = "графикиРаботыToolStripMenuItem";
             this.графикиРаботыToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.графикиРаботыToolStripMenuItem.Text = "График работы";
@@ -487,7 +485,6 @@
             // 
             // просмотретьГрафикРаботыToolStripMenuItem
             // 
-            this.просмотретьГрафикРаботыToolStripMenuItem.Enabled = false;
             this.просмотретьГрафикРаботыToolStripMenuItem.Name = "просмотретьГрафикРаботыToolStripMenuItem";
             this.просмотретьГрафикРаботыToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.просмотретьГрафикРаботыToolStripMenuItem.Text = "&График работы";
@@ -495,7 +492,6 @@
             // 
             // просмотретьТабельОтрВремениToolStripMenuItem
             // 
-            this.просмотретьТабельОтрВремениToolStripMenuItem.Enabled = false;
             this.просмотретьТабельОтрВремениToolStripMenuItem.Name = "просмотретьТабельОтрВремениToolStripMenuItem";
             this.просмотретьТабельОтрВремениToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.просмотретьТабельОтрВремениToolStripMenuItem.Text = "&Табель учета раб. времени";
@@ -510,12 +506,16 @@
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
+            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridView1.Location = new System.Drawing.Point(3, 27);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(809, 411);
             this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // Main
             // 
