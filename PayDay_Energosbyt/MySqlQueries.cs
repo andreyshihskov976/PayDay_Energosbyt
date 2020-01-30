@@ -8,6 +8,8 @@
 
         public string Select_Doljnosti = $@"SELECT ID_Doljnosti AS 'ID Должности', NAME AS 'Наименование должности' FROM doljnosti;";
 
+        public string Select_Doljnost_by_ID = $@"SELECT NAME AS 'Наименование должности' FROM doljnosti WHERE ID_Doljnosti = @ID;";
+
         public string Select_Oklad = $@"SELECT oklad.ID_Oklada AS 'ID Оклада', CONCAT(sotrudniki.Familiya, ' ', sotrudniki.Imya, ' ', sotrudniki.Otchestvo) AS 'ФИО Сотрудника',
 oklad.Znachenie AS 'Значение', oklad.Date_Nachala_Deistv AS 'Дата начала действия', oklad.Date_Okonchaniya_Deistv AS 'Дата окончания действия' FROM oklad LEFT JOIN sotrudniki ON oklad.ID_Oklada = sotrudniki.ID_Oklada;";
 
@@ -255,6 +257,305 @@ AND tabel_otr_vremeni.ID_Sotrudnika = @ID";
 
         public string Exists_Vyplaty = $@"SELECT EXISTS(SELECT * FROM vyplaty WHERE vyplaty.Date_Begin = @Value1 AND vyplaty.Date_Begin = @Value2 AND vyplaty.Date_End = @Value3 AND vyplaty.ID_Sotrudnika = @ID)";
 
+        public string Exists_Print_Grafik = $@"SELECT EXISTS
+(SELECT * FROM grafik_raboty
+WHERE Concat(grafik_raboty.Year, '-',grafik_raboty.Month, '-', grafik_raboty.Day) BETWEEN @Value1 AND @Value2
+AND grafik_raboty.ID_Doljnosti = @ID)";
+
         //Запросы проверки на существование
+
+        //Запросы на печать табеля и графика
+
+        public string Print_Grafik = $@"SET lc_time_names = 'ru_RU';
+SELECT
+  Date_Format(Concat(grafik_raboty.Year, '-',grafik_raboty.Month, '-', grafik_raboty.Day),'%M') AS 'Месяц',
+  		Max(CASE grafik_raboty.Day
+        WHEN 1 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '1',
+      Max(CASE grafik_raboty.Day
+        WHEN 2 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '2',
+      Max(CASE grafik_raboty.Day
+        WHEN 3 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '3',
+      Max(CASE grafik_raboty.Day
+        WHEN 4 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '4',
+      Max(CASE grafik_raboty.Day
+        WHEN 5 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '5',
+      Max(CASE grafik_raboty.Day
+        WHEN 6 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '6',
+      Max(CASE grafik_raboty.Day
+        WHEN 7 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '7',
+      Max(CASE grafik_raboty.Day
+        WHEN 8 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '8',
+      Max(CASE grafik_raboty.Day
+        WHEN 9 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '9',
+      Max(CASE grafik_raboty.Day
+        WHEN 10 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '10',
+      Max(CASE grafik_raboty.Day
+        WHEN 11 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '11',
+      Max(CASE grafik_raboty.Day
+        WHEN 12 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '12',
+      Max(CASE grafik_raboty.Day
+        WHEN 13 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '13',
+      Max(CASE grafik_raboty.Day
+        WHEN 14 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '14',
+      Max(CASE grafik_raboty.Day
+        WHEN 15 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '15',
+      Max(CASE grafik_raboty.Day
+        WHEN 16 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '16',
+      Max(CASE grafik_raboty.Day
+        WHEN 17 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '17',
+      Max(CASE grafik_raboty.Day
+        WHEN 18 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '18',
+      Max(CASE grafik_raboty.Day
+        WHEN 19 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '19',
+      Max(CASE grafik_raboty.Day
+        WHEN 20 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '20',
+      Max(CASE grafik_raboty.Day
+        WHEN 21 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '21',
+      Max(CASE grafik_raboty.Day
+        WHEN 22 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '22',
+      Max(CASE grafik_raboty.Day
+        WHEN 23 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '23',
+      Max(CASE grafik_raboty.Day
+        WHEN 24 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '24',
+      Max(CASE grafik_raboty.Day
+        WHEN 25 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '25',
+      Max(CASE grafik_raboty.Day
+        WHEN 26 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '26',
+      Max(CASE grafik_raboty.Day
+        WHEN 27 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '27',
+      Max(CASE grafik_raboty.Day
+        WHEN 28 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '28',
+      Max(CASE grafik_raboty.Day
+        WHEN 29 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '29',
+      Max(CASE grafik_raboty.Day
+        WHEN 30 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '30',
+      Max(CASE grafik_raboty.Day
+        WHEN 31 THEN (CASE grafik_raboty.Znachenie_Raboch_Vremeni WHEN 0.00 THEN grafik_raboty.Identify ELSE grafik_raboty.Znachenie_Raboch_Vremeni END)
+        ELSE null
+      END) AS '31'
+FROM grafik_raboty
+WHERE Concat(grafik_raboty.Year, '-',grafik_raboty.Month, '-', grafik_raboty.Day) BETWEEN @Value1 AND @Value2
+AND grafik_raboty.ID_Doljnosti = @ID
+GROUP BY grafik_raboty.Month
+ORDER BY grafik_raboty.Month";
+
+        public string Kol_Rab_Dney = $@"SELECT
+COUNT(grafik_raboty.Identify)
+FROM grafik_raboty
+WHERE grafik_raboty.Identify = 'Р' AND Concat(grafik_raboty.Year, '-',grafik_raboty.Month, '-', grafik_raboty.Day) BETWEEN @Value1 AND @Value2 
+AND grafik_raboty.ID_Doljnosti = @ID";
+
+        public string Kol_PredPrazdn_Dney = $@"SELECT
+COUNT(grafik_raboty.Identify)
+FROM grafik_raboty
+WHERE grafik_raboty.Identify = 'Р' AND grafik_raboty.Znachenie_Raboch_Vremeni = '7.2' AND Concat(grafik_raboty.Year, '-',grafik_raboty.Month, '-', grafik_raboty.Day) BETWEEN @Value1 AND @Value2 
+AND grafik_raboty.ID_Doljnosti = @ID";
+
+        public string Kol_Poln_Dney = $@"SELECT
+COUNT(grafik_raboty.Identify)
+FROM grafik_raboty
+WHERE grafik_raboty.Identify = 'Р' AND grafik_raboty.Znachenie_Raboch_Vremeni = '8.2' AND Concat(grafik_raboty.Year, '-',grafik_raboty.Month, '-', grafik_raboty.Day) BETWEEN @Value1 AND @Value2 
+AND grafik_raboty.ID_Doljnosti = @ID";
+
+        public string Itogo_Rab_Chasov = $@"SELECT
+SUM(grafik_raboty.Znachenie_Raboch_Vremeni)
+FROM grafik_raboty
+WHERE Concat(grafik_raboty.Year, '-',grafik_raboty.Month, '-', grafik_raboty.Day) BETWEEN @Value1 AND @Value2 
+AND grafik_raboty.ID_Doljnosti = @ID";
+
+        public string Print_Tabel = $@"SET lc_time_names = 'ru_RU';
+SELECT
+  Date_Format(Concat(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-', tabel_otr_vremeni.Day),'%M') AS 'Месяц',
+  		Max(CASE tabel_otr_vremeni.Day
+        WHEN 1 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '1',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 2 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '2',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 3 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '3',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 4 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '4',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 5 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '5',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 6 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '6',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 7 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '7',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 8 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '8',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 9 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '9',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 10 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '10',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 11 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '11',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 12 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '12',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 13 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '13',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 14 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '14',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 15 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '15',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 16 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '16',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 17 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '17',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 18 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '18',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 19 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '19',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 20 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '20',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 21 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '21',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 22 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '22',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 23 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '23',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 24 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '24',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 25 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '25',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 26 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '26',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 27 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '27',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 28 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '28',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 29 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '29',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 30 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '30',
+      Max(CASE tabel_otr_vremeni.Day
+        WHEN 31 THEN (CASE tabel_otr_vremeni.Znachenie_Otr_Vremeni WHEN 0.00 THEN tabel_otr_vremeni.Identify ELSE tabel_otr_vremeni.Znachenie_Otr_Vremeni END)
+        ELSE null
+      END) AS '31'
+FROM tabel_otr_vremeni
+WHERE Concat(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-', tabel_otr_vremeni.Day) BETWEEN @Value1 AND @Value2
+AND tabel_otr_vremeni.ID_Sotrudnika = @ID
+GROUP BY tabel_otr_vremeni.Month
+ORDER BY tabel_otr_vremeni.Month";
+
+        //Запросы на печать табеля и графика
     }
 }

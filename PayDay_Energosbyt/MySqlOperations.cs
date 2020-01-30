@@ -1,15 +1,16 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.Office.Interop.Excel;
+using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Application = System.Windows.Forms.Application;
+using ExcelApplication = Microsoft.Office.Interop.Excel.Application;
 
 namespace PayDay_Energosbyt
 {
     public class MySqlOperations
     {
-        public Microsoft.Office.Interop.Word.Application WordApp = new Microsoft.Office.Interop.Word.Application();
-        public Microsoft.Office.Interop.Excel.Application ExcelApp = new Microsoft.Office.Interop.Excel.Application();
-
         public MySqlConnection mySqlConnection = new MySqlConnection("server=localhost; user=root; database=payday; port=3306; password=; charset=utf8;");
         public MySqlQueries MySqlQueries = null;
 
@@ -164,27 +165,87 @@ namespace PayDay_Energosbyt
         {
             if (MessageBox.Show("Вы действительно хотите удалить запись?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                sqlCommand = new MySqlCommand(query, mySqlConnection);
-                sqlCommand.Parameters.AddWithValue("ID", ID);
-                sqlCommand.ExecuteNonQuery();
+                try
+                {
+                    sqlCommand = new MySqlCommand(query, mySqlConnection);
+                    sqlCommand.Parameters.AddWithValue("ID", ID);
+                    sqlCommand.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             Select_DataGridView(query2, dataGridView);
         }
 
-        public void Print_String(DataGridView dataGridView1)
+        public void Print_Grafik(MySqlQueries mySqlQueries, DataGridView dataGridView, DateTimePicker dateTimePicker, string ID)
         {
-
-            try
+            ExcelApplication ExcelApp = null;
+            Workbooks workbooks = null;
+            Workbook workbook = null;
+            string output = null;
+            string fileName = null;
+            Select_Text(mySqlQueries.Exists_Print_Grafik, ref output, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
+            if (output == "1")
             {
-            
+                Select_DataGridView(mySqlQueries.Print_Grafik, dataGridView, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
+                if (dataGridView.Rows.Count >= 13)
+                {
+                    try
+                    {
+                        Select_Text(mySqlQueries.Select_Doljnost_by_ID, ref output, ID);
+                        fileName = output;
+                        ExcelApp = new ExcelApplication();
+                        workbooks = ExcelApp.Workbooks;
+                        workbook = workbooks.Open(Application.StartupPath + "\\Blanks\\Grafik.xlsx");
+                        ExcelApp.Cells[1, 22] = dateTimePicker.Value.Year.ToString();
+                        ExcelApp.Cells[2, 13] = output;
+                        ExcelApp.Cells[26, 11] = dateTimePicker.Value.Year.ToString();
+                        Select_Text(mySqlQueries.Kol_Rab_Dney, ref output, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
+                        ExcelApp.Cells[27, 5] = output;
+                        Select_Text(mySqlQueries.Kol_PredPrazdn_Dney, ref output, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
+                        ExcelApp.Cells[27, 20] = output;
+                        Select_Text(mySqlQueries.Kol_Poln_Dney, ref output, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
+                        ExcelApp.Cells[27, 11] = output;
+                        Select_Text(mySqlQueries.Itogo_Rab_Chasov, ref output, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
+                        ExcelApp.Cells[28, 5] = output;
+                        int ExCol = 2;
+                        int ExRow = 7;
+                        for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
+                        {
+                            if (ExRow == 10 || ExRow == 14 || ExRow == 18)
+                                ExRow++;
+                            ExCol = 2;
+                            for (int j = 1; j < dataGridView.Columns.Count; j++)
+                            {
+                                ExcelApp.Cells[ExRow, ExCol] = dataGridView.Rows[i].Cells[j].Value.ToString();
+                                ExCol++;
+                            }
+                            ExRow++;
+                        }
+                        workbook.SaveAs(Application.StartupPath + "\\Отчетность\\График работы для " + fileName);
+                        ExcelApp.Visible = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        Marshal.ReleaseComObject(workbook);
+                        Marshal.ReleaseComObject(workbooks);
+                        Marshal.ReleaseComObject(ExcelApp);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Не хватает записей графика работы для данной должности" + '\n' + "на выбранный вами год." + '\n' + "Пожалуйста дополните график работы для данной должности." + '\n' + "Необходимо заполнить график на 12 месяцев" + '\n' + "для выбранного вами года.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                
+                MessageBox.Show("Отсутствует график работы для данной должности" + '\n' + "на выбранный вами год." + '\n' + "Пожалуйста добавьте график работы для данной должности.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

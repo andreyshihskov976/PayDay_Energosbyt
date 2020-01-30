@@ -234,12 +234,14 @@
             this.табельУчетаРабВремениСотрудникаToolStripMenuItem.Name = "табельУчетаРабВремениСотрудникаToolStripMenuItem";
             this.табельУчетаРабВремениСотрудникаToolStripMenuItem.Size = new System.Drawing.Size(289, 22);
             this.табельУчетаРабВремениСотрудникаToolStripMenuItem.Text = "Табель учета раб. времени сотрудника";
+            this.табельУчетаРабВремениСотрудникаToolStripMenuItem.Click += new System.EventHandler(this.табельУчетаРабВремениСотрудникаToolStripMenuItem_Click);
             // 
             // графикРаботыToolStripMenuItem
             // 
             this.графикРаботыToolStripMenuItem.Name = "графикРаботыToolStripMenuItem";
             this.графикРаботыToolStripMenuItem.Size = new System.Drawing.Size(289, 22);
             this.графикРаботыToolStripMenuItem.Text = "График работы";
+            this.графикРаботыToolStripMenuItem.Click += new System.EventHandler(this.графикРаботыToolStripMenuItem_Click);
             // 
             // расчетныйЛистокToolStripMenuItem
             // 

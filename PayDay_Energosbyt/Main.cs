@@ -34,7 +34,7 @@ namespace PayDay_Energosbyt
         private void DataGrid_Load(string query)
         {
             MySqlOperations.Select_DataGridView(query, dataGridView1);
-            dataGridView1.Columns[0].Visible = false;
+            //dataGridView1.Columns[0].Visible = false;
         }
         private void отделыToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -176,45 +176,19 @@ namespace PayDay_Energosbyt
                 toolStripMenuItem7.Enabled = true;
                 //if (identify == "doljnosti")
                 //{
-                //    просмотретьГрафикРаботыToolStripMenuItem.Enabled = true;
-                //    графикРаботыToolStripMenuItem.Enabled = true;
-                //    графикиРаботыToolStripMenuItem.Enabled = true;
-                //    просмотретьТабельОтрВремениToolStripMenuItem.Enabled = false;
-                //    табелиУчетаРабВремениToolStripMenuItem.Enabled = false;
-                //    табельУчетаРабВремениСотрудникаToolStripMenuItem.Enabled = false;
-                //    расчетныйЛистокToolStripMenuItem.Enabled = false;
-                //    расчетноплатежнаяВедомостьToolStripMenuItem.Enabled = false;
+
                 //}
                 //else if (identify == "sotrudniki")
                 //{
-                //    просмотретьГрафикРаботыToolStripMenuItem.Enabled = false;
-                //    графикиРаботыToolStripMenuItem.Enabled = false;
-                //    графикРаботыToolStripMenuItem.Enabled = false;
-                //    просмотретьТабельОтрВремениToolStripMenuItem.Enabled = true;
-                //    табелиУчетаРабВремениToolStripMenuItem.Enabled = true;
-                //    табельУчетаРабВремениСотрудникаToolStripMenuItem.Enabled = true;
-                //    расчетныйЛистокToolStripMenuItem.Enabled = true;
-                //    расчетноплатежнаяВедомостьToolStripMenuItem.Enabled = true;
+
                 //}
                 //else if (identify == "vyplaty")
                 //{
-                //    просмотретьГрафикРаботыToolStripMenuItem.Enabled = false;
-                //    графикиРаботыToolStripMenuItem.Enabled = false;
-                //    просмотретьТабельОтрВремениToolStripMenuItem.Enabled = false;
-                //    табелиУчетаРабВремениToolStripMenuItem.Enabled = false;
-                //    табельУчетаРабВремениСотрудникаToolStripMenuItem.Enabled = false;
-                //    расчетныйЛистокToolStripMenuItem.Enabled = true;
-                //    расчетноплатежнаяВедомостьToolStripMenuItem.Enabled = false;
+
                 //}
                 //else
                 //{
-                //    просмотретьГрафикРаботыToolStripMenuItem.Enabled = false;
-                //    графикиРаботыToolStripMenuItem.Enabled = false;
-                //    просмотретьТабельОтрВремениToolStripMenuItem.Enabled = false;
-                //    табелиУчетаРабВремениToolStripMenuItem.Enabled = false;
-                //    табельУчетаРабВремениСотрудникаToolStripMenuItem.Enabled = false;
-                //    расчетныйЛистокToolStripMenuItem.Enabled = false;
-                //    расчетноплатежнаяВедомостьToolStripMenuItem.Enabled = false;
+
                 //}
             }
             else
@@ -223,14 +197,6 @@ namespace PayDay_Energosbyt
                 редактироватьToolStripMenuItem.Enabled = false;
                 toolStripMenuItem2.Enabled = false;
                 toolStripMenuItem7.Enabled = false;
-                //просмотретьГрафикРаботыToolStripMenuItem.Enabled = false;
-                //табелиУчетаРабВремениToolStripMenuItem.Enabled = false;
-                //графикиРаботыToolStripMenuItem.Enabled = false;
-                //просмотретьТабельОтрВремениToolStripMenuItem.Enabled = false;
-                //табельУчетаРабВремениСотрудникаToolStripMenuItem.Enabled = false;
-                //графикРаботыToolStripMenuItem.Enabled = false;
-                //расчетныйЛистокToolStripMenuItem.Enabled = false;
-                //расчетноплатежнаяВедомостьToolStripMenuItem.Enabled = false;
             }
         }
 
@@ -456,6 +422,47 @@ namespace PayDay_Energosbyt
                 {
                     Open_Tabel(dataGridView1.SelectedRows[0].Cells[4].Value.ToString(), MySqlQueries.Select_Tabel_FIO, dataGridView1.SelectedRows[0].Cells[4].Value.ToString());
                 }
+            }
+        }
+        private Print_Grafik_Dialog Print_Grafik(string ID)
+        {
+            Print_Grafik_Dialog print_Tabel_Grafik_Dialog = new Print_Grafik_Dialog(MySqlOperations, MySqlQueries, ID);
+            return print_Tabel_Grafik_Dialog;
+        }
+
+        private void табельУчетаРабВремениСотрудникаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string ID = string.Empty;
+            if (identify == "sotrudniki")
+            {
+            
+            }
+            else if (identify == "vyplaty")
+            {
+
+            }
+        }
+
+        private void графикРаботыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string ID = string.Empty;
+            if (identify == "doljnosti")
+            {
+                ID = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                Print_Grafik_Dialog print_Grafik_Dialog = Print_Grafik(ID);
+                print_Grafik_Dialog.ShowDialog();
+            }
+            if (identify == "sotrudniki")
+            {
+                MySqlOperations.Select_Text(MySqlQueries.Select_ID_Doljnosti_Sotrudnika, ref ID, null, dataGridView1.SelectedRows[0].Cells[1].Value.ToString());
+                Print_Grafik_Dialog print_Grafik_Dialog = Print_Grafik(ID);
+                print_Grafik_Dialog.ShowDialog();
+            }
+            if (identify == "vyplaty")
+            {
+                MySqlOperations.Select_Text(MySqlQueries.Select_ID_Doljnosti_Sotrudnika, ref ID, null, dataGridView1.SelectedRows[0].Cells[4].Value.ToString());
+                Print_Grafik_Dialog print_Grafik_Dialog = Print_Grafik(ID);
+                print_Grafik_Dialog.ShowDialog();
             }
         }
     }
