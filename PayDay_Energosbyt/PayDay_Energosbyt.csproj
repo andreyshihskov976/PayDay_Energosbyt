@@ -111,11 +111,11 @@
     <Compile Include="Print_Grafik_Dialog.Designer.cs">
       <DependentUpon>Print_Grafik_Dialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Print_Tabel.cs">
+    <Compile Include="Print_Tabel_Dialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Print_Tabel.Designer.cs">
-      <DependentUpon>Print_Tabel.cs</DependentUpon>
+    <Compile Include="Print_Tabel_Dialog.Designer.cs">
+      <DependentUpon>Print_Tabel_Dialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -161,8 +161,8 @@
     <EmbeddedResource Include="Print_Grafik_Dialog.resx">
       <DependentUpon>Print_Grafik_Dialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Print_Tabel.resx">
-      <DependentUpon>Print_Tabel.cs</DependentUpon>
+    <EmbeddedResource Include="Print_Tabel_Dialog.resx">
+      <DependentUpon>Print_Tabel_Dialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

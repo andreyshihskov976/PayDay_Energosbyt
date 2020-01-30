@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PayDay_Energosbyt
 {
-    public partial class Print_Tabel : Form
+    public partial class Print_Tabel_Dialog : Form
     {
-        public Print_Tabel()
+        public Print_Tabel_Dialog()
         {
             InitializeComponent();
         }

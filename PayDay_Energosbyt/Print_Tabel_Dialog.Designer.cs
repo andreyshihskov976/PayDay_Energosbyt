@@ -1,6 +1,6 @@
 ﻿namespace PayDay_Energosbyt
 {
-    partial class Print_Tabel
+    partial class Print_Tabel_Dialog
     {
         /// <summary>
         /// Required designer variable.
