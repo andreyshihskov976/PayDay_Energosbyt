@@ -42,7 +42,6 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
@@ -63,7 +62,7 @@
             this.groupBox3.Controls.Add(this.dateTimePicker2);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.groupBox3.Location = new System.Drawing.Point(0, 209);
+            this.groupBox3.Location = new System.Drawing.Point(0, 180);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(332, 80);
             this.groupBox3.TabIndex = 10;
@@ -123,7 +122,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(320, 289);
+            this.dataGridView1.Size = new System.Drawing.Size(320, 260);
             this.dataGridView1.TabIndex = 12;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
@@ -137,7 +136,7 @@
             this.groupBox2.Controls.Add(this.comboBox1);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.groupBox2.Location = new System.Drawing.Point(0, 86);
+            this.groupBox2.Location = new System.Drawing.Point(0, 57);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(332, 117);
             this.groupBox2.TabIndex = 11;
@@ -217,30 +216,20 @@
             // groupBox1
             // 
             this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.dateTimePicker1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(332, 80);
+            this.groupBox1.Size = new System.Drawing.Size(332, 51);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Добавление";
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(169, 48);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(157, 26);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Отмена";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(6, 48);
+            this.button1.Location = new System.Drawing.Point(169, 19);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(157, 26);
             this.button1.TabIndex = 5;
@@ -250,12 +239,12 @@
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.CustomFormat = "    MMMM yyyy г.";
+            this.dateTimePicker1.CustomFormat = "yyyy г.";
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker1.Location = new System.Drawing.Point(117, 17);
+            this.dateTimePicker1.Location = new System.Drawing.Point(54, 19);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.ShowUpDown = true;
-            this.dateTimePicker1.Size = new System.Drawing.Size(209, 26);
+            this.dateTimePicker1.Size = new System.Drawing.Size(109, 26);
             this.dateTimePicker1.TabIndex = 4;
             this.dateTimePicker1.Value = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
             // 
@@ -264,9 +253,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 22);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(61, 20);
+            this.label2.Size = new System.Drawing.Size(42, 20);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Месяц:";
+            this.label2.Text = "Год:";
             // 
             // dataGridView2
             // 
@@ -320,7 +309,6 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label2;

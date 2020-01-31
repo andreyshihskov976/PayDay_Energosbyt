@@ -300,7 +300,7 @@ namespace PayDay_Energosbyt
                         {
                             for (int j = 1; j < dataGridView.Columns.Count; j++)
                             {
-                                ExcelApp.Cells[ExRow, ExCol] = dataGridView.Rows[i].Cells[j].Value.ToString();
+                                ExcelApp.Cells[ExRow, ExCol] = dataGridView.Rows[0].Cells[j].Value.ToString();
                                 ExCol++;
                                 if (ExCol == 18 && j == 15)
                                 {
@@ -347,21 +347,23 @@ namespace PayDay_Energosbyt
                 {
                     ExcelApp = new ExcelApplication();
                     workbooks = ExcelApp.Workbooks;
-                    workbook = workbooks.Open(Application.StartupPath + "\\Blanks\\Tabel.xlsx");
-                    ExcelApp.Cells[2, 4] = dataGridView.SelectedRows[0].Cells[1].Value.ToString();
+                    workbook = workbooks.Open(Application.StartupPath + "\\Blanks\\Listok.xlsx");
+                    ExcelApp.Cells[2, 5] = DateTime.Parse(dataGridView.SelectedRows[0].Cells[1].Value.ToString()).ToShortDateString();
                     ExcelApp.Cells[5, 3] = dataGridView.SelectedRows[0].Cells[4].Value.ToString();
                     decimal Nachisleno = decimal.Parse(dataGridView.SelectedRows[0].Cells[5].Value.ToString());
                     ExcelApp.Cells[10, 3] = Nachisleno;
-                    string date1 = dataGridView.SelectedRows[0].Cells[2].Value.ToString().Split(' ')[0].Split('.')[2] + "-" + dataGridView.SelectedRows[0].Cells[2].Value.ToString().Split(' ')[0].Split('.')[1] + "-" + dataGridView.SelectedRows[0].Cells[2].Value.ToString().Split(' ')[0].Split('.')[0];
-                    string date2 = dataGridView.SelectedRows[0].Cells[3].Value.ToString().Split(' ')[0].Split('.')[2] + "-" + dataGridView.SelectedRows[0].Cells[3].Value.ToString().Split(' ')[0].Split('.')[1] + "-" + dataGridView.SelectedRows[0].Cells[3].Value.ToString().Split(' ')[0].Split('.')[0];
-                    Select_Text(mySqlQueries.Select_Otrabotano, ref output, dataGridView.SelectedRows[0].Cells[4].Value.ToString(),date1,date2);
+                    DateTime date1 = DateTime.Parse(dataGridView.SelectedRows[0].Cells[2].Value.ToString().Split(' ')[0]);
+                    DateTime date2 = DateTime.Parse(dataGridView.SelectedRows[0].Cells[3].Value.ToString().Split(' ')[0]);
+                    Select_Text(mySqlQueries.Select_Otrabotano, ref output, dataGridView.SelectedRows[0].Cells[4].Value.ToString(),date1.Year.ToString()+"-"+date1.Month.ToString()+"-"+date1.Day.ToString(), date2.Year.ToString() + "-" + date2.Month.ToString() + "-"+date2.Day.ToString());
                     ExcelApp.Cells[10, 5] = decimal.Parse(output);
+                    Select_Text(mySqlQueries.Select_Kol_Dney_Otrabotano, ref output, dataGridView.SelectedRows[0].Cells[4].Value.ToString(), date1.Year.ToString() + "-" + date1.Month.ToString() + "-" + date1.Day.ToString(), date2.Year.ToString() + "-" + date2.Month.ToString() + "-" + date2.Day.ToString());
+                    ExcelApp.Cells[10, 4] = decimal.Parse(output);
                     ExcelApp.Cells[13, 3] = Nachisleno;
                     ExcelApp.Cells[13, 7] = dataGridView.SelectedRows[0].Cells[6].Value.ToString();
                     ExcelApp.Cells[14, 4] = dataGridView.SelectedRows[0].Cells[7].Value.ToString();
                     ExcelApp.Cells[10, 7] = (Nachisleno * 1) / 100;
                     ExcelApp.Cells[11,7] = (Nachisleno * 1) / 100;
-                    ExcelApp.Cells[11,8] = (Nachisleno * 13) / 100;
+                    ExcelApp.Cells[12,7] = (Nachisleno * 13) / 100;
                     workbook.SaveAs(fileName);
                     ExcelApp.Visible = true;
                 }
@@ -380,7 +382,65 @@ namespace PayDay_Energosbyt
             {
                 MessageBox.Show("Отсутствует табель учета рабочего времени" + '\n' + "для данного сотрудника на выбранный вами месяц." + '\n' + "Пожалуйста заполните табель учета рабочего времени для данного сотрудника.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        } 
+        }
+
+        public void Print_Vedomost(MySqlQueries mySqlQueries, DataGridView dataGridView,DateTimePicker dateTimePicker, SaveFileDialog saveFileDialog, string ID = null)
+        {
+            ExcelApplication ExcelApp = null;
+            Workbooks workbooks = null;
+            Workbook workbook = null;
+            string output = null;
+            string fileName = null;
+            Select_Text(mySqlQueries.Select_Otdel_by_ID, ref output, ID);
+            saveFileDialog.Title = "Сохранить расчетно-платежная ведомость как";
+            saveFileDialog.FileName = "Расчетно-платежная ведомость за " + dateTimePicker.Text + " ("+output+")";
+            saveFileDialog.InitialDirectory = Application.StartupPath + "\\Отчетность\\";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                fileName = saveFileDialog.FileName;
+                try
+                {
+                    ExcelApp = new ExcelApplication();
+                    workbooks = ExcelApp.Workbooks;
+                    workbook = workbooks.Open(Application.StartupPath + "\\Blanks\\Vedomost.xlsx");
+                    ExcelApp.Cells[2, 2] = dateTimePicker.Text;
+                    ExcelApp.Cells[4, 8] = output;
+                    Select_Text(mySqlQueries.Itog_Vyplat_Po_Otdelu, ref output, ID);
+                    ExcelApp.Cells[5, 8] = output;
+                    string date1 = dateTimePicker.Value.Year.ToString() + "-" + dateTimePicker.Value.Month.ToString() + "-1";
+                    string date2 = dateTimePicker.Value.Year.ToString() + "-" + dateTimePicker.Value.AddMonths(1).Month.ToString() + "-0";
+                    Select_DataGridView(mySqlQueries.Select_Vyplaty_Otdela, dataGridView, ID,date1,date2);
+                    int ExRow = 4;
+                    int ExCol = 1;
+                    for (int i = 0; i < dataGridView.RowCount-1; i++)
+                    {
+                        for (int j = 0; j < dataGridView.ColumnCount; j++)
+                        {
+                            ExcelApp.Cells[ExRow, ExCol] = dataGridView.Rows[i].Cells[j].Value.ToString();
+                            ExCol++;
+                        }
+                        ExRow++;
+                        ExCol = 1;
+                    }
+                    workbook.SaveAs(fileName);
+                    ExcelApp.Visible = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    Marshal.ReleaseComObject(workbook);
+                    Marshal.ReleaseComObject(workbooks);
+                    Marshal.ReleaseComObject(ExcelApp);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Отсутствует табель учета рабочего времени" + '\n' + "для данного сотрудника на выбранный вами месяц." + '\n' + "Пожалуйста заполните табель учета рабочего времени для данного сотрудника.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
 
         public void Select_Text(string query, ref string output, string ID = null, string Value1 = null, string Value2 = null, string Value3 = null, string Value4 = null, string Value5 = null, string Value6 = null, string Value7 = null, string Value8 = null)
         {

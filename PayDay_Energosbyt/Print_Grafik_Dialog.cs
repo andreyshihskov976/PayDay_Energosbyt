@@ -19,6 +19,7 @@ namespace PayDay_Energosbyt
             ID = iD;
             MySqlOperations = mySqlOperations;
             MySqlQueries = mySqlQueries;
+            dateTimePicker1.Value = DateTime.Now;
         }
 
         private void button2_Click(object sender, EventArgs e)

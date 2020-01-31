@@ -18,9 +18,9 @@ namespace PayDay_Energosbyt
             InitializeComponent();
             MySqlOperations = mySqlOperations;
             MySqlQueries = mySqlQueries;
-            MySqlOperations.Select_ComboBox(MySqlQueries.Select_Sotrudniki_ComboBox, comboBox1);
             dateTimePicker1.Value = DateTime.Now;
             dateTimePicker2.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            MySqlOperations.Select_ComboBox(MySqlQueries.Select_Sotrudniki_ComboBox, comboBox1);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -95,6 +95,7 @@ namespace PayDay_Energosbyt
         private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
         {
             dateTimePicker3.Value = new DateTime(dateTimePicker2.Value.Year, dateTimePicker2.Value.Month, DateTime.DaysInMonth(dateTimePicker2.Value.Year, dateTimePicker2.Value.Month));
+            Calculating();
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -105,6 +106,11 @@ namespace PayDay_Energosbyt
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             MySqlOperations.Select_Text(MySqlQueries.Select_ID_Sotrudnika, ref ID, null, comboBox1.Text);
+            Calculating();
+        }
+
+        private void Calculating()
+        {
             string nachisleno = "0";
             string date1 = dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString() + '-' + dateTimePicker2.Value.Day.ToString();
             string date2 = dateTimePicker3.Value.Year.ToString() + '-' + dateTimePicker3.Value.Month.ToString() + '-' + dateTimePicker3.Value.Day.ToString();

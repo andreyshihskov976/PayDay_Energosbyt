@@ -118,9 +118,7 @@ namespace PayDay_Energosbyt
             }
             finally
             {
-                Update_Table(dateTimePicker1.Value.Month.ToString(),dateTimePicker1.Value.Year.ToString());
-                dateTimePicker2.Value = dateTimePicker1.Value;
-                dateTimePicker2.Checked = true;
+                Update_Table();
             }
         }
 

@@ -256,6 +256,7 @@
             this.расчетноплатежнаяВедомостьToolStripMenuItem.Name = "расчетноплатежнаяВедомостьToolStripMenuItem";
             this.расчетноплатежнаяВедомостьToolStripMenuItem.Size = new System.Drawing.Size(289, 22);
             this.расчетноплатежнаяВедомостьToolStripMenuItem.Text = "Расчетно-платежная ведомость";
+            this.расчетноплатежнаяВедомостьToolStripMenuItem.Click += new System.EventHandler(this.расчетноплатежнаяВедомостьToolStripMenuItem_Click);
             // 
             // предварительныйпросмотрToolStripMenuItem
             // 

@@ -561,7 +561,7 @@ namespace PayDay_Energosbyt
 
         private void графикРаботыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count == 0)
+            if (dataGridView1.SelectedRows.Count == 1)
             {
                 string ID = string.Empty;
                 if (identify == "doljnosti")
@@ -605,6 +605,19 @@ namespace PayDay_Energosbyt
             else
             {
                 MessageBox.Show("Из данной таблицы невозможно распечатать расчетный листок." + '\n' + "Пожалуйста перейдите на таблицу Выплаты зарплат.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void расчетноплатежнаяВедомостьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (identify == "vyplaty")
+            {
+                Print_Vedomost_Dialog print_Vedomost_Dialog = new Print_Vedomost_Dialog(MySqlOperations, MySqlQueries);
+                print_Vedomost_Dialog.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Из данной таблицы невозможно распечатать расчетно-платежную ведомость." + '\n' + "Пожалуйста перейдите на таблицу Выплаты зарплат.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
