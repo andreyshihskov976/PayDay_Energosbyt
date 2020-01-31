@@ -34,7 +34,7 @@ namespace PayDay_Energosbyt
         private void DataGrid_Load(string query)
         {
             MySqlOperations.Select_DataGridView(query, dataGridView1);
-            //dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[0].Visible = false;
         }
         private void отделыToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -109,10 +109,14 @@ namespace PayDay_Energosbyt
                 sotrudniki.Owner = this;
                 sotrudniki.button1.Visible = true;
                 sotrudniki.button3.Visible = false;
-                if (sotrudniki.comboBox4.Items.Count == 0)
-                {
-                    sotrudniki = Kostyl(sotrudniki);
-                }
+                if (sotrudniki.comboBox1.Items.Count == 0)
+                    Sotrudniki_After_Otdely(sotrudniki);
+                if (sotrudniki.comboBox2.Items.Count == 0)
+                    Sotrudniki_After_Doljnosti(sotrudniki);
+                if (sotrudniki.comboBox1.Items.Count == 0)
+                    Sotrudniki_After_Oklad(sotrudniki);
+                if (sotrudniki.comboBox1.Items.Count == 0)
+                    Sotrudniki_After_RS(sotrudniki);
                 sotrudniki.Show();
             }
             else if (identify == "oklad")
@@ -142,7 +146,7 @@ namespace PayDay_Energosbyt
             }
         }
 
-        private Sotrudniki Kostyl(Sotrudniki sotrudniki)
+        private Sotrudniki Sotrudniki_After_RS(Sotrudniki sotrudniki)
         {
             if (MessageBox.Show("Отсутствуют свободные записи в таблице Расчетные счета." + '\n' + "Желаете добавить запись?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -161,6 +165,63 @@ namespace PayDay_Energosbyt
             return sotrudniki;
         }
 
+        private Sotrudniki Sotrudniki_After_Otdely(Sotrudniki sotrudniki)
+        {
+            if (MessageBox.Show("Отсутствуют записи в таблице Отделы." + '\n' + "Желаете добавить запись?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Otdely otdely = new Otdely(MySqlOperations, MySqlQueries);
+                otdely.Otdely_Closed += Kostyl_Event;
+                otdely.Owner = this.Owner;
+                otdely.button1.Visible = true;
+                otdely.button3.Visible = false;
+                otdely.ShowDialog();
+                sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
+                sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
+                sotrudniki.Owner = this;
+                sotrudniki.button1.Visible = true;
+                sotrudniki.button3.Visible = false;
+            }
+            return sotrudniki;
+        }
+
+        private Sotrudniki Sotrudniki_After_Oklad(Sotrudniki sotrudniki)
+        {
+            if (MessageBox.Show("Отсутствуют записи в таблице Отделы." + '\n' + "Желаете добавить запись?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Oklad oklad = new Oklad(MySqlOperations, MySqlQueries);
+                oklad.Oklad_Closed += Kostyl_Event;
+                oklad.Owner = this.Owner;
+                oklad.button1.Visible = true;
+                oklad.button3.Visible = false;
+                oklad.ShowDialog();
+                sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
+                sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
+                sotrudniki.Owner = this;
+                sotrudniki.button1.Visible = true;
+                sotrudniki.button3.Visible = false;
+            }
+            return sotrudniki;
+        }
+
+        private Sotrudniki Sotrudniki_After_Doljnosti(Sotrudniki sotrudniki)
+        {
+            if (MessageBox.Show("Отсутствуют записи в таблице Отделы." + '\n' + "Желаете добавить запись?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Doljnosti doljnosti = new Doljnosti(MySqlOperations, MySqlQueries);
+                doljnosti.Doljnosti_Closed += Kostyl_Event;
+                doljnosti.Owner = this.Owner;
+                doljnosti.button1.Visible = true;
+                doljnosti.button3.Visible = false;
+                doljnosti.ShowDialog();
+                sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
+                sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
+                sotrudniki.Owner = this;
+                sotrudniki.button1.Visible = true;
+                sotrudniki.button3.Visible = false;
+            }
+            return sotrudniki;
+        }
+
         private void выделитьвсеToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dataGridView1.SelectAll();
@@ -168,36 +229,20 @@ namespace PayDay_Energosbyt
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count == 1)
-            {
-                удалитьToolStripMenuItem.Enabled = true;
-                редактироватьToolStripMenuItem.Enabled = true;
-                toolStripMenuItem2.Enabled = true;
-                toolStripMenuItem7.Enabled = true;
-                //if (identify == "doljnosti")
-                //{
-
-                //}
-                //else if (identify == "sotrudniki")
-                //{
-
-                //}
-                //else if (identify == "vyplaty")
-                //{
-
-                //}
-                //else
-                //{
-
-                //}
-            }
-            else
-            {
-                удалитьToolStripMenuItem.Enabled = false;
-                редактироватьToolStripMenuItem.Enabled = false;
-                toolStripMenuItem2.Enabled = false;
-                toolStripMenuItem7.Enabled = false;
-            }
+            //if (dataGridView1.SelectedRows.Count == 1)
+            //{
+            //    удалитьToolStripMenuItem.Enabled = true;
+            //    редактироватьToolStripMenuItem.Enabled = true;
+            //    toolStripMenuItem2.Enabled = true;
+            //    toolStripMenuItem7.Enabled = true;
+            //}
+            //else
+            //{
+            //    удалитьToolStripMenuItem.Enabled = false;
+            //    редактироватьToolStripMenuItem.Enabled = false;
+            //    toolStripMenuItem2.Enabled = false;
+            //    toolStripMenuItem7.Enabled = false;
+            //}
         }
 
         private void Edit_String()
@@ -231,9 +276,16 @@ namespace PayDay_Energosbyt
             else if (identify == "sotrudniki")
             {
                 Sotrudniki sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
-                if (sotrudniki.comboBox4.Items.Count == 0)
+                if (sotrudniki.comboBox1.Items.Count == 0 || sotrudniki.comboBox2.Items.Count == 0|| sotrudniki.comboBox3.Items.Count == 0|| sotrudniki.comboBox4.Items.Count == 0)
                 {
-                    Kostyl(sotrudniki);
+                    if (sotrudniki.comboBox1.Items.Count == 0)
+                        Sotrudniki_After_Otdely(sotrudniki);
+                    if (sotrudniki.comboBox2.Items.Count == 0)
+                        Sotrudniki_After_Doljnosti(sotrudniki);
+                    if (sotrudniki.comboBox3.Items.Count == 0)
+                        Sotrudniki_After_Oklad(sotrudniki);
+                    if (sotrudniki.comboBox4.Items.Count == 0)
+                        Sotrudniki_After_RS(sotrudniki);
                     sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
                     sotrudniki.ID = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
                     sotrudniki.textBox1.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString().Split(' ')[0];
@@ -302,29 +354,50 @@ namespace PayDay_Energosbyt
 
         private void Delete_String()
         {
-            if (identify == "raschetniki")
+            if (MessageBox.Show("Вы действительно хотите удалить запись(-и)?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                MySqlOperations.Delete(MySqlQueries.Delete_Rasch_Scheta, MySqlQueries.Select_Rasch_Scheta, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
-            }
-            else if (identify == "otdely")
-            {
-                MySqlOperations.Delete(MySqlQueries.Delete_Otdely, MySqlQueries.Select_Otdely, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
-            }
-            else if (identify == "sotrudniki")
-            {
-                MySqlOperations.Delete(MySqlQueries.Delete_Sotrudniki, MySqlQueries.Select_Sotrudniki, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
-            }
-            else if (identify == "oklad")
-            {
-                MySqlOperations.Delete(MySqlQueries.Delete_Oklad, MySqlQueries.Select_Oklad, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
-            }
-            else if (identify == "doljnosti")
-            {
-                MySqlOperations.Delete(MySqlQueries.Delete_Doljnosti, MySqlQueries.Select_Doljnosti, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
-            }
-            else if(identify == "vyplaty")
-            {
-                MySqlOperations.Delete(MySqlQueries.Delete_Vyplaty, MySqlQueries.Select_Vyplaty, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                if (identify == "raschetniki")
+                {
+                    foreach (var i in dataGridView1.SelectedRows)
+                    {
+                        MySqlOperations.Delete(MySqlQueries.Delete_Rasch_Scheta, MySqlQueries.Select_Rasch_Scheta, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                    }
+                }
+                else if (identify == "otdely")
+                {
+                    foreach (var i in dataGridView1.SelectedRows)
+                    {
+                        MySqlOperations.Delete(MySqlQueries.Delete_Otdely, MySqlQueries.Select_Otdely, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                    }
+                }
+                else if (identify == "sotrudniki")
+                {
+                    foreach (var i in dataGridView1.SelectedRows)
+                    {
+                        MySqlOperations.Delete(MySqlQueries.Delete_Sotrudniki, MySqlQueries.Select_Sotrudniki, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                    }
+                }
+                else if (identify == "oklad")
+                {
+                    foreach (var i in dataGridView1.SelectedRows)
+                    {
+                        MySqlOperations.Delete(MySqlQueries.Delete_Oklad, MySqlQueries.Select_Oklad, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                    }
+                }
+                else if (identify == "doljnosti")
+                {
+                    foreach (var i in dataGridView1.SelectedRows)
+                    {
+                        MySqlOperations.Delete(MySqlQueries.Delete_Doljnosti, MySqlQueries.Select_Doljnosti, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                    }
+                }
+                else if (identify == "vyplaty")
+                {
+                    foreach (var i in dataGridView1.SelectedRows)
+                    {
+                        MySqlOperations.Delete(MySqlQueries.Delete_Vyplaty, MySqlQueries.Select_Vyplaty, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                    }
+                }
             }
         }
         public void редактироватьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -354,10 +427,22 @@ namespace PayDay_Energosbyt
 
         private void табелиУчетаРабВремениToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (identify == "sotrudniki")
-                Open_Tabel(dataGridView1.SelectedRows[0].Cells[0].Value.ToString(), MySqlQueries.Select_Tabel, dataGridView1.SelectedRows[0].Cells[1].Value.ToString());
-            if (identify == "vyplaty")
-                Open_Tabel(dataGridView1.SelectedRows[0].Cells[4].Value.ToString(), MySqlQueries.Select_Tabel_FIO, dataGridView1.SelectedRows[0].Cells[4].Value.ToString());
+            Show_Tabel();
+        }
+
+        private void Show_Tabel()
+        {
+            if (dataGridView1.SelectedRows.Count == 1)
+            {
+                if (identify == "sotrudniki")
+                    Open_Tabel(dataGridView1.SelectedRows[0].Cells[0].Value.ToString(), MySqlQueries.Select_Tabel, dataGridView1.SelectedRows[0].Cells[1].Value.ToString());
+                if (identify == "vyplaty")
+                    Open_Tabel(dataGridView1.SelectedRows[0].Cells[4].Value.ToString(), MySqlQueries.Select_Tabel_FIO, dataGridView1.SelectedRows[0].Cells[4].Value.ToString());
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста выберите одну запись," + '\n' + " по которой хотите просмотреть табель учета рабочего времени", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void Open_Tabel(string Sotrudnik, string query, string title)
@@ -369,12 +454,37 @@ namespace PayDay_Energosbyt
 
         private void графикиРаботыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (identify == "doljnosti")
-                Open_Grafik(dataGridView1.SelectedRows[0].Cells[0].Value.ToString(), MySqlQueries.Select_Grafik_Raboty, dataGridView1.SelectedRows[0].Cells[1].Value.ToString());
-            if (identify == "sotrudniki")
-                Open_Grafik(dataGridView1.SelectedRows[0].Cells[1].Value.ToString(), MySqlQueries.Select_Grafik_Raboty_FIO, dataGridView1.SelectedRows[0].Cells[1].Value.ToString());
-            if (identify == "vyplaty")
-                Open_Grafik(dataGridView1.SelectedRows[0].Cells[4].Value.ToString(),MySqlQueries.Select_Grafik_Raboty_FIO, dataGridView1.SelectedRows[0].Cells[4].Value.ToString());
+            Show_Grafik();
+        }
+
+        private void Show_Grafik()
+        {
+            if (dataGridView1.SelectedRows.Count == 1)
+            {
+                if (identify == "doljnosti")
+                    Open_Grafik(dataGridView1.SelectedRows[0].Cells[0].Value.ToString(), MySqlQueries.Select_Grafik_Raboty, dataGridView1.SelectedRows[0].Cells[1].Value.ToString());
+                if (identify == "sotrudniki")
+                {
+                    if (dataGridView1.SelectedRows[0].Cells[3].Value.ToString() != "")
+                        Open_Grafik(dataGridView1.SelectedRows[0].Cells[1].Value.ToString(), MySqlQueries.Select_Grafik_Raboty_FIO, dataGridView1.SelectedRows[0].Cells[1].Value.ToString());
+                    else
+                        MessageBox.Show("У выбранного вами сотрудника отсутствует должность." + '\n' + "Пожалуйста измените запись данного сотрудника", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                if (identify == "vyplaty")
+                {
+                    string output = null;
+                    MySqlOperations.Select_Text(MySqlQueries.Select_ID_Doljnosti_Sotrudnika, ref output, null, dataGridView1.SelectedRows[0].Cells[4].Value.ToString());
+                    if (output != null)
+                        Open_Grafik(dataGridView1.SelectedRows[0].Cells[4].Value.ToString(), MySqlQueries.Select_Grafik_Raboty_FIO, dataGridView1.SelectedRows[0].Cells[4].Value.ToString());
+                    else
+                        MessageBox.Show("У выбранного вами сотрудника отсутствует должность." + '\n' + "Пожалуйста измените запись данного сотрудника", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста выберите одну запись," + '\n' + " по которой хотите просмотреть график работы", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void Open_Grafik(string Doljnost, string query, string title)
@@ -397,18 +507,18 @@ namespace PayDay_Energosbyt
                 {
                     if (MessageBox.Show("Хотите просмотреть график работы для данной должности?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        Open_Grafik(dataGridView1.SelectedRows[0].Cells[0].Value.ToString(), MySqlQueries.Select_Grafik_Raboty, dataGridView1.SelectedRows[0].Cells[1].Value.ToString());
+                        Show_Grafik();
                     }
                 }
                 else if (result == DialogResult.No && identify == "sotrudniki")
                 {
                     if (MessageBox.Show("Хотите просмотреть табель отработанного времени для данного сотрудника?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        Open_Tabel(dataGridView1.SelectedRows[0].Cells[0].Value.ToString(), MySqlQueries.Select_Tabel, dataGridView1.SelectedRows[0].Cells[1].Value.ToString());
+                        Show_Tabel();
                     }
                     else if (MessageBox.Show("Хотите просмотреть график работы для данного сотрудника?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        Open_Grafik(dataGridView1.SelectedRows[0].Cells[1].Value.ToString(), MySqlQueries.Select_Grafik_Raboty_FIO, dataGridView1.SelectedRows[0].Cells[1].Value.ToString());
+                        Show_Grafik();
                     }
                 }
             }
@@ -416,53 +526,85 @@ namespace PayDay_Energosbyt
             {
                 if (MessageBox.Show("Хотите просмотреть график работы для данного сотрудника?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    Open_Grafik(dataGridView1.SelectedRows[0].Cells[4].Value.ToString(), MySqlQueries.Select_Grafik_Raboty_FIO, dataGridView1.SelectedRows[0].Cells[4].Value.ToString());
+                    Show_Grafik();
                 }
                 else if (MessageBox.Show("Хотите просмотреть табель отработанного времени для данного сотрудника?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    Open_Tabel(dataGridView1.SelectedRows[0].Cells[4].Value.ToString(), MySqlQueries.Select_Tabel_FIO, dataGridView1.SelectedRows[0].Cells[4].Value.ToString());
+                    Show_Tabel();
                 }
             }
-        }
-        private Print_Grafik_Dialog Print_Grafik(string ID)
-        {
-            Print_Grafik_Dialog print_Tabel_Grafik_Dialog = new Print_Grafik_Dialog(MySqlOperations, MySqlQueries, ID);
-            return print_Tabel_Grafik_Dialog;
         }
 
         private void табельУчетаРабВремениСотрудникаToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string ID = string.Empty;
-            if (identify == "sotrudniki")
+            if (dataGridView1.SelectedRows.Count == 1)
             {
-            
+                string ID = string.Empty;
+                if (identify == "sotrudniki")
+                {
+                    ID = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                    Print_Tabel_Dialog print_Tabel_Dialog = new Print_Tabel_Dialog(ID, MySqlOperations, MySqlQueries);
+                    print_Tabel_Dialog.ShowDialog();
+                }
+                else if (identify == "vyplaty")
+                {
+                    MySqlOperations.Select_Text(MySqlQueries.Select_ID_Sotrudnika, ref ID, null, dataGridView1.SelectedRows[0].Cells[4].Value.ToString());
+                    Print_Tabel_Dialog print_Tabel_Dialog = new Print_Tabel_Dialog(ID, MySqlOperations, MySqlQueries);
+                    print_Tabel_Dialog.ShowDialog();
+                }
             }
-            else if (identify == "vyplaty")
+            else
             {
-
+                MessageBox.Show("Пожалуйста выберите одну запись на которой будет основан табель.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void графикРаботыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string ID = string.Empty;
-            if (identify == "doljnosti")
+            if (dataGridView1.SelectedRows.Count == 0)
             {
-                ID = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-                Print_Grafik_Dialog print_Grafik_Dialog = Print_Grafik(ID);
-                print_Grafik_Dialog.ShowDialog();
+                string ID = string.Empty;
+                if (identify == "doljnosti")
+                {
+                    ID = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                    Print_Grafik_Dialog print_Grafik_Dialog = new Print_Grafik_Dialog(ID, MySqlOperations, MySqlQueries);
+                    print_Grafik_Dialog.ShowDialog();
+                }
+                if (identify == "sotrudniki")
+                {
+                    MySqlOperations.Select_Text(MySqlQueries.Select_ID_Doljnosti_Sotrudnika, ref ID, null, dataGridView1.SelectedRows[0].Cells[1].Value.ToString());
+                    Print_Grafik_Dialog print_Grafik_Dialog = new Print_Grafik_Dialog(ID, MySqlOperations, MySqlQueries);
+                    print_Grafik_Dialog.ShowDialog();
+                }
+                if (identify == "vyplaty")
+                {
+                    MySqlOperations.Select_Text(MySqlQueries.Select_ID_Doljnosti_Sotrudnika, ref ID, null, dataGridView1.SelectedRows[0].Cells[4].Value.ToString());
+                    Print_Grafik_Dialog print_Grafik_Dialog = new Print_Grafik_Dialog(ID, MySqlOperations, MySqlQueries);
+                    print_Grafik_Dialog.ShowDialog();
+                }
             }
-            if (identify == "sotrudniki")
+            else
             {
-                MySqlOperations.Select_Text(MySqlQueries.Select_ID_Doljnosti_Sotrudnika, ref ID, null, dataGridView1.SelectedRows[0].Cells[1].Value.ToString());
-                Print_Grafik_Dialog print_Grafik_Dialog = Print_Grafik(ID);
-                print_Grafik_Dialog.ShowDialog();
+                MessageBox.Show("Пожалуйста выберите одну запись на которой будет основан график.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void расчетныйЛистокToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             if (identify == "vyplaty")
             {
-                MySqlOperations.Select_Text(MySqlQueries.Select_ID_Doljnosti_Sotrudnika, ref ID, null, dataGridView1.SelectedRows[0].Cells[4].Value.ToString());
-                Print_Grafik_Dialog print_Grafik_Dialog = Print_Grafik(ID);
-                print_Grafik_Dialog.ShowDialog();
+                if (dataGridView1.SelectedRows.Count == 1)
+                {
+                    MySqlOperations.Print_Listok(MySqlQueries, dataGridView1, saveFileDialog1);
+                }
+                else
+                {
+                    MessageBox.Show("Невозможно распечатать расчетный листок с выбранными вами записями." + '\n' + "Пожалуйста выберите одну запись для печати расчетного листка.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Из данной таблицы невозможно распечатать расчетный листок." + '\n' + "Пожалуйста перейдите на таблицу Выплаты зарплат.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

@@ -187,9 +187,9 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.button2.Location = new System.Drawing.Point(216, 228);
+            this.button2.Location = new System.Drawing.Point(218, 228);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(210, 26);
+            this.button2.Size = new System.Drawing.Size(208, 26);
             this.button2.TabIndex = 14;
             this.button2.Text = "Отмена";
             this.button2.UseVisualStyleBackColor = true;
@@ -198,9 +198,9 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.button1.Location = new System.Drawing.Point(0, 228);
+            this.button1.Location = new System.Drawing.Point(3, 228);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(210, 26);
+            this.button1.Size = new System.Drawing.Size(208, 26);
             this.button1.TabIndex = 15;
             this.button1.Text = "Добавить";
             this.button1.UseVisualStyleBackColor = true;

@@ -32,6 +32,9 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // button2
@@ -43,6 +46,7 @@
             this.button2.TabIndex = 7;
             this.button2.Text = "Отмена";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -53,6 +57,7 @@
             this.button1.TabIndex = 6;
             this.button1.Text = "Печать";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
@@ -77,17 +82,37 @@
             this.dateTimePicker1.Size = new System.Drawing.Size(150, 26);
             this.dateTimePicker1.TabIndex = 4;
             // 
-            // Print_Tabel
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(0, 0);
+            this.dataGridView1.TabIndex = 8;
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.AddExtension = false;
+            this.saveFileDialog1.CreatePrompt = true;
+            this.saveFileDialog1.DefaultExt = "Книга Excel|*.xlsx";
+            this.saveFileDialog1.Filter = "Книга Excel|*.xlsx|Книга Excel 93-2003|*.xls|PDF|*.pdf";
+            this.saveFileDialog1.OverwritePrompt = false;
+            // 
+            // Print_Tabel_Dialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dateTimePicker1);
-            this.Name = "Print_Tabel";
+            this.Name = "Print_Tabel_Dialog";
             this.Text = "Параметры печати";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -98,5 +123,7 @@
         public System.Windows.Forms.Button button1;
         public System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }

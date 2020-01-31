@@ -156,75 +156,160 @@ namespace PayDay_Energosbyt
             {
                 if (sqlDataReader != null)
                     sqlDataReader.Close();
-                
+
             }
-            
+
         }
 
         public void Delete(string query, string query2, DataGridView dataGridView, string ID)
         {
-            if (MessageBox.Show("Вы действительно хотите удалить запись?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            try
             {
-                try
-                {
-                    sqlCommand = new MySqlCommand(query, mySqlConnection);
-                    sqlCommand.Parameters.AddWithValue("ID", ID);
-                    sqlCommand.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                sqlCommand = new MySqlCommand(query, mySqlConnection);
+                sqlCommand.Parameters.AddWithValue("ID", ID);
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Невозможно удалить запись(-и)." + '\n' + "Возможно она(-и) используются в других записях.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             Select_DataGridView(query2, dataGridView);
+            dataGridView.Columns[0].Visible = false;
         }
 
-        public void Print_Grafik(MySqlQueries mySqlQueries, DataGridView dataGridView, DateTimePicker dateTimePicker, string ID)
+        public void Print_Grafik(MySqlQueries mySqlQueries, DataGridView dataGridView, DateTimePicker dateTimePicker, SaveFileDialog saveFileDialog, string ID)
         {
             ExcelApplication ExcelApp = null;
             Workbooks workbooks = null;
             Workbook workbook = null;
             string output = null;
             string fileName = null;
-            Select_Text(mySqlQueries.Exists_Print_Grafik, ref output, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
-            if (output == "1")
+            Select_Text(mySqlQueries.Select_Doljnost_by_ID, ref output, ID);
+            saveFileDialog.Title = "Сохранить график работы как";
+            saveFileDialog.FileName = "График работы для " + output;
+            saveFileDialog.InitialDirectory = Application.StartupPath + "\\Отчетность\\";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                Select_DataGridView(mySqlQueries.Print_Grafik, dataGridView, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
-                if (dataGridView.Rows.Count >= 13)
+                fileName = saveFileDialog.FileName;
+                Select_Text(mySqlQueries.Exists_Grafik_Raboty_Print, ref output, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
+                if (output == "1")
                 {
+                    Select_DataGridView(mySqlQueries.Print_Grafik, dataGridView, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
+                    if (dataGridView.Rows.Count >= 13)
+                    {
+                        try
+                        {
+                            Select_Text(mySqlQueries.Select_Doljnost_by_ID, ref output, ID);
+                            ExcelApp = new ExcelApplication();
+                            workbooks = ExcelApp.Workbooks;
+                            workbook = workbooks.Open(Application.StartupPath + "\\Blanks\\Grafik.xlsx");
+                            ExcelApp.Cells[1, 22] = dateTimePicker.Value.Year.ToString();
+                            ExcelApp.Cells[2, 13] = output;
+                            ExcelApp.Cells[26, 11] = dateTimePicker.Value.Year.ToString();
+                            Select_Text(mySqlQueries.Select_Kol_Rab_Dney_Grafik, ref output, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
+                            ExcelApp.Cells[27, 5] = output;
+                            Select_Text(mySqlQueries.Select_Kol_PredPrazdn_Dney_Grafik, ref output, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
+                            ExcelApp.Cells[27, 20] = output;
+                            Select_Text(mySqlQueries.Select_Kol_Poln_Dney_Grafik, ref output, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
+                            ExcelApp.Cells[27, 11] = output;
+                            Select_Text(mySqlQueries.Select_Itogo_Rab_Chasov_Grafik, ref output, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
+                            ExcelApp.Cells[28, 5] = decimal.Parse(output);
+                            int ExCol = 2;
+                            int ExRow = 7;
+                            for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
+                            {
+                                if (ExRow == 10 || ExRow == 14 || ExRow == 18)
+                                    ExRow++;
+                                ExCol = 2;
+                                for (int j = 1; j < dataGridView.Columns.Count; j++)
+                                {
+                                    ExcelApp.Cells[ExRow, ExCol] = dataGridView.Rows[i].Cells[j].Value.ToString();
+                                    ExCol++;
+                                }
+                                ExRow++;
+                            }
+                            workbook.SaveAs(fileName);
+                            ExcelApp.Visible = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            Marshal.ReleaseComObject(workbook);
+                            Marshal.ReleaseComObject(workbooks);
+                            Marshal.ReleaseComObject(ExcelApp);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Не хватает записей графика работы" + '\n' + "для данной должности на выбранный вами год." + '\n' + "Пожалуйста дополните график работы для данной должности." + '\n' + "Необходимо заполнить график на 12 месяцев для выбранного вами года.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Отсутствует график работы" + '\n' + "для данной должности на выбранный вами год." + '\n' + "Пожалуйста заполните график работы для данной должности.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
+        public void Print_Tabel(MySqlQueries mySqlQueries, DataGridView dataGridView, DateTimePicker dateTimePicker, SaveFileDialog saveFileDialog, string ID)
+        {
+            ExcelApplication ExcelApp = null;
+            Workbooks workbooks = null;
+            Workbook workbook = null;
+            string output = null;
+            string fileName = null;
+            Select_Text(mySqlQueries.Select_FIO_Sotrudnika_by_ID, ref output, ID);
+            saveFileDialog.Title = "Сохранить табель как";
+            saveFileDialog.FileName = "Табель учета рабочего времени для " + output;
+            saveFileDialog.InitialDirectory = Application.StartupPath + "\\Отчетность\\";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                fileName = saveFileDialog.FileName;
+                Select_Text(mySqlQueries.Exists_Tabel_Print, ref output, ID, dateTimePicker.Value.Year.ToString() + "-" + dateTimePicker.Value.Month.ToString() + "-1", dateTimePicker.Value.Year.ToString() + "-" + dateTimePicker.Value.AddMonths(1).Month.ToString() + "-0");
+                if (output == "1")
+                {
+                    Select_DataGridView(mySqlQueries.Print_Tabel, dataGridView, ID, dateTimePicker.Value.Year.ToString() + "-" + dateTimePicker.Value.Month.ToString() + "-1", dateTimePicker.Value.Year.ToString() + "-" + dateTimePicker.Value.AddMonths(1).Month.ToString() + "-0");
                     try
                     {
-                        Select_Text(mySqlQueries.Select_Doljnost_by_ID, ref output, ID);
-                        fileName = output;
+                        Select_Text(mySqlQueries.Select_FIO_Sotrudnika_by_ID, ref output, ID);
                         ExcelApp = new ExcelApplication();
                         workbooks = ExcelApp.Workbooks;
-                        workbook = workbooks.Open(Application.StartupPath + "\\Blanks\\Grafik.xlsx");
-                        ExcelApp.Cells[1, 22] = dateTimePicker.Value.Year.ToString();
-                        ExcelApp.Cells[2, 13] = output;
-                        ExcelApp.Cells[26, 11] = dateTimePicker.Value.Year.ToString();
-                        Select_Text(mySqlQueries.Kol_Rab_Dney, ref output, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
-                        ExcelApp.Cells[27, 5] = output;
-                        Select_Text(mySqlQueries.Kol_PredPrazdn_Dney, ref output, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
-                        ExcelApp.Cells[27, 20] = output;
-                        Select_Text(mySqlQueries.Kol_Poln_Dney, ref output, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
-                        ExcelApp.Cells[27, 11] = output;
-                        Select_Text(mySqlQueries.Itogo_Rab_Chasov, ref output, ID, dateTimePicker.Value.Year.ToString() + "-1-1", dateTimePicker.Value.AddYears(1).Year.ToString() + "-1-0");
+                        workbook = workbooks.Open(Application.StartupPath + "\\Blanks\\Tabel.xlsx");
+                        ExcelApp.Cells[3, 16] = dateTimePicker.Text.ToString();
+                        ExcelApp.Cells[11, 3] = output;
+                        ExcelApp.Cells[11, 2] = ID;
+                        Select_Text(mySqlQueries.Select_Otdel_Sotrudnika_by_ID, ref output, ID);
+                        ExcelApp.Cells[4, 3] = output.Split(' ')[0];
+                        ExcelApp.Cells[4, 6] = output.Split(' ')[1];
+                        Select_Text(mySqlQueries.Select_Doljnost_Sotrudnika_by_ID, ref output, ID);
+                        ExcelApp.Cells[11, 19] = output;
+                        Select_Text(mySqlQueries.Select_Kol_Rab_Dney_Tabel, ref output, ID, dateTimePicker.Value.Year.ToString() + "-" + dateTimePicker.Value.Month.ToString() + "-1", dateTimePicker.Value.Year.ToString() + "-" + dateTimePicker.Value.AddMonths(1).Month.ToString() + "-0");
+                        ExcelApp.Cells[11, 20] = output;
+                        Select_Text(mySqlQueries.Select_VP_Tabel, ref output, ID, dateTimePicker.Value.Year.ToString() + "-" + dateTimePicker.Value.Month.ToString() + "-1", dateTimePicker.Value.Year.ToString() + "-" + dateTimePicker.Value.AddMonths(1).Month.ToString() + "-0");
+                        ExcelApp.Cells[11, 21] = output;
+                        Select_Text(mySqlQueries.Select_Otrabotano_Tabel, ref output, ID, dateTimePicker.Value.Year.ToString() + "-" + dateTimePicker.Value.Month.ToString() + "-1", dateTimePicker.Value.Year.ToString() + "-" + dateTimePicker.Value.AddMonths(1).Month.ToString() + "-0");
+                        ExcelApp.Cells[11, 22] = decimal.Parse(output);
+                        Select_Text(mySqlQueries.Select_Itogo_Rab_Chasov_Grafik, ref output, ID, dateTimePicker.Value.Year.ToString() + "-" + dateTimePicker.Value.Month.ToString() + "-1", dateTimePicker.Value.Year.ToString() + "-" + dateTimePicker.Value.AddMonths(1).Month.ToString() + "-0");
                         ExcelApp.Cells[28, 5] = output;
-                        int ExCol = 2;
-                        int ExRow = 7;
+                        int ExCol = 3;
+                        int ExRow = 12;
                         for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
                         {
-                            if (ExRow == 10 || ExRow == 14 || ExRow == 18)
-                                ExRow++;
-                            ExCol = 2;
                             for (int j = 1; j < dataGridView.Columns.Count; j++)
                             {
                                 ExcelApp.Cells[ExRow, ExCol] = dataGridView.Rows[i].Cells[j].Value.ToString();
                                 ExCol++;
+                                if (ExCol == 18 && j == 15)
+                                {
+                                    ExRow++;
+                                    ExCol = 3;
+                                }
                             }
-                            ExRow++;
                         }
-                        workbook.SaveAs(Application.StartupPath + "\\Отчетность\\График работы для " + fileName);
+                        workbook.SaveAs(fileName);
                         ExcelApp.Visible = true;
                     }
                     catch (Exception ex)
@@ -240,14 +325,62 @@ namespace PayDay_Energosbyt
                 }
                 else
                 {
-                    MessageBox.Show("Не хватает записей графика работы для данной должности" + '\n' + "на выбранный вами год." + '\n' + "Пожалуйста дополните график работы для данной должности." + '\n' + "Необходимо заполнить график на 12 месяцев" + '\n' + "для выбранного вами года.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Отсутствует табель учета рабочего времени" + '\n' + "для данного сотрудника на выбранный вами месяц." + '\n' + "Пожалуйста заполните табель учета рабочего времени для данного сотрудника.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
+        public void Print_Listok(MySqlQueries mySqlQueries, DataGridView dataGridView, SaveFileDialog saveFileDialog, string ID = null)
+        {
+            ExcelApplication ExcelApp = null;
+            Workbooks workbooks = null;
+            Workbook workbook = null;
+            string output = null;
+            string fileName = null;
+            saveFileDialog.Title = "Сохранить расчетный листок как";
+            saveFileDialog.FileName = "Расчетный листок " + dataGridView.SelectedRows[0].Cells[4].Value.ToString();
+            saveFileDialog.InitialDirectory = Application.StartupPath + "\\Отчетность\\";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                fileName = saveFileDialog.FileName;
+                try
+                {
+                    ExcelApp = new ExcelApplication();
+                    workbooks = ExcelApp.Workbooks;
+                    workbook = workbooks.Open(Application.StartupPath + "\\Blanks\\Tabel.xlsx");
+                    ExcelApp.Cells[2, 4] = dataGridView.SelectedRows[0].Cells[1].Value.ToString();
+                    ExcelApp.Cells[5, 3] = dataGridView.SelectedRows[0].Cells[4].Value.ToString();
+                    decimal Nachisleno = decimal.Parse(dataGridView.SelectedRows[0].Cells[5].Value.ToString());
+                    ExcelApp.Cells[10, 3] = Nachisleno;
+                    string date1 = dataGridView.SelectedRows[0].Cells[2].Value.ToString().Split(' ')[0].Split('.')[2] + "-" + dataGridView.SelectedRows[0].Cells[2].Value.ToString().Split(' ')[0].Split('.')[1] + "-" + dataGridView.SelectedRows[0].Cells[2].Value.ToString().Split(' ')[0].Split('.')[0];
+                    string date2 = dataGridView.SelectedRows[0].Cells[3].Value.ToString().Split(' ')[0].Split('.')[2] + "-" + dataGridView.SelectedRows[0].Cells[3].Value.ToString().Split(' ')[0].Split('.')[1] + "-" + dataGridView.SelectedRows[0].Cells[3].Value.ToString().Split(' ')[0].Split('.')[0];
+                    Select_Text(mySqlQueries.Select_Otrabotano, ref output, dataGridView.SelectedRows[0].Cells[4].Value.ToString(),date1,date2);
+                    ExcelApp.Cells[10, 5] = decimal.Parse(output);
+                    ExcelApp.Cells[13, 3] = Nachisleno;
+                    ExcelApp.Cells[13, 7] = dataGridView.SelectedRows[0].Cells[6].Value.ToString();
+                    ExcelApp.Cells[14, 4] = dataGridView.SelectedRows[0].Cells[7].Value.ToString();
+                    ExcelApp.Cells[10, 7] = (Nachisleno * 1) / 100;
+                    ExcelApp.Cells[11,7] = (Nachisleno * 1) / 100;
+                    ExcelApp.Cells[11,8] = (Nachisleno * 13) / 100;
+                    workbook.SaveAs(fileName);
+                    ExcelApp.Visible = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    Marshal.ReleaseComObject(workbook);
+                    Marshal.ReleaseComObject(workbooks);
+                    Marshal.ReleaseComObject(ExcelApp);
                 }
             }
             else
             {
-                MessageBox.Show("Отсутствует график работы для данной должности" + '\n' + "на выбранный вами год." + '\n' + "Пожалуйста добавьте график работы для данной должности.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Отсутствует табель учета рабочего времени" + '\n' + "для данного сотрудника на выбранный вами месяц." + '\n' + "Пожалуйста заполните табель учета рабочего времени для данного сотрудника.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
+        } 
 
         public void Select_Text(string query, ref string output, string ID = null, string Value1 = null, string Value2 = null, string Value3 = null, string Value4 = null, string Value5 = null, string Value6 = null, string Value7 = null, string Value8 = null)
         {
@@ -309,8 +442,8 @@ namespace PayDay_Energosbyt
             string output = string.Empty;
             string Identify = string.Empty;
             string RabVrem = string.Empty;
-            DateTime Begin = new DateTime(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, 1);
-            DateTime End = new DateTime(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, DateTime.DaysInMonth(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month));
+            DateTime Begin = new DateTime(dateTimePicker1.Value.Year, 1, 1);
+            DateTime End = new DateTime(dateTimePicker1.Value.Year, 12, 31);
             Select_Text(mySqlQueries.Exists_Grafik_Raboty, ref output, ID, Begin.Year.ToString(), Begin.Month.ToString(), Begin.Day.ToString());
             if (output == "0")
             {
@@ -348,9 +481,9 @@ namespace PayDay_Energosbyt
             string Identify = string.Empty;
             string RabVrem = string.Empty;
             int index = 0;
-            DateTime Begin = new DateTime(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, 1);
-            DateTime End = new DateTime(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, DateTime.DaysInMonth(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month));
-            Select_DataGridView(mySqlQueries.Select_Grafik_For_Tabel, dataGridView, ID, dateTimePicker1.Value.Month.ToString(), dateTimePicker1.Value.Year.ToString());
+            DateTime Begin = new DateTime(dateTimePicker1.Value.Year, 1, 1);
+            DateTime End = new DateTime(dateTimePicker1.Value.Year, 12, 31);
+            Select_DataGridView(mySqlQueries.Select_Grafik_For_Tabel, dataGridView, ID, Begin.Year.ToString());
             Select_Text(mySqlQueries.Exists_Tabel, ref output, ID, Begin.Year.ToString(), Begin.Month.ToString(), Begin.Day.ToString());
             if (output == "0")
             {

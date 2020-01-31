@@ -13,7 +13,7 @@ namespace PayDay_Energosbyt
             InitializeComponent();
         }
 
-        public Print_Grafik_Dialog(MySqlOperations mySqlOperations, MySqlQueries mySqlQueries, string iD)
+        public Print_Grafik_Dialog(string iD, MySqlOperations mySqlOperations, MySqlQueries mySqlQueries)
         {
             InitializeComponent();
             ID = iD;
@@ -29,7 +29,7 @@ namespace PayDay_Energosbyt
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MySqlOperations.Print_Grafik(MySqlQueries, dataGridView1, dateTimePicker1, ID);
+            MySqlOperations.Print_Grafik(MySqlQueries, dataGridView1, dateTimePicker1, saveFileDialog1, ID);
             this.Close();
         }
     }

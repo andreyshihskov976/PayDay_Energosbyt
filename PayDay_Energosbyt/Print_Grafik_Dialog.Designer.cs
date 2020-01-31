@@ -28,13 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,11 +90,13 @@
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.Visible = false;
             // 
-            // imageList1
+            // saveFileDialog1
             // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.saveFileDialog1.AddExtension = false;
+            this.saveFileDialog1.CreatePrompt = true;
+            this.saveFileDialog1.DefaultExt = "Книга Excel|*.xlsx";
+            this.saveFileDialog1.Filter = "Книга Excel|*.xlsx|Книга Excel 93-2003|*.xls|PDF|*.pdf";
+            this.saveFileDialog1.OverwritePrompt = false;
             // 
             // Print_Grafik_Dialog
             // 
@@ -124,6 +125,6 @@
         private System.Windows.Forms.Button button2;
         public System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }

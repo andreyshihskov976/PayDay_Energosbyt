@@ -36,8 +36,20 @@ namespace PayDay_Energosbyt
                     MySqlOperations.Select_Text(MySqlQueries.Exists_Vyplaty, ref exists, ID, date1, date2, date3);
                     if (exists == "0")
                     {
-                        MySqlOperations.Insert_Update(MySqlQueries.Insert_Vyplaty, ID, date1, date2, date3, textBox1.Text, textBox2.Text, textBox3.Text);
-                        MessageBox.Show("Операция выполнена успешно.", "Успех");
+                        MySqlOperations.Select_Text(MySqlQueries.Exists_Grafik_Raboty_Vylaty, ref exists, ID, date2, date3);
+                        if (exists == "1")
+                        {
+                            MySqlOperations.Select_Text(MySqlQueries.Exists_Tabel_Print, ref exists, ID, date2, date3);
+                            if (exists == "1")
+                            {
+                                MySqlOperations.Insert_Update(MySqlQueries.Insert_Vyplaty, ID, date1, date2, date3, textBox1.Text, textBox2.Text, textBox3.Text);
+                                MessageBox.Show("Операция выполнена успешно.", "Успех");
+                            }
+                            else
+                                MessageBox.Show("На выбранного вами сотрудника отсутствует табель на выбранные вами числа." + '\n' + "Заполните табель выбранного сотрудника на выбранные вами числа.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        else
+                            MessageBox.Show("На выбранного вами сотрудника отсутствует график работы на выбранные вами числа." + '\n' + "Заполните график работы для должности выбранного сотрудника на выбранные вами числа.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
                     {

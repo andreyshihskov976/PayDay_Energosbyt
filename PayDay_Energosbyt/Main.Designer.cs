@@ -81,6 +81,7 @@
             this.просмотретьГрафикРаботыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.просмотретьТабельОтрВремениToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -248,6 +249,7 @@
             this.расчетныйЛистокToolStripMenuItem.Name = "расчетныйЛистокToolStripMenuItem";
             this.расчетныйЛистокToolStripMenuItem.Size = new System.Drawing.Size(289, 22);
             this.расчетныйЛистокToolStripMenuItem.Text = "Расчетный листок";
+            this.расчетныйЛистокToolStripMenuItem.Click += new System.EventHandler(this.расчетныйЛистокToolStripMenuItem_Click);
             // 
             // расчетноплатежнаяВедомостьToolStripMenuItem
             // 
@@ -519,6 +521,14 @@
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.AddExtension = false;
+            this.saveFileDialog1.CreatePrompt = true;
+            this.saveFileDialog1.DefaultExt = "Книга Excel|*.xlsx";
+            this.saveFileDialog1.Filter = "Книга Excel|*.xlsx|Книга Excel 93-2003|*.xls|PDF|*.pdf";
+            this.saveFileDialog1.OverwritePrompt = false;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -595,6 +605,7 @@
         private System.Windows.Forms.ToolStripMenuItem просмотретьГрафикРаботыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem просмотретьТабельОтрВремениToolStripMenuItem;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 
