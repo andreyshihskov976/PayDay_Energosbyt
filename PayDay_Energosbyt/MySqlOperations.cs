@@ -161,7 +161,7 @@ namespace PayDay_Energosbyt
 
         }
 
-        public void Delete(string query, string query2, DataGridView dataGridView, string ID)
+        public void Delete(string query, string ID)
         {
             try
             {
@@ -173,8 +173,6 @@ namespace PayDay_Energosbyt
             {
                 MessageBox.Show("Невозможно удалить запись(-и)." + '\n' + "Возможно она(-и) используются в других записях.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            Select_DataGridView(query2, dataGridView);
-            dataGridView.Columns[0].Visible = false;
         }
 
         public void Print_Grafik(MySqlQueries mySqlQueries, DataGridView dataGridView, DateTimePicker dateTimePicker, SaveFileDialog saveFileDialog, string ID)

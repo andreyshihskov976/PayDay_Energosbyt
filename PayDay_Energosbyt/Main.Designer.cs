@@ -345,7 +345,6 @@
             // 
             // удалитьToolStripMenuItem
             // 
-            this.удалитьToolStripMenuItem.Enabled = false;
             this.удалитьToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("удалитьToolStripMenuItem.Image")));
             this.удалитьToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
@@ -356,7 +355,6 @@
             // 
             // редактироватьToolStripMenuItem
             // 
-            this.редактироватьToolStripMenuItem.Enabled = false;
             this.редактироватьToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("редактироватьToolStripMenuItem.Image")));
             this.редактироватьToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.редактироватьToolStripMenuItem.Name = "редактироватьToolStripMenuItem";
@@ -456,7 +454,7 @@
             this.просмотретьГрафикРаботыToolStripMenuItem,
             this.просмотретьТабельОтрВремениToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(224, 114);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(224, 136);
             // 
             // toolStripMenuItem2
             // 
@@ -540,7 +538,9 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "Main";
+            this.ShowIcon = false;
             this.Text = "Главное окно";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Main_KeyPress);

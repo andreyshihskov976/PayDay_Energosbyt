@@ -266,7 +266,10 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Grafik";
+            this.ShowIcon = false;
             this.Text = "Grafik";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

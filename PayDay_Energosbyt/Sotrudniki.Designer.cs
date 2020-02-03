@@ -194,6 +194,7 @@
             // 
             // button2
             // 
+            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.button2.Location = new System.Drawing.Point(306, 138);
             this.button2.Name = "button2";
@@ -220,6 +221,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.CancelButton = this.button2;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -238,7 +240,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Sotrudniki";
+            this.ShowIcon = false;
             this.Text = "Форма добавления|редактирования записей таблицы Сотрудники";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Sotrudniki_FormClosed);
             this.ResumeLayout(false);

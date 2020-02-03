@@ -91,6 +91,7 @@ namespace PayDay_Energosbyt
                 raschetniki.Owner = this;
                 raschetniki.button1.Visible = true;
                 raschetniki.button3.Visible = false;
+                raschetniki.AcceptButton = raschetniki.button1;
                 raschetniki.Show();
             }
             else if (identify == "otdely")
@@ -100,6 +101,7 @@ namespace PayDay_Energosbyt
                 otdely.Owner = this;
                 otdely.button1.Visible = true;
                 otdely.button3.Visible = false;
+                otdely.AcceptButton = otdely.button1;
                 otdely.Show();
             }
             else if (identify == "sotrudniki")
@@ -107,8 +109,6 @@ namespace PayDay_Energosbyt
                 Sotrudniki sotrudniki = new Sotrudniki(MySqlOperations,MySqlQueries);
                 sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
                 sotrudniki.Owner = this;
-                sotrudniki.button1.Visible = true;
-                sotrudniki.button3.Visible = false;
                 if (sotrudniki.comboBox1.Items.Count == 0)
                     Sotrudniki_After_Otdely(sotrudniki);
                 if (sotrudniki.comboBox2.Items.Count == 0)
@@ -117,6 +117,9 @@ namespace PayDay_Energosbyt
                     Sotrudniki_After_Oklad(sotrudniki);
                 if (sotrudniki.comboBox1.Items.Count == 0)
                     Sotrudniki_After_RS(sotrudniki);
+                sotrudniki.button1.Visible = true;
+                sotrudniki.button3.Visible = false;
+                sotrudniki.AcceptButton = sotrudniki.button1;
                 sotrudniki.Show();
             }
             else if (identify == "oklad")
@@ -126,6 +129,7 @@ namespace PayDay_Energosbyt
                 oklad.Owner = this;
                 oklad.button1.Visible = true;
                 oklad.button3.Visible = false;
+                oklad.AcceptButton = oklad.button1;
                 oklad.Show();
             }
             else if (identify == "doljnosti")
@@ -135,6 +139,7 @@ namespace PayDay_Energosbyt
                 doljnosti.Owner = this;
                 doljnosti.button1.Visible = true;
                 doljnosti.button3.Visible = false;
+                doljnosti.AcceptButton = doljnosti.button1;
                 doljnosti.Show();
             }
             else if (identify == "vyplaty")
@@ -155,12 +160,11 @@ namespace PayDay_Energosbyt
                 raschetniki.Owner = this.Owner;
                 raschetniki.button1.Visible = true;
                 raschetniki.button3.Visible = false;
+                raschetniki.AcceptButton = raschetniki.button1;
                 raschetniki.ShowDialog();
                 sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
                 sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
                 sotrudniki.Owner = this;
-                sotrudniki.button1.Visible = true;
-                sotrudniki.button3.Visible = false;
             }
             return sotrudniki;
         }
@@ -174,12 +178,11 @@ namespace PayDay_Energosbyt
                 otdely.Owner = this.Owner;
                 otdely.button1.Visible = true;
                 otdely.button3.Visible = false;
+                otdely.AcceptButton = otdely.button1;
                 otdely.ShowDialog();
                 sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
                 sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
                 sotrudniki.Owner = this;
-                sotrudniki.button1.Visible = true;
-                sotrudniki.button3.Visible = false;
             }
             return sotrudniki;
         }
@@ -193,12 +196,11 @@ namespace PayDay_Energosbyt
                 oklad.Owner = this.Owner;
                 oklad.button1.Visible = true;
                 oklad.button3.Visible = false;
+                oklad.AcceptButton = oklad.button1;
                 oklad.ShowDialog();
                 sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
                 sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
                 sotrudniki.Owner = this;
-                sotrudniki.button1.Visible = true;
-                sotrudniki.button3.Visible = false;
             }
             return sotrudniki;
         }
@@ -213,11 +215,10 @@ namespace PayDay_Energosbyt
                 doljnosti.button1.Visible = true;
                 doljnosti.button3.Visible = false;
                 doljnosti.ShowDialog();
+                doljnosti.AcceptButton = doljnosti.button1;
                 sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
                 sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
                 sotrudniki.Owner = this;
-                sotrudniki.button1.Visible = true;
-                sotrudniki.button3.Visible = false;
             }
             return sotrudniki;
         }
@@ -260,6 +261,7 @@ namespace PayDay_Energosbyt
                 raschetniki.Owner = this;
                 raschetniki.button3.Visible = true;
                 raschetniki.button1.Visible = false;
+                raschetniki.AcceptButton = raschetniki.button3;
                 raschetniki.Show();
             }
             else if (identify == "otdely")
@@ -271,6 +273,7 @@ namespace PayDay_Energosbyt
                 otdely.Owner = this;
                 otdely.button3.Visible = true;
                 otdely.button1.Visible = false;
+                otdely.AcceptButton = otdely.button3;
                 otdely.Show();
             }
             else if (identify == "sotrudniki")
@@ -303,6 +306,7 @@ namespace PayDay_Energosbyt
                     sotrudniki.Owner = this;
                     sotrudniki.button3.Visible = true;
                     sotrudniki.button1.Visible = false;
+                    sotrudniki.AcceptButton = sotrudniki.button3;
                     sotrudniki.Show();
                 }
                 else
@@ -323,6 +327,7 @@ namespace PayDay_Energosbyt
                     sotrudniki.Owner = this;
                     sotrudniki.button3.Visible = true;
                     sotrudniki.button1.Visible = false;
+                    sotrudniki.AcceptButton = sotrudniki.button3;
                     sotrudniki.Show();
                 }
             }
@@ -337,6 +342,7 @@ namespace PayDay_Energosbyt
                 oklad.Owner = this;
                 oklad.button3.Visible = true;
                 oklad.button1.Visible = false;
+                oklad.AcceptButton = oklad.button3;
                 oklad.Show();
             }
             else if (identify == "doljnosti")
@@ -348,6 +354,7 @@ namespace PayDay_Energosbyt
                 doljnosti.Owner = this;
                 doljnosti.button3.Visible = true;
                 doljnosti.button1.Visible = false;
+                doljnosti.AcceptButton = doljnosti.button3;
                 doljnosti.Show();
             }
         }
@@ -358,45 +365,63 @@ namespace PayDay_Energosbyt
             {
                 if (identify == "raschetniki")
                 {
-                    foreach (var i in dataGridView1.SelectedRows)
+                    for (int i = 0; i < dataGridView1.SelectedRows.Count; i++)
                     {
-                        MySqlOperations.Delete(MySqlQueries.Delete_Rasch_Scheta, MySqlQueries.Select_Rasch_Scheta, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                        MySqlOperations.Delete(MySqlQueries.Delete_Rasch_Scheta, dataGridView1.SelectedRows[i].Cells[0].Value.ToString());
                     }
+                    identify = "raschetniki";
+                    DataGrid_Load(MySqlQueries.Select_Rasch_Scheta);
+                    this.Text = "Расчетные счета";
                 }
                 else if (identify == "otdely")
                 {
-                    foreach (var i in dataGridView1.SelectedRows)
+                    for (int i = 0; i < dataGridView1.SelectedRows.Count; i++)
                     {
-                        MySqlOperations.Delete(MySqlQueries.Delete_Otdely, MySqlQueries.Select_Otdely, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                        MySqlOperations.Delete(MySqlQueries.Delete_Otdely, dataGridView1.SelectedRows[i].Cells[0].Value.ToString());
                     }
+                    identify = "otdely";
+                    DataGrid_Load(MySqlQueries.Select_Otdely);
+                    this.Text = "Отделы";
                 }
                 else if (identify == "sotrudniki")
                 {
-                    foreach (var i in dataGridView1.SelectedRows)
+                    for (int i = 0; i < dataGridView1.SelectedRows.Count; i++)
                     {
-                        MySqlOperations.Delete(MySqlQueries.Delete_Sotrudniki, MySqlQueries.Select_Sotrudniki, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                        MySqlOperations.Delete(MySqlQueries.Delete_Sotrudniki, dataGridView1.SelectedRows[i].Cells[0].Value.ToString());
                     }
+                    identify = "sotrudniki";
+                    DataGrid_Load(MySqlQueries.Select_Sotrudniki);
+                    this.Text = "Сотрудники";
                 }
                 else if (identify == "oklad")
                 {
-                    foreach (var i in dataGridView1.SelectedRows)
+                    for (int i = 0; i < dataGridView1.SelectedRows.Count; i++)
                     {
-                        MySqlOperations.Delete(MySqlQueries.Delete_Oklad, MySqlQueries.Select_Oklad, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                        MySqlOperations.Delete(MySqlQueries.Delete_Oklad, dataGridView1.SelectedRows[i].Cells[0].Value.ToString());
                     }
+                    identify = "oklad";
+                    DataGrid_Load(MySqlQueries.Select_Oklad);
+                    this.Text = "Оклад";
                 }
                 else if (identify == "doljnosti")
                 {
-                    foreach (var i in dataGridView1.SelectedRows)
+                    for (int i = 0; i < dataGridView1.SelectedRows.Count; i++)
                     {
-                        MySqlOperations.Delete(MySqlQueries.Delete_Doljnosti, MySqlQueries.Select_Doljnosti, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                        MySqlOperations.Delete(MySqlQueries.Delete_Doljnosti, dataGridView1.SelectedRows[i].Cells[0].Value.ToString());
                     }
+                    identify = "doljnosti";
+                    DataGrid_Load(MySqlQueries.Select_Doljnosti);
+                    this.Text = "Должности";
                 }
                 else if (identify == "vyplaty")
                 {
-                    foreach (var i in dataGridView1.SelectedRows)
+                    for (int i = 0; i < dataGridView1.SelectedRows.Count; i++)
                     {
-                        MySqlOperations.Delete(MySqlQueries.Delete_Vyplaty, MySqlQueries.Select_Vyplaty, dataGridView1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                        MySqlOperations.Delete(MySqlQueries.Delete_Vyplaty, dataGridView1.SelectedRows[i].Cells[0].Value.ToString());
                     }
+                    identify = "vyplaty";
+                    DataGrid_Load(MySqlQueries.Select_Vyplaty);
+                    this.Text = "Выплаты зарплаты";
                 }
             }
         }

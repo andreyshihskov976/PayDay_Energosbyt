@@ -186,6 +186,7 @@
             // 
             // button2
             // 
+            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.button2.Location = new System.Drawing.Point(218, 228);
             this.button2.Name = "button2";
@@ -238,10 +239,12 @@
             // 
             // Vyplaty
             // 
+            this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.CancelButton = this.button2;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
@@ -262,7 +265,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.label1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Vyplaty";
+            this.ShowIcon = false;
             this.Text = "Форма добавления записей  таблицы Выплаты";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Vyplaty_FormClosed);
             this.ResumeLayout(false);

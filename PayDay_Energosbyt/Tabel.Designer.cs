@@ -278,7 +278,10 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Tabel";
+            this.ShowIcon = false;
             this.Text = "Tabel";
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
