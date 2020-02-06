@@ -8,11 +8,40 @@ namespace PayDay_Energosbyt
         public MySqlOperations MySqlOperations = null;
         public MySqlQueries MySqlQueries = null;
         public string identify = null;
-        public Main()
+        public string Role = string.Empty;
+        public string Login = string.Empty;
+        public string Password = string.Empty;
+        public Main(string login, string password)
         {
             InitializeComponent();
             MySqlOperations = new MySqlOperations(MySqlQueries);
             MySqlQueries = new MySqlQueries();
+            Login = login;
+            Password = password;
+            //MySqlOperations.Select_Text(MySqlQueries.Select_Role, ref Role, null, Login, Password);
+            //if (Role[0] == '0')
+            //    должностиToolStripMenuItem.Visible = false;
+            //if (Role[1] == '0')
+            //{
+            //    графикиРаботыToolStripMenuItem.Visible = false;
+            //    просмотретьГрафикРаботыToolStripMenuItem.Visible = false;
+            //}
+            //if (Role[2] == '0')
+            //    окладToolStripMenuItem.Visible = false;
+
+            //if (Role[3] == '0')
+            //    отделыToolStripMenuItem.Visible = false;
+            //if (Role[4] == '0')
+            //    расчетныеСчетаToolStripMenuItem.Visible = false;
+            //if (Role[5] == '0')
+            //    сотрудникиToolStripMenuItem1.Visible = false;
+            //if (Role[6] == '0')
+            //{
+            //    табельУчетаРабВремениСотрудникаToolStripMenuItem.Visible = false;
+            //    просмотретьТабельОтрВремениToolStripMenuItem.Visible = false;
+            //}
+            //if (Role[7] == '0')
+            //    выплатыЗарплатыToolStripMenuItem.Visible = false;
         }
 
         private void выходToolStripMenuItem_Click(object sender, EventArgs e)
@@ -23,6 +52,37 @@ namespace PayDay_Energosbyt
         private void Form1_Load(object sender, EventArgs e)
         {
             MySqlOperations.OpenConnection();
+            MySqlOperations.Select_Text(MySqlQueries.Select_Role, ref Role, null, Login, Password);
+            if (Role[0] == '0')
+                должностиToolStripMenuItem.Visible = false;
+            if (Role[1] == '0')
+            {
+                графикиРаботыToolStripMenuItem.Visible = false;
+                просмотретьГрафикРаботыToolStripMenuItem.Visible = false;
+                графикРаботыToolStripMenuItem.Visible = false;
+            }
+            if (Role[2] == '0')
+                окладToolStripMenuItem.Visible = false;
+
+            if (Role[3] == '0')
+                отделыToolStripMenuItem.Visible = false;
+            if (Role[4] == '0')
+                расчетныеСчетаToolStripMenuItem.Visible = false;
+            if (Role[5] == '0')
+                сотрудникиToolStripMenuItem1.Visible = false;
+            if (Role[6] == '0')
+            {
+                табельУчетаРабВремениСотрудникаToolStripMenuItem.Visible = false;
+                просмотретьТабельОтрВремениToolStripMenuItem.Visible = false;
+                табелиУчетаРабВремениToolStripMenuItem.Visible = false;
+            }
+            if (Role[7] == '0')
+            {
+                выплатыЗарплатыToolStripMenuItem.Visible = false;
+                расчетныйЛистокToolStripMenuItem.Visible = false;
+                расчетноплатежнаяВедомостьToolStripMenuItem.Visible = false;
+            }
+
         }
         private void Kostyl_Event(object sender, EventArgs e){}
 
@@ -109,13 +169,13 @@ namespace PayDay_Energosbyt
                 Sotrudniki sotrudniki = new Sotrudniki(MySqlOperations,MySqlQueries);
                 sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
                 sotrudniki.Owner = this;
-                if (sotrudniki.comboBox1.Items.Count == 0)
+                if (sotrudniki.comboBox1.Items.Count == 0 && Role[3] != '0')
                     Sotrudniki_After_Otdely(sotrudniki);
-                if (sotrudniki.comboBox2.Items.Count == 0)
+                if (sotrudniki.comboBox2.Items.Count == 0 && Role[0] != '0')
                     Sotrudniki_After_Doljnosti(sotrudniki);
-                if (sotrudniki.comboBox1.Items.Count == 0)
+                if (sotrudniki.comboBox1.Items.Count == 0 && Role[2] != '0')
                     Sotrudniki_After_Oklad(sotrudniki);
-                if (sotrudniki.comboBox1.Items.Count == 0)
+                if (sotrudniki.comboBox1.Items.Count == 0 && Role[4] != '0')
                     Sotrudniki_After_RS(sotrudniki);
                 sotrudniki.button1.Visible = true;
                 sotrudniki.button3.Visible = false;
@@ -281,13 +341,13 @@ namespace PayDay_Energosbyt
                 Sotrudniki sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
                 if (sotrudniki.comboBox1.Items.Count == 0 || sotrudniki.comboBox2.Items.Count == 0|| sotrudniki.comboBox3.Items.Count == 0|| sotrudniki.comboBox4.Items.Count == 0)
                 {
-                    if (sotrudniki.comboBox1.Items.Count == 0)
+                    if (sotrudniki.comboBox1.Items.Count == 0 && Role[3] != '0')
                         Sotrudniki_After_Otdely(sotrudniki);
-                    if (sotrudniki.comboBox2.Items.Count == 0)
+                    if (sotrudniki.comboBox2.Items.Count == 0 && Role[0] != '0')
                         Sotrudniki_After_Doljnosti(sotrudniki);
-                    if (sotrudniki.comboBox3.Items.Count == 0)
+                    if (sotrudniki.comboBox1.Items.Count == 0 && Role[2] != '0')
                         Sotrudniki_After_Oklad(sotrudniki);
-                    if (sotrudniki.comboBox4.Items.Count == 0)
+                    if (sotrudniki.comboBox1.Items.Count == 0 && Role[4] != '0')
                         Sotrudniki_After_RS(sotrudniki);
                     sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
                     sotrudniki.ID = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
@@ -528,7 +588,7 @@ namespace PayDay_Energosbyt
                 {
                     Edit_String();
                 }
-                else if (result == DialogResult.No && identify == "doljnosti")
+                else if (result == DialogResult.No && identify == "doljnosti" && Role[1] != '0')
                 {
                     if (MessageBox.Show("Хотите просмотреть график работы для данной должности?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
@@ -537,26 +597,22 @@ namespace PayDay_Energosbyt
                 }
                 else if (result == DialogResult.No && identify == "sotrudniki")
                 {
-                    if (MessageBox.Show("Хотите просмотреть табель отработанного времени для данного сотрудника?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        Show_Tabel();
-                    }
-                    else if (MessageBox.Show("Хотите просмотреть график работы для данного сотрудника?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        Show_Grafik();
-                    }
+                    if (Role[6] != '0')
+                        if (MessageBox.Show("Хотите просмотреть табель отработанного времени для данного сотрудника?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            Show_Tabel();
+                    if (Role[1] != '0')
+                        if (MessageBox.Show("Хотите просмотреть график работы для данного сотрудника?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            Show_Grafik();
                 }
             }
-            else if(identify == "vyplaty")
+            else if (identify == "vyplaty")
             {
-                if (MessageBox.Show("Хотите просмотреть график работы для данного сотрудника?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    Show_Grafik();
-                }
-                else if (MessageBox.Show("Хотите просмотреть табель отработанного времени для данного сотрудника?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    Show_Tabel();
-                }
+                if (Role[1] != '0')
+                    if (MessageBox.Show("Хотите просмотреть график работы для данного сотрудника?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        Show_Grafik();
+                if (Role[6] != '0')
+                    if (MessageBox.Show("Хотите просмотреть табель отработанного времени для данного сотрудника?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        Show_Tabel();
             }
         }
 
