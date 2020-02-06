@@ -18,30 +18,6 @@ namespace PayDay_Energosbyt
             MySqlQueries = new MySqlQueries();
             Login = login;
             Password = password;
-            //MySqlOperations.Select_Text(MySqlQueries.Select_Role, ref Role, null, Login, Password);
-            //if (Role[0] == '0')
-            //    должностиToolStripMenuItem.Visible = false;
-            //if (Role[1] == '0')
-            //{
-            //    графикиРаботыToolStripMenuItem.Visible = false;
-            //    просмотретьГрафикРаботыToolStripMenuItem.Visible = false;
-            //}
-            //if (Role[2] == '0')
-            //    окладToolStripMenuItem.Visible = false;
-
-            //if (Role[3] == '0')
-            //    отделыToolStripMenuItem.Visible = false;
-            //if (Role[4] == '0')
-            //    расчетныеСчетаToolStripMenuItem.Visible = false;
-            //if (Role[5] == '0')
-            //    сотрудникиToolStripMenuItem1.Visible = false;
-            //if (Role[6] == '0')
-            //{
-            //    табельУчетаРабВремениСотрудникаToolStripMenuItem.Visible = false;
-            //    просмотретьТабельОтрВремениToolStripMenuItem.Visible = false;
-            //}
-            //if (Role[7] == '0')
-            //    выплатыЗарплатыToolStripMenuItem.Visible = false;
         }
 
         private void выходToolStripMenuItem_Click(object sender, EventArgs e)
@@ -700,6 +676,11 @@ namespace PayDay_Energosbyt
             {
                 MessageBox.Show("Из данной таблицы невозможно распечатать расчетно-платежную ведомость." + '\n' + "Пожалуйста перейдите на таблицу Выплаты зарплат.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void поискToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MySqlOperations.Search(toolStripTextBox1, dataGridView1);
         }
     }
 }

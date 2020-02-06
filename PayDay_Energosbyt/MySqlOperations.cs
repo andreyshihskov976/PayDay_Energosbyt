@@ -472,6 +472,25 @@ namespace PayDay_Energosbyt
             }
         }
 
+        public void Search(ToolStripTextBox textBox, DataGridView dataGridView)
+        {
+            if (textBox.Text != "")
+            {
+                for (int i = 0; i < dataGridView.RowCount; i++)
+                {
+                    dataGridView.Rows[i].Selected = false;
+                    for (int j = 0; j < dataGridView.ColumnCount; j++)
+                        if (dataGridView.Rows[i].Cells[j].Value != null)
+                            if (dataGridView.Rows[i].Cells[j].Value.ToString().Contains(textBox.Text))
+                            {
+                                dataGridView.Rows[i].Selected = true;
+                                break;
+                            }
+                }
+            }
+            else dataGridView.ClearSelection();
+        }
+
         //Универсальные методы
 
         //Методы для таблиц Должности, Отдел

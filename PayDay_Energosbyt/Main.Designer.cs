@@ -542,6 +542,7 @@
             this.поискToolStripMenuItem1.Name = "поискToolStripMenuItem1";
             this.поискToolStripMenuItem1.Size = new System.Drawing.Size(54, 23);
             this.поискToolStripMenuItem1.Text = "Поиск";
+            this.поискToolStripMenuItem1.Click += new System.EventHandler(this.поискToolStripMenuItem1_Click);
             // 
             // Main
             // 
