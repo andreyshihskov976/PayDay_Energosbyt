@@ -482,8 +482,6 @@ namespace PayDay_Energosbyt
 
         private void Show_Tabel()
         {
-            //if (dataGridView1.SelectedRows.Count == 1)
-            //{
             for (int i = 0; i < dataGridView1.SelectedRows.Count; i++)
             {
                 if (identify == "sotrudniki")
@@ -491,11 +489,6 @@ namespace PayDay_Energosbyt
                 if (identify == "vyplaty")
                     Open_Tabel(dataGridView1.SelectedRows[i].Cells[4].Value.ToString(), MySqlQueries.Select_Tabel_FIO, dataGridView1.SelectedRows[i].Cells[4].Value.ToString());
             }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Пожалуйста выберите одну запись," + '\n' + " по которой хотите просмотреть табель учета рабочего времени", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
         }
 
         private void Open_Tabel(string Sotrudnik, string query, string title)
@@ -512,8 +505,6 @@ namespace PayDay_Energosbyt
 
         private void Show_Grafik()
         {
-            //if (dataGridView1.SelectedRows.Count == 1)
-            //{
             for (int i = 0; i < dataGridView1.SelectedRows.Count; i++)
             {
                 if (identify == "doljnosti")
@@ -535,11 +526,6 @@ namespace PayDay_Energosbyt
                         MessageBox.Show("У выбранного вами сотрудника отсутствует должность." + '\n' + "Пожалуйста измените запись данного сотрудника", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Пожалуйста выберите одну запись," + '\n' + " по которой хотите просмотреть график работы", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
         }
 
         private void Open_Grafik(string Doljnost, string query, string title)
