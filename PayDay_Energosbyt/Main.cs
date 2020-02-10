@@ -149,9 +149,9 @@ namespace PayDay_Energosbyt
                     Sotrudniki_After_Otdely(sotrudniki);
                 if (sotrudniki.comboBox2.Items.Count == 0 && Role[0] != '0')
                     Sotrudniki_After_Doljnosti(sotrudniki);
-                if (sotrudniki.comboBox1.Items.Count == 0 && Role[2] != '0')
+                if (sotrudniki.comboBox3.Items.Count == 0 && Role[2] != '0')
                     Sotrudniki_After_Oklad(sotrudniki);
-                if (sotrudniki.comboBox1.Items.Count == 0 && Role[4] != '0')
+                if (sotrudniki.comboBox4.Items.Count == 0 && Role[4] != '0')
                     Sotrudniki_After_RS(sotrudniki);
                 sotrudniki.button1.Visible = true;
                 sotrudniki.button3.Visible = false;
@@ -323,9 +323,9 @@ namespace PayDay_Energosbyt
                             Sotrudniki_After_Otdely(sotrudniki);
                         if (sotrudniki.comboBox2.Items.Count == 0 && Role[0] != '0')
                             Sotrudniki_After_Doljnosti(sotrudniki);
-                        if (sotrudniki.comboBox1.Items.Count == 0 && Role[2] != '0')
+                        if (sotrudniki.comboBox3.Items.Count == 0 && Role[2] != '0')
                             Sotrudniki_After_Oklad(sotrudniki);
-                        if (sotrudniki.comboBox1.Items.Count == 0 && Role[4] != '0')
+                        if (sotrudniki.comboBox4.Items.Count == 0 && Role[4] != '0')
                             Sotrudniki_After_RS(sotrudniki);
                         sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
                         sotrudniki.ID = dataGridView1.SelectedRows[i].Cells[0].Value.ToString();
