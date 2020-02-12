@@ -2,7 +2,7 @@
 {
     public class MySqlQueries
     {
-        //Запросы вывода таблиц в DataGridView
+        //Запросы Select
 
         public string Select_Otdely = $@"SELECT ID_Otdela AS 'ID Отдела', NAME AS 'Наименование отдела' FROM otdely;";
 
@@ -119,20 +119,6 @@ tabel_otr_vremeni INNER JOIN sotrudniki ON tabel_otr_vremeni.ID_Sotrudnika = sot
 WHERE STR_TO_DATE(Concat(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-', tabel_otr_vremeni.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d')
 AND CONCAT(sotrudniki.Familiya, ' ',sotrudniki.Imya, ' ',sotrudniki.Otchestvo) = @ID";
 
-        //        public string Select_Plan = $@"SELECT Sum(grafik_raboty.Znachenie_Raboch_Vremeni) FROM
-        //grafik_raboty INNER JOIN sotrudniki ON grafik_raboty.ID_Doljnosti = sotrudniki.ID_Doljnosti
-        //WHERE CONCAT(grafik_raboty.Year, '-',grafik_raboty.Month, '-',grafik_raboty.Day) BETWEEN @Value1 AND @Value2
-        //AND sotrudniki.ID_Sotrudnika = @ID";
-
-        //        public string Select_Stavka = $@"SELECT oklad.Znachenie / @Value1
-        //FROM oklad
-        //INNER JOIN sotrudniki ON oklad.ID_Oklada = sotrudniki.ID_Oklada
-        //WHERE sotrudniki.ID_Sotrudnika = @ID";
-
-        //        public string Select_Nachisleno = $@"SELECT DISTINCT @Value1 * @Value2
-        //FROM tabel_otr_vremeni INNER JOIN sotrudniki ON tabel_otr_vremeni.ID_Sotrudnika = sotrudniki.ID_Sotrudnika
-        //WHERE sotrudniki.ID_Sotrudnika = @ID";
-
         public string Select_Nachisleno = $@"SELECT DISTINCT ROUND((SELECT oklad.Znachenie / (SELECT Sum(grafik_raboty.Znachenie_Raboch_Vremeni) FROM
 grafik_raboty INNER JOIN sotrudniki ON grafik_raboty.ID_Doljnosti = sotrudniki.ID_Doljnosti
 WHERE STR_TO_DATE(Concat(grafik_raboty.Year, '-',grafik_raboty.Month, '-', grafik_raboty.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d')
@@ -145,9 +131,6 @@ WHERE STR_TO_DATE(Concat(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-
 AND sotrudniki.ID_Sotrudnika = @ID),2)
 FROM tabel_otr_vremeni INNER JOIN sotrudniki ON tabel_otr_vremeni.ID_Sotrudnika = sotrudniki.ID_Sotrudnika
 WHERE sotrudniki.ID_Sotrudnika = @ID;";
-        //Запросы вывода таблиц в DataGridView
-
-        //Запросы вывода данный в ComboBox
 
         public string Select_Sotrudniki_ComboBox = $@"SELECT CONCAT(Familiya, ' ', Imya, ' ', Otchestvo) AS 'ФИО Сотрудника'
 FROM sotrudniki;";
@@ -168,10 +151,6 @@ raschetnye_scheta.Cod_banka_BIC,
 raschetnye_scheta.Individual_schet) AS 'Расчетный счет'
 FROM raschetnye_scheta LEFT JOIN sotrudniki ON sotrudniki.ID_Rasch_scheta = raschetnye_scheta.ID_Rasch_scheta
 WHERE CONCAT(sotrudniki.Familiya, ' ', sotrudniki.Imya, ' ', sotrudniki.Otchestvo) IS NULL;";
-
-        //Запросы вывода данный в ComboBox
-
-        //Запросы получения ID из значений ComboBox
 
         public string Select_ID_Otdela = $@"SELECT otdely.ID_Otdela FROM otdely WHERE otdely.Name = @Value1;";
 
@@ -194,9 +173,67 @@ raschetnye_scheta.Individual_schet) = @Value1;";
         public string Select_ID_Sotrudnika = $@"SELECT sotrudniki.ID_Sotrudnika FROM sotrudniki
 WHERE CONCAT(sotrudniki.Familiya, ' ',sotrudniki.Imya, ' ',sotrudniki.Otchestvo) = @Value1;";
 
-        //Запросы получения ID из значений ComboBox
+        public string Select_Kol_Rab_Dney_Grafik = $@"SELECT
+COUNT(grafik_raboty.Identify)
+FROM grafik_raboty
+WHERE grafik_raboty.Identify = 'Р' AND STR_TO_DATE(Concat(grafik_raboty.Year, '-',grafik_raboty.Month, '-', grafik_raboty.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d')
+AND grafik_raboty.ID_Doljnosti = @ID;";
 
-        //Запросы вставки в таблицы
+        public string Select_Kol_PredPrazdn_Dney_Grafik = $@"SELECT
+COUNT(grafik_raboty.Identify)
+FROM grafik_raboty
+WHERE grafik_raboty.Identify = 'Р' AND grafik_raboty.Znachenie_Raboch_Vremeni = '7.2' AND STR_TO_DATE(Concat(grafik_raboty.Year, '-',grafik_raboty.Month, '-', grafik_raboty.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d')
+AND grafik_raboty.ID_Doljnosti = @ID;";
+
+        public string Select_Kol_Poln_Dney_Grafik = $@"SELECT
+COUNT(grafik_raboty.Identify)
+FROM grafik_raboty
+WHERE grafik_raboty.Identify = 'Р' AND grafik_raboty.Znachenie_Raboch_Vremeni = '8.2' AND STR_TO_DATE(Concat(grafik_raboty.Year, '-',grafik_raboty.Month, '-', grafik_raboty.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d')
+AND grafik_raboty.ID_Doljnosti = @ID;";
+
+        public string Select_Itogo_Rab_Chasov_Grafik = $@"SELECT
+SUM(grafik_raboty.Znachenie_Raboch_Vremeni)
+FROM grafik_raboty
+WHERE STR_TO_DATE(Concat(grafik_raboty.Year, '-',grafik_raboty.Month, '-', grafik_raboty.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d') 
+AND grafik_raboty.ID_Doljnosti = @ID;";
+
+        public string Select_Kol_Rab_Dney_Tabel = $@"SELECT
+COUNT(tabel_otr_vremeni.Identify)
+FROM tabel_otr_vremeni
+WHERE tabel_otr_vremeni.Identify = 'Р' AND STR_TO_DATE(Concat(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-', tabel_otr_vremeni.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d') 
+AND tabel_otr_vremeni.ID_Sotrudnika = @ID
+GROUP BY tabel_otr_vremeni.Month;";
+
+        public string Select_VP_Tabel = $@"SELECT
+COUNT(tabel_otr_vremeni.Identify)
+FROM tabel_otr_vremeni
+WHERE (tabel_otr_vremeni.Identify = 'П' OR tabel_otr_vremeni.Identify = 'В') AND STR_TO_DATE(Concat(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-', tabel_otr_vremeni.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d')
+AND tabel_otr_vremeni.ID_Sotrudnika = @ID
+GROUP BY tabel_otr_vremeni.Month;";
+
+        public string Select_Otrabotano_Tabel = $@"SELECT Sum(tabel_otr_vremeni.Znachenie_Otr_Vremeni) FROM
+tabel_otr_vremeni INNER JOIN sotrudniki ON tabel_otr_vremeni.ID_Sotrudnika = sotrudniki.ID_Sotrudnika
+WHERE STR_TO_DATE(Concat(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-', tabel_otr_vremeni.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d')
+AND sotrudniki.ID_Sotrudnika = @ID
+GROUP BY tabel_otr_vremeni.Month;";
+
+        public string Select_Vyplaty_Otdela = $@"SELECT vyplaty.Id, CONCAT(sotrudniki.Familiya, ' ', sotrudniki.Imya, ' ', sotrudniki.Otchestvo), vyplaty.Otrabotano,vyplaty.Uderzhaniya,vyplaty.Itog
+FROM vyplaty
+INNER JOIN sotrudniki ON vyplaty.ID_Sotrudnika = sotrudniki.ID_Sotrudnika
+INNER JOIN otdely ON sotrudniki.ID_Otdela = otdely.ID_Otdela
+WHERE otdely.ID_Otdela = @ID AND vyplaty.Date BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d');";
+
+        public string Itog_Vyplat_Po_Otdelu = $@"SELECT SUM(vyplaty.Itog)
+FROM vyplaty
+INNER JOIN sotrudniki ON vyplaty.ID_Sotrudnika = sotrudniki.ID_Sotrudnika
+INNER JOIN otdely ON sotrudniki.ID_Otdela = otdely.ID_Otdela
+WHERE otdely.ID_Otdela = @ID;";
+
+        //Запросы Select
+
+
+
+        //Запросы Insert
 
         public string Insert_Doljnosti = $@"INSERT INTO doljnosti (Name) VALUES (@Value1);";
 
@@ -214,10 +251,11 @@ WHERE CONCAT(sotrudniki.Familiya, ' ',sotrudniki.Imya, ' ',sotrudniki.Otchestvo)
 
         public string Insert_Vyplaty = $@"INSERT INTO vyplaty (Date, Date_Begin, Date_End, ID_Sotrudnika, Otrabotano, Uderzhaniya, Itog) VALUES (@Value1, @Value2, @Value3, @ID, @Value4, @Value5, @Value6);";
 
-        //Запросы вставки в таблицы
+        //Запросы Insert
 
 
-        //Запросы редактирования записей
+
+        //Запросы Update
 
         public string Update_Doljnosti = $@"UPDATE doljnosti SET Name = @Value1 WHERE ID_Doljnosti = @ID;";
 
@@ -241,10 +279,12 @@ AND grafik_raboty.ID_Doljnosti = @ID;";
 SET tabel_otr_vremeni.Znachenie_Otr_Vremeni = @Value2, tabel_otr_vremeni.Identify = @Value1 
 WHERE DATE_FORMAT(CONCAT(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-',tabel_otr_vremeni.Day),'%d %M %Y') = @Value3
 AND tabel_otr_vremeni.ID_Sotrudnika = @ID;";
-        //Запросы редактирования записей
+        
+        //Запросы Update
 
 
-        //Запросы удаления записей
+
+        //Запросы Delete
 
         public string Delete_Doljnosti = $@"DELETE FROM doljnosti WHERE ID_Doljnosti = @ID;";
 
@@ -258,9 +298,11 @@ AND tabel_otr_vremeni.ID_Sotrudnika = @ID;";
 
         public string Delete_Vyplaty = $@"DELETE FROM vyplaty WHERE Id= @ID;";
 
-        //Запросы удаления записей
+        //Запросы Delete
 
-        //Запросы проверки на существование
+
+
+        //Запросы Exists
 
         public string Exists_Grafik_Raboty = $@"SELECT EXISTS (SELECT * FROM grafik_raboty WHERE grafik_raboty.ID_Doljnosti = @ID AND grafik_raboty.Year = @Value1 AND grafik_raboty.Month = @Value2 AND grafik_raboty.Day = @Value3);";
 
@@ -291,9 +333,11 @@ AND grafik_raboty.ID_Doljnosti = (SELECT sotrudniki.ID_Doljnosti FROM sotrudniki
 WHERE STR_TO_DATE(Concat(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-', tabel_otr_vremeni.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d')
 AND tabel_otr_vremeni.ID_Sotrudnika = @ID);";
 
-        //Запросы проверки на существование
+        //Запросы Exists
 
-        //Запросы на печать табеля и графика
+
+
+        //Запросы Print
 
         public string Print_Grafik = $@"SET lc_time_names = 'ru_RU';
 SELECT
@@ -428,30 +472,6 @@ AND grafik_raboty.ID_Doljnosti = @ID
 GROUP BY grafik_raboty.Month
 ORDER BY 'Месяц';";
 
-        public string Select_Kol_Rab_Dney_Grafik = $@"SELECT
-COUNT(grafik_raboty.Identify)
-FROM grafik_raboty
-WHERE grafik_raboty.Identify = 'Р' AND STR_TO_DATE(Concat(grafik_raboty.Year, '-',grafik_raboty.Month, '-', grafik_raboty.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d')
-AND grafik_raboty.ID_Doljnosti = @ID;";
-
-        public string Select_Kol_PredPrazdn_Dney_Grafik = $@"SELECT
-COUNT(grafik_raboty.Identify)
-FROM grafik_raboty
-WHERE grafik_raboty.Identify = 'Р' AND grafik_raboty.Znachenie_Raboch_Vremeni = '7.2' AND STR_TO_DATE(Concat(grafik_raboty.Year, '-',grafik_raboty.Month, '-', grafik_raboty.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d')
-AND grafik_raboty.ID_Doljnosti = @ID;";
-
-        public string Select_Kol_Poln_Dney_Grafik = $@"SELECT
-COUNT(grafik_raboty.Identify)
-FROM grafik_raboty
-WHERE grafik_raboty.Identify = 'Р' AND grafik_raboty.Znachenie_Raboch_Vremeni = '8.2' AND STR_TO_DATE(Concat(grafik_raboty.Year, '-',grafik_raboty.Month, '-', grafik_raboty.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d')
-AND grafik_raboty.ID_Doljnosti = @ID;";
-
-        public string Select_Itogo_Rab_Chasov_Grafik = $@"SELECT
-SUM(grafik_raboty.Znachenie_Raboch_Vremeni)
-FROM grafik_raboty
-WHERE STR_TO_DATE(Concat(grafik_raboty.Year, '-',grafik_raboty.Month, '-', grafik_raboty.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d') 
-AND grafik_raboty.ID_Doljnosti = @ID;";
-
         public string Print_Tabel = $@"SET lc_time_names = 'ru_RU';
 SELECT
   Date_Format(Concat(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-', tabel_otr_vremeni.Day),'%M') AS 'Месяц',
@@ -585,61 +605,6 @@ AND tabel_otr_vremeni.ID_Sotrudnika = @ID
 GROUP BY tabel_otr_vremeni.Month
 ORDER BY 'Месяц';";
 
-        public string Select_Kol_Rab_Dney_Tabel = $@"SELECT
-COUNT(tabel_otr_vremeni.Identify)
-FROM tabel_otr_vremeni
-WHERE tabel_otr_vremeni.Identify = 'Р' AND STR_TO_DATE(Concat(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-', tabel_otr_vremeni.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d') 
-AND tabel_otr_vremeni.ID_Sotrudnika = @ID
-GROUP BY tabel_otr_vremeni.Month;";
-
-        public string Select_VP_Tabel = $@"SELECT
-COUNT(tabel_otr_vremeni.Identify)
-FROM tabel_otr_vremeni
-WHERE (tabel_otr_vremeni.Identify = 'П' OR tabel_otr_vremeni.Identify = 'В') AND STR_TO_DATE(Concat(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-', tabel_otr_vremeni.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d')
-AND tabel_otr_vremeni.ID_Sotrudnika = @ID
-GROUP BY tabel_otr_vremeni.Month;";
-
-        public string Select_Otrabotano_Tabel = $@"SELECT Sum(tabel_otr_vremeni.Znachenie_Otr_Vremeni) FROM
-tabel_otr_vremeni INNER JOIN sotrudniki ON tabel_otr_vremeni.ID_Sotrudnika = sotrudniki.ID_Sotrudnika
-WHERE STR_TO_DATE(Concat(tabel_otr_vremeni.Year, '-',tabel_otr_vremeni.Month, '-', tabel_otr_vremeni.Day),'%Y-%m-%d') BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d')
-AND sotrudniki.ID_Sotrudnika = @ID
-GROUP BY tabel_otr_vremeni.Month;";
-
-        public string Select_Vyplaty_Otdela = $@"SELECT vyplaty.Id, CONCAT(sotrudniki.Familiya, ' ', sotrudniki.Imya, ' ', sotrudniki.Otchestvo), vyplaty.Otrabotano,vyplaty.Uderzhaniya,vyplaty.Itog
-FROM vyplaty
-INNER JOIN sotrudniki ON vyplaty.ID_Sotrudnika = sotrudniki.ID_Sotrudnika
-INNER JOIN otdely ON sotrudniki.ID_Otdela = otdely.ID_Otdela
-WHERE otdely.ID_Otdela = @ID AND vyplaty.Date BETWEEN STR_TO_DATE(@Value1,'%Y-%m-%d') AND STR_TO_DATE(@Value2,'%Y-%m-%d');";
-
-        public string Itog_Vyplat_Po_Otdelu = $@"SELECT SUM(vyplaty.Itog)
-FROM vyplaty
-INNER JOIN sotrudniki ON vyplaty.ID_Sotrudnika = sotrudniki.ID_Sotrudnika
-INNER JOIN otdely ON sotrudniki.ID_Otdela = otdely.ID_Otdela
-WHERE otdely.ID_Otdela = @ID;";
-
-        //Запросы на печать табеля и графика
-
-        //Запросы для авторизации
-
-        public string Select_Avtorization = $@"SELECT CASE EXISTS(SELECT * FROM login WHERE login.Login = @Value1 AND login.Password = @Value2)
-WHEN 1 THEN
-(SELECT CONCAT(sotrudniki.Familiya, ' ', sotrudniki.Imya, ' ', sotrudniki.Otchestvo) 
-FROM sotrudniki 
-INNER JOIN login ON sotrudniki.ID_Sotrudnika = login.ID_Sotrudnika
-WHERE sotrudniki.ID_Sotrudnika = (SELECT login.ID_Sotrudnika FROM login WHERE login.Login = @Value1 AND login.Password = @Value2)) END;";
-
-        public string Exists_User = $@"SELECT EXISTS(SELECT * FROM login WHERE login.Login = @Value1 AND login.Password = @Value2);";
-
-        public string Select_FIO_Usera = $@"SELECT CONCAT(sotrudniki.Familiya, ' ', sotrudniki.Imya, ' ', sotrudniki.Otchestvo) 
-FROM sotrudniki 
-INNER JOIN login ON sotrudniki.ID_Sotrudnika = login.ID_Sotrudnika
-WHERE sotrudniki.ID_Sotrudnika = (SELECT login.ID_Sotrudnika FROM login WHERE login.Login = @Value1 AND login.Password = @Value2);";
-
-        public string Select_Role = $@"SELECT CONCAT(roles.Doljnosti,roles.Grafik_Raboty,roles.Oklad,roles.Otdely,
-roles.Raschetnye_Scheta,roles.Sotrudniki,roles.Tabel_Otr_Vremeni,roles.Vyplaty)
-FROM roles INNER JOIN login ON roles.ID_Role = login.ID_Role
-WHERE login.Login = @Value1 AND login.Password = @Value2;";
-
-        //Запросы для авторизации
+        //Запросы Print
     }
 }
