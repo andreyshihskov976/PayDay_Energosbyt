@@ -606,5 +606,31 @@ GROUP BY tabel_otr_vremeni.Month
 ORDER BY 'Месяц';";
 
         //Запросы Print
+
+
+
+        //Запросы авторизации
+
+        public string Select_Avtorization = $@"SELECT CASE EXISTS(SELECT * FROM login WHERE login.Login = @Value1 AND login.Password = @Value2)
+WHEN 1 THEN
+(SELECT CONCAT(sotrudniki.Familiya, ' ', sotrudniki.Imya, ' ', sotrudniki.Otchestvo) 
+FROM sotrudniki 
+INNER JOIN login ON sotrudniki.ID_Sotrudnika = login.ID_Sotrudnika
+WHERE sotrudniki.ID_Sotrudnika = (SELECT login.ID_Sotrudnika FROM login WHERE login.Login = @Value1 AND login.Password = @Value2)) END;";
+
+        public string Exists_User = $@"SELECT EXISTS(SELECT * FROM login WHERE login.Login = @Value1 AND login.Password = @Value2);";
+
+        public string Select_FIO_Usera = $@"SELECT CONCAT(sotrudniki.Familiya, ' ', sotrudniki.Imya, ' ', sotrudniki.Otchestvo) 
+FROM sotrudniki 
+INNER JOIN login ON sotrudniki.ID_Sotrudnika = login.ID_Sotrudnika
+WHERE sotrudniki.ID_Sotrudnika = (SELECT login.ID_Sotrudnika FROM login WHERE login.Login = @Value1 AND login.Password = @Value2);";
+
+        public string Select_Role = $@"SELECT CONCAT(roles.Doljnosti,roles.Grafik_Raboty,roles.Oklad,roles.Otdely,
+roles.Raschetnye_Scheta,roles.Sotrudniki,roles.Tabel_Otr_Vremeni,roles.Vyplaty)
+FROM roles INNER JOIN login ON roles.ID_Role = login.ID_Role
+WHERE login.Login = @Value1 AND login.Password = @Value2;";
+
+
+        //Запросы авторизации
     }
 }

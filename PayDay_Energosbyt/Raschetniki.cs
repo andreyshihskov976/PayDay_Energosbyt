@@ -25,6 +25,8 @@ namespace PayDay_Energosbyt
             {
                 try
                 {
+                    textBox1.Text = textBox1.Text.ToUpper();
+                    textBox4.Text = textBox4.Text.ToUpper();
                     string exists = null;
                     string rs = textBox1.Text + textBox2.Text + textBox3.Text + textBox4.Text + textBox5.Text;
                     MySqlOperations.Select_Text(MySqlQueries.Exists_Rasch_Scheta, ref exists, null, rs);
