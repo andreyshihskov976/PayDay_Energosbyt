@@ -23,13 +23,13 @@ namespace PayDay_Energosbyt
             mySqlOperations.Select_ComboBox(mySqlQueries.Select_Otdely_ComboBox, comboBox1);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             MySqlOperations.Select_Text(MySqlQueries.Select_ID_Otdela, ref ID, null, comboBox1.Text);
             MySqlOperations.Print_Vedomost(MySqlQueries, dataGridView1,dateTimePicker1, saveFileDialog1,ID);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
             dateTimePicker1.Value = DateTime.Now;
             this.Close();

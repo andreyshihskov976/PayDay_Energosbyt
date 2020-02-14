@@ -24,7 +24,7 @@ namespace PayDay_Energosbyt
             MySqlOperations = new MySqlOperations(MySqlQueries);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             MySqlOperations.OpenConnection();
             if (textBox1.Text != "" && textBox2.Text != "")

@@ -22,13 +22,13 @@ namespace PayDay_Energosbyt
             dateTimePicker1.Value = DateTime.Now;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             MySqlOperations.Print_Tabel(MySqlQueries, dataGridView1, dateTimePicker1, saveFileDialog1, ID);
             this.Close();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
             dateTimePicker1.Value = DateTime.Now;
             this.Close();

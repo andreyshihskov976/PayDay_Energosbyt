@@ -9,12 +9,15 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Расчет ЗП|Any CPU = Расчет ЗП|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{309C4195-5FF1-4F26-9ACE-62074B1B8028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{309C4195-5FF1-4F26-9ACE-62074B1B8028}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{309C4195-5FF1-4F26-9ACE-62074B1B8028}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{309C4195-5FF1-4F26-9ACE-62074B1B8028}.Release|Any CPU.Build.0 = Release|Any CPU
+		{309C4195-5FF1-4F26-9ACE-62074B1B8028}.Расчет ЗП|Any CPU.ActiveCfg = Расчет ЗП|Any CPU
+		{309C4195-5FF1-4F26-9ACE-62074B1B8028}.Расчет ЗП|Any CPU.Build.0 = Расчет ЗП|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,7 +20,7 @@ namespace PayDay_Energosbyt
             MySqlQueries = mySqlQueries;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
             {
@@ -50,13 +50,13 @@ namespace PayDay_Energosbyt
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
             textBox1.Clear();
             this.Close();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Button3_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
             {

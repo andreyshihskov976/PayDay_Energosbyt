@@ -19,7 +19,7 @@ namespace PayDay_Energosbyt
             MySqlOperations = mySqlOperations;
             MySqlQueries = mySqlQueries;
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "" || textBox2.Text != "" || textBox3.Text != "" || textBox4.Text != "" || textBox5.Text != "" )
             {
@@ -52,7 +52,7 @@ namespace PayDay_Energosbyt
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
             textBox1.Clear();
             textBox2.Clear();
@@ -62,12 +62,14 @@ namespace PayDay_Energosbyt
             this.Close();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Button3_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "" || textBox2.Text != "" || textBox3.Text != "" || textBox4.Text != "" || textBox5.Text != "")
             {
                 try
                 {
+                    textBox1.Text = textBox1.Text.ToUpper();
+                    textBox4.Text = textBox4.Text.ToUpper();
                     string exists = null;
                     string rs = textBox1.Text + textBox2.Text + textBox3.Text + textBox4.Text + textBox5.Text;
                     MySqlOperations.Select_Text(MySqlQueries.Exists_Rasch_Scheta, ref exists, null, rs);

@@ -23,7 +23,7 @@ namespace PayDay_Energosbyt
             MySqlOperations.Select_ComboBox(MySqlQueries.Select_Sotrudniki_ComboBox, comboBox1);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "")
             {
@@ -68,7 +68,7 @@ namespace PayDay_Energosbyt
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
             textBox1.Clear();
             this.Close();
@@ -80,7 +80,7 @@ namespace PayDay_Energosbyt
         }
         public event EventHandler Vyplaty_Closed;
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Button3_Click(object sender, EventArgs e)
         {
             //string nachisleno = "0";
             //string date1 = dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString() + '-' + dateTimePicker2.Value.Day.ToString();
@@ -92,18 +92,18 @@ namespace PayDay_Energosbyt
             //textBox3.Text = (decimal.Parse(nachisleno) - uderzhano).ToString();
         }
 
-        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        private void DateTimePicker2_ValueChanged(object sender, EventArgs e)
         {
             dateTimePicker3.Value = new DateTime(dateTimePicker2.Value.Year, dateTimePicker2.Value.Month, DateTime.DaysInMonth(dateTimePicker2.Value.Year, dateTimePicker2.Value.Month));
             Calculating();
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void Button5_Click(object sender, EventArgs e)
         {
             textBox3.Text = (decimal.Parse(textBox1.Text) - decimal.Parse(textBox2.Text)).ToString();
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             MySqlOperations.Select_Text(MySqlQueries.Select_ID_Sotrudnika, ref ID, null, comboBox1.Text);
             Calculating();

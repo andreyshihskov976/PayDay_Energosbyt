@@ -21,13 +21,13 @@ namespace PayDay_Energosbyt
             dateTimePicker1.Value = DateTime.Now;
             dateTimePicker1.MaxDate = DateTime.Parse(DateTime.Now.ToShortDateString());
         }
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        private void DateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             dateTimePicker2.MinDate = dateTimePicker1.Value.AddDays(1);
             dateTimePicker2.MaxDate = dateTimePicker1.Value.AddYears(10);
             dateTimePicker2.Value = dateTimePicker2.MinDate;
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
             {
@@ -59,13 +59,13 @@ namespace PayDay_Energosbyt
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
             textBox1.Clear();
             this.Close();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Button3_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
             {

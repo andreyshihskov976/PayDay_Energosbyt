@@ -23,7 +23,7 @@ namespace PayDay_Energosbyt
             MySqlOperations.Select_ComboBox(MySqlQueries.Select_Oklad_ComboBox, comboBox3);
             MySqlOperations.Select_ComboBox(MySqlQueries.Select_Rasch_Scheta_ComboBox, comboBox4);
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "" || textBox2.Text != "" || textBox3.Text != "")
             {
@@ -48,7 +48,7 @@ namespace PayDay_Energosbyt
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
             textBox1.Clear();
             textBox2.Clear();
@@ -56,7 +56,7 @@ namespace PayDay_Energosbyt
             this.Close();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Button3_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "" || textBox2.Text != "" || textBox3.Text != "")
             {

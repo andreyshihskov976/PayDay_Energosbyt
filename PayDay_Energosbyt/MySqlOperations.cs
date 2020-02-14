@@ -169,7 +169,7 @@ namespace PayDay_Energosbyt
                 sqlCommand.Parameters.AddWithValue("ID", ID);
                 sqlCommand.ExecuteNonQuery();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Невозможно удалить запись(-и)." + '\n' + "Возможно она(-и) используются в других записях.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

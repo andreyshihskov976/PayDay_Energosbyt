@@ -20,7 +20,7 @@ namespace PayDay_Energosbyt
             Password = password;
         }
 
-        private void выходToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ВыходToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
@@ -72,48 +72,48 @@ namespace PayDay_Energosbyt
             MySqlOperations.Select_DataGridView(query, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
         }
-        private void отделыToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ОтделыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             identify = "otdely";
             DataGrid_Load(MySqlQueries.Select_Otdely);
             this.Text = "Отделы";
         }
 
-        private void окладToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ОкладToolStripMenuItem_Click(object sender, EventArgs e)
         {
             identify = "oklad";
             DataGrid_Load(MySqlQueries.Select_Oklad);
             this.Text = "Оклад";
         }
 
-        private void должностиToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ДолжностиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             identify = "doljnosti";
             DataGrid_Load(MySqlQueries.Select_Doljnosti);
             this.Text = "Должности";
         }
 
-        private void сотрудникиToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void СотрудникиToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             identify = "sotrudniki";
             DataGrid_Load(MySqlQueries.Select_Sotrudniki);
             this.Text = "Сотрудники";
         }
 
-        private void расчетныеСчетаToolStripMenuItem_Click(object sender, EventArgs e)
+        private void РасчетныеСчетаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             identify = "raschetniki";
             DataGrid_Load(MySqlQueries.Select_Rasch_Scheta);
             this.Text = "Расчетные счета";
         }
-        private void выплатыЗарплатыToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ВыплатыЗарплатыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             identify = "vyplaty";
             DataGrid_Load(MySqlQueries.Select_Vyplaty);
             this.Text = "Выплаты зарплаты";
         }
 
-        private void вставкаToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ВставкаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Insert_String();
         }
@@ -123,7 +123,7 @@ namespace PayDay_Energosbyt
             if (identify == "raschetniki")
             {
                 Raschetniki raschetniki = new Raschetniki(MySqlOperations,MySqlQueries);
-                raschetniki.Raschetniki_Closed += расчетныеСчетаToolStripMenuItem_Click;
+                raschetniki.Raschetniki_Closed += РасчетныеСчетаToolStripMenuItem_Click;
                 raschetniki.Owner = this;
                 raschetniki.button1.Visible = true;
                 raschetniki.button3.Visible = false;
@@ -133,7 +133,7 @@ namespace PayDay_Energosbyt
             else if (identify == "otdely")
             {
                 Otdely otdely = new Otdely(MySqlOperations, MySqlQueries);
-                otdely.Otdely_Closed += отделыToolStripMenuItem_Click;
+                otdely.Otdely_Closed += ОтделыToolStripMenuItem_Click;
                 otdely.Owner = this;
                 otdely.button1.Visible = true;
                 otdely.button3.Visible = false;
@@ -143,7 +143,7 @@ namespace PayDay_Energosbyt
             else if (identify == "sotrudniki")
             {
                 Sotrudniki sotrudniki = new Sotrudniki(MySqlOperations,MySqlQueries);
-                sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
+                sotrudniki.Sotrudniki_Closed += СотрудникиToolStripMenuItem1_Click;
                 sotrudniki.Owner = this;
                 if (sotrudniki.comboBox1.Items.Count == 0 && Role[3] != '0')
                     Sotrudniki_After_Otdely(sotrudniki);
@@ -161,7 +161,7 @@ namespace PayDay_Energosbyt
             else if (identify == "oklad")
             {
                 Oklad oklad = new Oklad(MySqlOperations,MySqlQueries);
-                oklad.Oklad_Closed += окладToolStripMenuItem_Click;
+                oklad.Oklad_Closed += ОкладToolStripMenuItem_Click;
                 oklad.Owner = this;
                 oklad.button1.Visible = true;
                 oklad.button3.Visible = false;
@@ -171,7 +171,7 @@ namespace PayDay_Energosbyt
             else if (identify == "doljnosti")
             {
                 Doljnosti doljnosti = new Doljnosti(MySqlOperations, MySqlQueries);
-                doljnosti.Doljnosti_Closed += должностиToolStripMenuItem_Click;
+                doljnosti.Doljnosti_Closed += ДолжностиToolStripMenuItem_Click;
                 doljnosti.Owner = this;
                 doljnosti.button1.Visible = true;
                 doljnosti.button3.Visible = false;
@@ -181,7 +181,7 @@ namespace PayDay_Energosbyt
             else if (identify == "vyplaty")
             {
                 Vyplaty vyplaty = new Vyplaty(MySqlOperations, MySqlQueries);
-                vyplaty.Vyplaty_Closed += выплатыЗарплатыToolStripMenuItem_Click;
+                vyplaty.Vyplaty_Closed += ВыплатыЗарплатыToolStripMenuItem_Click;
                 vyplaty.Owner = this;
                 vyplaty.Show();
             }
@@ -199,7 +199,7 @@ namespace PayDay_Energosbyt
                 raschetniki.AcceptButton = raschetniki.button1;
                 raschetniki.ShowDialog();
                 sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
-                sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
+                sotrudniki.Sotrudniki_Closed += СотрудникиToolStripMenuItem1_Click;
                 sotrudniki.Owner = this;
             }
             return sotrudniki;
@@ -217,7 +217,7 @@ namespace PayDay_Energosbyt
                 otdely.AcceptButton = otdely.button1;
                 otdely.ShowDialog();
                 sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
-                sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
+                sotrudniki.Sotrudniki_Closed += СотрудникиToolStripMenuItem1_Click;
                 sotrudniki.Owner = this;
             }
             return sotrudniki;
@@ -235,7 +235,7 @@ namespace PayDay_Energosbyt
                 oklad.AcceptButton = oklad.button1;
                 oklad.ShowDialog();
                 sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
-                sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
+                sotrudniki.Sotrudniki_Closed += СотрудникиToolStripMenuItem1_Click;
                 sotrudniki.Owner = this;
             }
             return sotrudniki;
@@ -253,18 +253,18 @@ namespace PayDay_Energosbyt
                 doljnosti.ShowDialog();
                 doljnosti.AcceptButton = doljnosti.button1;
                 sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
-                sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
+                sotrudniki.Sotrudniki_Closed += СотрудникиToolStripMenuItem1_Click;
                 sotrudniki.Owner = this;
             }
             return sotrudniki;
         }
 
-        private void выделитьвсеToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ВыделитьвсеToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dataGridView1.SelectAll();
         }
 
-        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        private void DataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             //if (dataGridView1.SelectedRows.Count == 1)
             //{
@@ -295,7 +295,7 @@ namespace PayDay_Energosbyt
                     raschetniki.textBox4.Text = dataGridView1.SelectedRows[i].Cells[5].Value.ToString();
                     raschetniki.textBox5.Text = dataGridView1.SelectedRows[i].Cells[6].Value.ToString();
                     raschetniki.ID = dataGridView1.SelectedRows[i].Cells[0].Value.ToString();
-                    raschetniki.Raschetniki_Closed += расчетныеСчетаToolStripMenuItem_Click;
+                    raschetniki.Raschetniki_Closed += РасчетныеСчетаToolStripMenuItem_Click;
                     raschetniki.Owner = this;
                     raschetniki.button3.Visible = true;
                     raschetniki.button1.Visible = false;
@@ -307,7 +307,7 @@ namespace PayDay_Energosbyt
                     Otdely otdely = new Otdely(MySqlOperations, MySqlQueries);
                     otdely.textBox1.Text = dataGridView1.SelectedRows[i].Cells[1].Value.ToString();
                     otdely.ID = dataGridView1.SelectedRows[i].Cells[0].Value.ToString();
-                    otdely.Otdely_Closed += отделыToolStripMenuItem_Click;
+                    otdely.Otdely_Closed += ОтделыToolStripMenuItem_Click;
                     otdely.Owner = this;
                     otdely.button3.Visible = true;
                     otdely.button1.Visible = false;
@@ -327,8 +327,10 @@ namespace PayDay_Energosbyt
                             Sotrudniki_After_Oklad(sotrudniki);
                         if (sotrudniki.comboBox4.Items.Count == 0 && Role[4] != '0')
                             Sotrudniki_After_RS(sotrudniki);
-                        sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries);
-                        sotrudniki.ID = dataGridView1.SelectedRows[i].Cells[0].Value.ToString();
+                        sotrudniki = new Sotrudniki(MySqlOperations, MySqlQueries)
+                        {
+                            ID = dataGridView1.SelectedRows[i].Cells[0].Value.ToString()
+                        };                        
                         sotrudniki.textBox1.Text = dataGridView1.SelectedRows[i].Cells[1].Value.ToString().Split(' ')[0];
                         sotrudniki.textBox2.Text = dataGridView1.SelectedRows[i].Cells[1].Value.ToString().Split(' ')[1];
                         sotrudniki.textBox3.Text = dataGridView1.SelectedRows[i].Cells[1].Value.ToString().Split(' ')[2];
@@ -340,7 +342,7 @@ namespace PayDay_Energosbyt
                         MySqlOperations.Search_In_ComboBox(dataGridView1.SelectedRows[i].Cells[3].Value.ToString(), sotrudniki.comboBox2);
                         MySqlOperations.Search_In_ComboBox(dataGridView1.SelectedRows[i].Cells[4].Value.ToString(), sotrudniki.comboBox3);
                         MySqlOperations.Search_In_ComboBox(dataGridView1.SelectedRows[i].Cells[5].Value.ToString(), sotrudniki.comboBox4);
-                        sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
+                        sotrudniki.Sotrudniki_Closed += СотрудникиToolStripMenuItem1_Click;
                         sotrudniki.Owner = this;
                         sotrudniki.button3.Visible = true;
                         sotrudniki.button1.Visible = false;
@@ -361,7 +363,7 @@ namespace PayDay_Energosbyt
                         MySqlOperations.Search_In_ComboBox(dataGridView1.SelectedRows[i].Cells[3].Value.ToString(), sotrudniki.comboBox2);
                         MySqlOperations.Search_In_ComboBox(dataGridView1.SelectedRows[i].Cells[4].Value.ToString(), sotrudniki.comboBox3);
                         MySqlOperations.Search_In_ComboBox(dataGridView1.SelectedRows[i].Cells[5].Value.ToString(), sotrudniki.comboBox4);
-                        sotrudniki.Sotrudniki_Closed += сотрудникиToolStripMenuItem1_Click;
+                        sotrudniki.Sotrudniki_Closed += СотрудникиToolStripMenuItem1_Click;
                         sotrudniki.Owner = this;
                         sotrudniki.button3.Visible = true;
                         sotrudniki.button1.Visible = false;
@@ -376,7 +378,7 @@ namespace PayDay_Energosbyt
                     oklad.dateTimePicker2.Value = DateTime.Parse(dataGridView1.SelectedRows[i].Cells[4].Value.ToString());
                     oklad.textBox1.Text = dataGridView1.SelectedRows[i].Cells[2].Value.ToString();
                     oklad.ID = dataGridView1.SelectedRows[i].Cells[0].Value.ToString();
-                    oklad.Oklad_Closed += окладToolStripMenuItem_Click;
+                    oklad.Oklad_Closed += ОкладToolStripMenuItem_Click;
                     oklad.Owner = this;
                     oklad.button3.Visible = true;
                     oklad.button1.Visible = false;
@@ -388,7 +390,7 @@ namespace PayDay_Energosbyt
                     Doljnosti doljnosti = new Doljnosti(MySqlOperations, MySqlQueries);
                     doljnosti.textBox1.Text = dataGridView1.SelectedRows[i].Cells[1].Value.ToString();
                     doljnosti.ID = dataGridView1.SelectedRows[i].Cells[0].Value.ToString();
-                    doljnosti.Doljnosti_Closed += должностиToolStripMenuItem_Click;
+                    doljnosti.Doljnosti_Closed += ДолжностиToolStripMenuItem_Click;
                     doljnosti.Owner = this;
                     doljnosti.button3.Visible = true;
                     doljnosti.button1.Visible = false;
@@ -450,32 +452,32 @@ namespace PayDay_Energosbyt
                 }
             }
         }
-        public void редактироватьToolStripMenuItem_Click(object sender, EventArgs e)
+        public void РедактироватьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Edit_String();
         }
 
-        private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void УдалитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Delete_String();
         }
 
-        private void toolStripMenuItem7_Click(object sender, EventArgs e)
+        private void ToolStripMenuItem7_Click(object sender, EventArgs e)
         {
             Edit_String();
         }
 
-        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        private void ToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             Delete_String();
         }
 
-        private void toolStripMenuItem6_Click(object sender, EventArgs e)
+        private void ToolStripMenuItem6_Click(object sender, EventArgs e)
         {
             Insert_String();
         }
 
-        private void табелиУчетаРабВремениToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ТабелиУчетаРабВремениToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Show_Tabel();
         }
@@ -493,12 +495,14 @@ namespace PayDay_Energosbyt
 
         private void Open_Tabel(string Sotrudnik, string query, string title)
         {
-            Tabel tabel = new Tabel(Sotrudnik, MySqlOperations, MySqlQueries, query);
-            tabel.Text = "Табель отработанного времения сотрудника " + title;
+            Tabel tabel = new Tabel(Sotrudnik, MySqlOperations, MySqlQueries, query)
+            {
+                Text = "Табель отработанного времения сотрудника " + title
+            };
             tabel.Show();
         }
 
-        private void графикиРаботыToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ГрафикиРаботыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Show_Grafik();
         }
@@ -530,12 +534,14 @@ namespace PayDay_Energosbyt
 
         private void Open_Grafik(string Doljnost, string query, string title)
         {
-            Grafik grafik = new Grafik(Doljnost, MySqlOperations, MySqlQueries, query);
-            grafik.Text = "График работы для " + '"' + title + '"';
+            Grafik grafik = new Grafik(Doljnost, MySqlOperations, MySqlQueries, query)
+            {
+                Text = "График работы для " + '"' + title + '"'
+            };
             grafik.Show();
         }
 
-        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (identify != "vyplaty")
             {
@@ -572,7 +578,7 @@ namespace PayDay_Energosbyt
             }
         }
 
-        private void табельУчетаРабВремениСотрудникаToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ТабельУчетаРабВремениСотрудникаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 1)
             {
@@ -596,7 +602,7 @@ namespace PayDay_Energosbyt
             }
         }
 
-        private void графикРаботыToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ГрафикРаботыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 1)
             {
@@ -626,7 +632,7 @@ namespace PayDay_Energosbyt
             }
         }
 
-        private void расчетныйЛистокToolStripMenuItem_Click(object sender, EventArgs e)
+        private void РасчетныйЛистокToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (identify == "vyplaty")
             {
@@ -645,7 +651,7 @@ namespace PayDay_Energosbyt
             }
         }
 
-        private void расчетноплатежнаяВедомостьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void РасчетноплатежнаяВедомостьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (identify == "vyplaty")
             {
@@ -658,7 +664,7 @@ namespace PayDay_Energosbyt
             }
         }
 
-        private void поискToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void ПоискToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             MySqlOperations.Search(toolStripTextBox1, dataGridView1);
         }

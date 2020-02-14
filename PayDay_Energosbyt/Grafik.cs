@@ -21,15 +21,14 @@ namespace PayDay_Energosbyt
             MySqlOperations = mySqlOperations;
             MySqlQueries = mySqlQueries;
             MySqlOperations.Select_DataGridView(query, dataGridView1, ID);
-            int result = 0;
-            if (int.TryParse(ID, out result) != true)
+            if (int.TryParse(ID, out int result) != true)
             {
                 MySqlOperations.Select_Text(MySqlQueries.Select_ID_Doljnosti_Sotrudnika, ref ID, null, ID);
             }
             Cancel_Update();
         }
 
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(comboBox1.Items[comboBox1.SelectedIndex].ToString()=="П - праздничный" || comboBox1.Items[comboBox1.SelectedIndex].ToString() == "В - выходной")
             {
@@ -45,12 +44,12 @@ namespace PayDay_Energosbyt
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Button3_Click(object sender, EventArgs e)
         {
             Cancel_Update();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void Button6_Click(object sender, EventArgs e)
         {
             Update_Table();
         }
@@ -76,13 +75,13 @@ namespace PayDay_Energosbyt
             }
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void Button5_Click(object sender, EventArgs e)
         {
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Grafik_Raboty, dataGridView1, ID);
             dateTimePicker2.Checked = false;
         }
 
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             DateTime = DateTime.Parse(dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
             MySqlOperations.Search_In_ComboBox_Identify(dataGridView1.SelectedRows[0].Cells[1].Value.ToString(), comboBox1);
@@ -91,7 +90,7 @@ namespace PayDay_Energosbyt
             numericUpDown1.Enabled = true;
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void Button4_Click(object sender, EventArgs e)
         {
             MySqlOperations.Insert_Update(MySqlQueries.Update_Grafik_Raboty, ID, comboBox1.Text[0].ToString(),numericUpDown1.Value.ToString().Replace(',','.'),dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
             Update_Table();
@@ -106,7 +105,7 @@ namespace PayDay_Energosbyt
             numericUpDown1.Enabled = false;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             try
             {
@@ -121,7 +120,5 @@ namespace PayDay_Energosbyt
                 Update_Table();
             }
         }
-
-        
     }
 }
