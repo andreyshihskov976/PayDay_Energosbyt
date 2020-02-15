@@ -74,6 +74,8 @@
             this.поискToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.опрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.поискToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,8 +84,6 @@
             this.просмотретьТабельОтрВремениToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
-            this.поискToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -118,6 +118,7 @@
             this.выходToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
+            this.файлToolStripMenuItem.ShowShortcutKeys = false;
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 23);
             this.файлToolStripMenuItem.Text = "&Файл";
             // 
@@ -449,6 +450,18 @@
             this.опрограммеToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.опрограммеToolStripMenuItem.Text = "&О программе...";
             // 
+            // toolStripTextBox1
+            // 
+            this.toolStripTextBox1.Name = "toolStripTextBox1";
+            this.toolStripTextBox1.Size = new System.Drawing.Size(521, 23);
+            // 
+            // поискToolStripMenuItem1
+            // 
+            this.поискToolStripMenuItem1.Name = "поискToolStripMenuItem1";
+            this.поискToolStripMenuItem1.Size = new System.Drawing.Size(54, 23);
+            this.поискToolStripMenuItem1.Text = "Поиск";
+            this.поискToolStripMenuItem1.Click += new System.EventHandler(this.ПоискToolStripMenuItem1_Click);
+            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -531,18 +544,6 @@
             this.saveFileDialog1.DefaultExt = "Книга Excel|*.xlsx";
             this.saveFileDialog1.Filter = "Книга Excel|*.xlsx|Книга Excel 93-2003|*.xls|PDF|*.pdf";
             this.saveFileDialog1.OverwritePrompt = false;
-            // 
-            // toolStripTextBox1
-            // 
-            this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Size = new System.Drawing.Size(521, 23);
-            // 
-            // поискToolStripMenuItem1
-            // 
-            this.поискToolStripMenuItem1.Name = "поискToolStripMenuItem1";
-            this.поискToolStripMenuItem1.Size = new System.Drawing.Size(54, 23);
-            this.поискToolStripMenuItem1.Text = "Поиск";
-            this.поискToolStripMenuItem1.Click += new System.EventHandler(this.ПоискToolStripMenuItem1_Click);
             // 
             // Main
             // 

@@ -387,6 +387,7 @@ namespace PayDay_Energosbyt
             ExcelApplication ExcelApp = null;
             Workbooks workbooks = null;
             Workbook workbook = null;
+            Worksheet worksheet = null;
             string output = null;
             string fileName = null;
             Select_Text(mySqlQueries.Select_Otdel_by_ID, ref output, ID);
@@ -401,6 +402,7 @@ namespace PayDay_Energosbyt
                     ExcelApp = new ExcelApplication();
                     workbooks = ExcelApp.Workbooks;
                     workbook = workbooks.Open(Application.StartupPath + "\\Blanks\\Vedomost.xlsx");
+                    worksheet = workbook.Worksheets.get_Item(1) as Worksheet;
                     ExcelApp.Cells[2, 2] = dateTimePicker.Text;
                     ExcelApp.Cells[4, 8] = output;
                     Select_Text(mySqlQueries.Itog_Vyplat_Po_Otdelu, ref output, ID);
@@ -420,6 +422,13 @@ namespace PayDay_Energosbyt
                         ExRow++;
                         ExCol = 1;
                     }
+                    var cells = worksheet.get_Range("A4 ", "E" + (ExRow - 1).ToString());
+                    cells.Borders[XlBordersIndex.xlInsideVertical].LineStyle = XlLineStyle.xlContinuous;
+                    cells.Borders[XlBordersIndex.xlInsideHorizontal].LineStyle = XlLineStyle.xlContinuous;
+                    cells.Borders[XlBordersIndex.xlEdgeTop].LineStyle = XlLineStyle.xlContinuous;
+                    cells.Borders[XlBordersIndex.xlEdgeRight].LineStyle = XlLineStyle.xlContinuous;
+                    cells.Borders[XlBordersIndex.xlEdgeLeft].LineStyle = XlLineStyle.xlContinuous;
+                    cells.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlContinuous;
                     workbook.SaveAs(fileName);
                     ExcelApp.Visible = true;
                 }
